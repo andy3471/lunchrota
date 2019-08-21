@@ -24,14 +24,10 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-2">
-                <a href="./rota.php"><img src="./images/core/advancedLogo.png" style="width:10rem" /></a>
+                <a href="./rota.php"><img src="{{ asset('img/logo.png') }}" style="width:10rem" /></a>
             </div>
             <div class="col-sm-10">
-                <h1 class="">Community Lunch Rota v<?php
-                                $verdir = scandir("./version/",1);
-                                $latest = simplexml_load_file("./version/".$verdir[0]);
-                                echo $latest->version_num;
-                                ?></h1>
+                <h1 class="">{{ config('app.name', 'Laravel') }}</h1>
             </div>
         </div>
     </div>
