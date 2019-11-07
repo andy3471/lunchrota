@@ -1,8 +1,32 @@
 // Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
+@import url("https://fonts.googleapis.com/css?family=Nunito");
+@import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
 
 // Variables
-@import 'variables';
+@import "variables";
 
 // Bootstrap
-@import '~bootstrap/scss/bootstrap';
+@import "~bootstrap/scss/bootstrap";
+
+body {
+    background-color: #fff;
+    color: #212529;
+    font-family: "Roboto", sans-serif;
+}
+
+.header {
+    padding: 15px;
+}
+
+.center {
+    margin: auto;
+}
+
+.datepicker {
+    border: 1px solid #dee2e6;
+}
+
+.navbar-text {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}

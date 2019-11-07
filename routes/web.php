@@ -11,10 +11,15 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'HomeController@index')->name('home');
+Route::get('/about', 'HomeController@about')->name('about');
+
+//Admin - Needs Admin Middleware
+Route::get('admin/roles', 'AdminController@roles')->name('rolesadmin');
+Route::get('admin/upload', 'AdminController@upload')->name('upload');
+Route::get('admin/users', 'AdminController@users')->name('usersadmin');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+//To be removed
+Route::get('/home', 'HomeController@index');
