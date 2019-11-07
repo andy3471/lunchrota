@@ -85,7 +85,7 @@
                     <li class="nav-item">
                         <a class="nav-link" data-toggle="modal" data-target="#loginModal">Login</a>
                     </li>
-                        @if( config('app.login_enabled') )
+                        @if( config('app.register_enabled') )
                             <li class="nav-item">
                                 <a href="{{ route('register') }}" class="nav-link">Register</a>
                             </li>

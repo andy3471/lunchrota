@@ -133,7 +133,7 @@ return [
     */
 
     'version' => '4.0.0',
-    'login_enabled' => env('APP_LOGIN_ENABLED', true),
+    'register_enabled' => env('APP_REGISTER_ENABLED', true),
     'support_code' => env('APP_SUPPORT_CODE', false),
 
     /*
