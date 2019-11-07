@@ -19,7 +19,9 @@ Route::get('admin/roles', 'AdminController@roles')->name('rolesadmin');
 Route::get('admin/upload', 'AdminController@upload')->name('upload');
 Route::get('admin/users', 'AdminController@users')->name('usersadmin');
 
-Auth::routes();
-
-//To be removed
-Route::get('/home', 'HomeController@index');
+//Disable Register Route if Registration Disabled
+if (config('app.login_enabled')) {
+    Auth::routes();
+} else {
+    Auth::routes(['register' => false]);
+}

@@ -49,7 +49,7 @@
                     </tr>
                     <tr>
                         <td>Version:</td>
-                        <td>4.0.0</td>
+                        <td>{{ config('app.version') }}</td>
                     </tr>
                     <tr>
                         <td>GitHub:</td>
