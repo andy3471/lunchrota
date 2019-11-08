@@ -18,7 +18,7 @@
             <button
               type="submit"
               disabled
-              class="btn btn-warning lunchbtn"
+              class="btn btn-primary lunchbtn"
               style="width:100%;"
               id="1"
               value="12:30"
@@ -26,7 +26,7 @@
             <button
               type="submit"
               disabled
-              class="btn btn-warning lunchbtn"
+              class="btn btn-primary lunchbtn"
               style="width:100%;"
               id="2"
               value="13:30"
@@ -34,14 +34,14 @@
             <button
               type="submit"
               disabled
-              class="btn btn-warning lunchbtn"
+              class="btn btn-primary lunchbtn"
               style="width:100%;"
               id="3"
               value="14:30"
             >14:30</button>
             <button
               type="submit"
-              class="btn btn-warning lunchbtn"
+              class="btn btn-primary lunchbtn"
               style="width: 20%; display: none;"
               id="X"
               disabled

@@ -2035,6 +2035,97 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/RoleAdmin.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/RoleAdmin.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Roles.vue?vue&type=script&lang=js&":
 /*!****************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Roles.vue?vue&type=script&lang=js& ***!
@@ -37991,7 +38082,7 @@ var staticRenderFns = [
                 _c(
                   "button",
                   {
-                    staticClass: "btn btn-warning lunchbtn",
+                    staticClass: "btn btn-primary lunchbtn",
                     staticStyle: { width: "100%" },
                     attrs: {
                       type: "submit",
@@ -38006,7 +38097,7 @@ var staticRenderFns = [
                 _c(
                   "button",
                   {
-                    staticClass: "btn btn-warning lunchbtn",
+                    staticClass: "btn btn-primary lunchbtn",
                     staticStyle: { width: "100%" },
                     attrs: {
                       type: "submit",
@@ -38021,7 +38112,7 @@ var staticRenderFns = [
                 _c(
                   "button",
                   {
-                    staticClass: "btn btn-warning lunchbtn",
+                    staticClass: "btn btn-primary lunchbtn",
                     staticStyle: { width: "100%" },
                     attrs: {
                       type: "submit",
@@ -38036,7 +38127,7 @@ var staticRenderFns = [
                 _c(
                   "button",
                   {
-                    staticClass: "btn btn-warning lunchbtn",
+                    staticClass: "btn btn-primary lunchbtn",
                     staticStyle: { width: "20%", display: "none" },
                     attrs: { type: "submit", id: "X", disabled: "" }
                   },
@@ -38062,6 +38153,349 @@ var staticRenderFns = [
         ])
       ])
     ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/RoleAdmin.vue?vue&type=template&id=644f321e&":
+/*!************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/RoleAdmin.vue?vue&type=template&id=644f321e& ***!
+  \************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container-fluid" }, [
+    _c("div", { staticClass: "row" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "col-lg-6 order-lg-2", attrs: { id: "DatePicker" } },
+        [_c("date-picker")],
+        1
+      )
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "col-lg-6 order-lg-1", attrs: { id: "role" } },
+      [
+        _c(
+          "form",
+          { attrs: { action: "", method: "post", id: "roleOverride" } },
+          [
+            _c("table", { staticClass: "table table-bordered" }, [
+              _c("tbody", [
+                _c("tr", [
+                  _c("th", { attrs: { colspan: "3" } }, [
+                    _c("h4", { staticClass: "text-center" }, [_vm._v("Roles")])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  attrs: { type: "hidden", name: "date", value: "2019-11-8" }
+                }),
+                _vm._v(" "),
+                _c("tr", [
+                  _c("th", [_vm._v("Person")]),
+                  _vm._v(" "),
+                  _c("th", [_vm._v("Override")])
+                ]),
+                _vm._v(" "),
+                _c("tr", [
+                  _c("td", [_vm._v("Bartosz Lazarewicz")]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c("div", { staticClass: "dropdown" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-primary dropdown-toggle",
+                          attrs: {
+                            type: "button",
+                            "data-toggle": "dropdown",
+                            id: "dropdown9",
+                            changed: "0"
+                          }
+                        },
+                        [_vm._v("In Office")]
+                      ),
+                      _vm._v(" "),
+                      _c("input", {
+                        attrs: {
+                          type: "hidden",
+                          name: "roleid[]",
+                          id: "9:roleid",
+                          value: "1"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("input", {
+                        attrs: {
+                          type: "hidden",
+                          name: "changed[]",
+                          id: "9:changed",
+                          value: "0"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("input", {
+                        attrs: { type: "hidden", name: "userid[]", value: "9" }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "dropdown-menu scrollable-menu" },
+                        [
+                          _c(
+                            "a",
+                            {
+                              staticClass: "dropdown-item",
+                              attrs: { href: "#", id: "role2" }
+                            },
+                            [_vm._v("Annual Leave")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "a",
+                            {
+                              staticClass: "dropdown-item",
+                              attrs: { href: "#", id: "role5" }
+                            },
+                            [_vm._v("Authorised Absence")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "a",
+                            {
+                              staticClass: "dropdown-item",
+                              attrs: { href: "#", id: "role20" }
+                            },
+                            [_vm._v("Backlog")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "a",
+                            {
+                              staticClass: "dropdown-item",
+                              attrs: { href: "#", id: "role6" }
+                            },
+                            [_vm._v("Coordinator")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "a",
+                            {
+                              staticClass: "dropdown-item",
+                              attrs: { href: "#", id: "role18" }
+                            },
+                            [_vm._v("Coordinator/On-Call")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "a",
+                            {
+                              staticClass: "dropdown-item",
+                              attrs: { href: "#", id: "role8" }
+                            },
+                            [_vm._v("Early")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "a",
+                            {
+                              staticClass: "dropdown-item",
+                              attrs: { href: "#", id: "role21" }
+                            },
+                            [_vm._v("Early/Backlog")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "a",
+                            {
+                              staticClass: "dropdown-item",
+                              attrs: { href: "#", id: "role23" }
+                            },
+                            [_vm._v("Early/Backlog/On-Call")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "a",
+                            {
+                              staticClass: "dropdown-item",
+                              attrs: { href: "#", id: "role11" }
+                            },
+                            [_vm._v("Early/Coordinator")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "a",
+                            {
+                              staticClass: "dropdown-item",
+                              attrs: { href: "#", id: "role19" }
+                            },
+                            [_vm._v("Early/Coordinator/On-Call")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "a",
+                            {
+                              staticClass: "dropdown-item",
+                              attrs: { href: "#", id: "role9" }
+                            },
+                            [_vm._v("Early/On-Call")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "a",
+                            {
+                              staticClass: "dropdown-item",
+                              attrs: { href: "#", id: "role16" }
+                            },
+                            [_vm._v("Half-Day AM")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "a",
+                            {
+                              staticClass: "dropdown-item",
+                              attrs: { href: "#", id: "role15" }
+                            },
+                            [_vm._v("Half-Day PM")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "a",
+                            {
+                              staticClass: "dropdown-item",
+                              attrs: { href: "#", id: "role1" }
+                            },
+                            [_vm._v("In Office")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "a",
+                            {
+                              staticClass: "dropdown-item",
+                              attrs: { href: "#", id: "role12" }
+                            },
+                            [_vm._v("Maternity")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "a",
+                            {
+                              staticClass: "dropdown-item",
+                              attrs: { href: "#", id: "role7" }
+                            },
+                            [_vm._v("On-Call")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "a",
+                            {
+                              staticClass: "dropdown-item",
+                              attrs: { href: "#", id: "role22" }
+                            },
+                            [_vm._v("On-Call/Backlog")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "a",
+                            {
+                              staticClass: "dropdown-item",
+                              attrs: { href: "#", id: "role13" }
+                            },
+                            [_vm._v("Paternity")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "a",
+                            {
+                              staticClass: "dropdown-item",
+                              attrs: { href: "#", id: "role3" }
+                            },
+                            [_vm._v("Sick")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "a",
+                            {
+                              staticClass: "dropdown-item",
+                              attrs: { href: "#", id: "role4" }
+                            },
+                            [_vm._v("Training")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "a",
+                            {
+                              staticClass: "dropdown-item",
+                              attrs: { href: "#", id: "role10" }
+                            },
+                            [_vm._v("Training/On-Call")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "a",
+                            {
+                              staticClass: "dropdown-item",
+                              attrs: { href: "#", id: "role25" }
+                            },
+                            [_vm._v("WFH")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "a",
+                            {
+                              staticClass: "dropdown-item",
+                              attrs: { href: "#", id: "role24" }
+                            },
+                            [_vm._v("Workshop")]
+                          )
+                        ]
+                      )
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("tr", [
+                  _c("th", { attrs: { colspan: "3" } }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary lunchbtn",
+                        staticStyle: { width: "100%" },
+                        attrs: { type: "submit", id: "1" }
+                      },
+                      [_vm._v("Submit")]
+                    )
+                  ])
+                ])
+              ])
+            ])
+          ]
+        )
+      ]
+    )
   }
 ]
 render._withStripped = true
@@ -50336,6 +50770,7 @@ Vue.component("rota", __webpack_require__(/*! ./components/Rota.vue */ "./resour
 Vue.component("date-picker", __webpack_require__(/*! ./components/DatePicker.vue */ "./resources/js/components/DatePicker.vue")["default"]);
 Vue.component("lunches", __webpack_require__(/*! ./components/Lunches.vue */ "./resources/js/components/Lunches.vue")["default"]);
 Vue.component("roles", __webpack_require__(/*! ./components/Roles.vue */ "./resources/js/components/Roles.vue")["default"]);
+Vue.component("role-admin", __webpack_require__(/*! ./components/RoleAdmin.vue */ "./resources/js/components/RoleAdmin.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -50532,6 +50967,78 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Lunches_vue_vue_type_template_id_5f636abd___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Lunches_vue_vue_type_template_id_5f636abd___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/RoleAdmin.vue":
+/*!***********************************************!*\
+  !*** ./resources/js/components/RoleAdmin.vue ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _RoleAdmin_vue_vue_type_template_id_644f321e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./RoleAdmin.vue?vue&type=template&id=644f321e& */ "./resources/js/components/RoleAdmin.vue?vue&type=template&id=644f321e&");
+/* harmony import */ var _RoleAdmin_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./RoleAdmin.vue?vue&type=script&lang=js& */ "./resources/js/components/RoleAdmin.vue?vue&type=script&lang=js&");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _RoleAdmin_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _RoleAdmin_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _RoleAdmin_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _RoleAdmin_vue_vue_type_template_id_644f321e___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _RoleAdmin_vue_vue_type_template_id_644f321e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/RoleAdmin.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/RoleAdmin.vue?vue&type=script&lang=js&":
+/*!************************************************************************!*\
+  !*** ./resources/js/components/RoleAdmin.vue?vue&type=script&lang=js& ***!
+  \************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_RoleAdmin_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./RoleAdmin.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/RoleAdmin.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_RoleAdmin_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_RoleAdmin_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_RoleAdmin_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_RoleAdmin_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_RoleAdmin_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./resources/js/components/RoleAdmin.vue?vue&type=template&id=644f321e&":
+/*!******************************************************************************!*\
+  !*** ./resources/js/components/RoleAdmin.vue?vue&type=template&id=644f321e& ***!
+  \******************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RoleAdmin_vue_vue_type_template_id_644f321e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./RoleAdmin.vue?vue&type=template&id=644f321e& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/RoleAdmin.vue?vue&type=template&id=644f321e&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RoleAdmin_vue_vue_type_template_id_644f321e___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RoleAdmin_vue_vue_type_template_id_644f321e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

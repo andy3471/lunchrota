@@ -1,5 +1,5 @@
 @extends('layouts.app')
 
 @section('content')
-    <p>roles</p>
+    <role-admin></role-admin>
 @endsection

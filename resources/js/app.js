@@ -23,6 +23,7 @@ Vue.component("rota", require("./components/Rota.vue").default);
 Vue.component("date-picker", require("./components/DatePicker.vue").default);
 Vue.component("lunches", require("./components/Lunches.vue").default);
 Vue.component("roles", require("./components/Roles.vue").default);
+Vue.component("role-admin", require("./components/RoleAdmin.vue").default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

@@ -148,17 +148,39 @@
 
     @auth
     <div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header bg-primary">
                 <h5 class="modal-title" id="changePasswordModalLabel">Change Password</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                ...
-            </div>
+                <div class="form-group row">
+                    <label for="Current Password" class="col-md-4 col-form-label text-md-right">Current Password</label>
+
+                    <div class="col-md-6">
+                        <input id="email" type="password" class="form-control" name="currentpassword" required autofocus>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="New Password" class="col-md-4 col-form-label text-md-right">New Password</label>
+
+                    <div class="col-md-6">
+                        <input id="email" type="password" class="form-control" name="newpassword" required autofocus>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="Confirm Password" class="col-md-4 col-form-label text-md-right">Confirm Password</label>
+
+                    <div class="col-md-6">
+                        <input id="email" type="password" class="form-control" name="confirmpassword" required autofocus>
+                    </div>
+                </div>
+
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary">Change Password</button>
@@ -168,11 +190,11 @@
     </div>
     @else
     <div class="modal fade show" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-lg" role="document">
             <form method="POST" action="{{ route('login') }}">
                 @csrf
                 <div class="modal-content">
-                    <div class="modal-header">
+                    <div class="modal-header bg-primary">
                         <h5 class="modal-title" id="loginModalLabel">Login</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -225,7 +247,7 @@
                                 {{ __('Forgot Your Password?') }}
                             </a>
                         @endif
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-error" data-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Login</button>
                     </div>
                 </div>
