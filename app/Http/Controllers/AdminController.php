@@ -2,18 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
+use App\Role;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
     public function users()
     {
-        return view('admin.users.index');
+        $users = User::withTrashed()->get();
+        return view('admin.users.index')->withUsers($users);
     }
 
     public function roles()
     {
-        return view('admin.roles.index');
+        $users = User::all();
+        $roles = Role::all();
+        return view('admin.roles.index')->withUsers($users)->withRoles($roles);
     }
 
     public function upload()
