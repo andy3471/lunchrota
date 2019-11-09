@@ -30,3 +30,15 @@ body {
     padding-left: 0.5rem;
     padding-right: 0.5rem;
 }
+
+.modal-link {
+    cursor: pointer;
+}
+
+.button {
+    cursor: pointer;
+}
+
+.button:hover {
+    background: red;
+}

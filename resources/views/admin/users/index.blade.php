@@ -48,7 +48,8 @@
         </div>
 
         <div class="col-lg-6 order-lg-2">
-            <form method="post" id="login" novalidate="novalidate">
+            <form method="post" action="{{ route('storeuser') }}">
+                @csrf
                 <table class="table table-bordered">
                     <tbody>
                         <tr>
@@ -56,14 +57,24 @@
                                 <label for="name">Name:</label>
                             </td>
                             <td>
-                                <input type="text" class="form-control" name="name" id="name">
+                                <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name">
+                                @error('name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </td>
                         <tr>
                             <td>
                                 <label for="username">Email:</label>
                             </td>
                             <td>
-                                <input type="email" class="form-control" name="username" id="username">
+                                <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" id="email">
+                                @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </td>
                         </tr>
                         <tr>
@@ -71,7 +82,12 @@
                                 <label for="password">Password:</label>
                             </td>
                             <td>
-                                <input type="password" class="form-control" name="password" id="password">
+                                <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" id="password">
+                                @error('currentpassword')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </td>
                         </tr>
                         <tr>
@@ -79,7 +95,7 @@
                                 <label for="confpass">Confirm Password:</label>
                             </td>
                             <td>
-                                <input type="password" class="form-control" name="confpass" id="confpass">
+                                <input type="password" class="form-control" name="password_confirmation" id="password_confirmation">
                             </td>
                         </tr>
                         <tr>

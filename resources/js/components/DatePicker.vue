@@ -3,18 +3,18 @@
     <tbody>
       <tr>
         <th colspan="7">
-          <h4 id="date" class="text-center" dbmaindate="2019-11-27">27 November 2019</h4>
+          <h4 id="date" class="text-center">{{ this.selectedDateTitle }}</h4>
         </th>
       </tr>
       <tr>
-        <th scope="col" colspan="2" class="button text-center">⟵</th>
-        <th id="currYear" scope="col" colspan="3" class="text-center">2019</th>
-        <th scope="col" colspan="2" class="button text-center">⟶</th>
+        <th scope="col" colspan="2" class="button text-center" v-on:click="changeYear(-1)">⟵</th>
+        <th scope="col" colspan="3" class="text-center">{{ this.selectedYear }}</th>
+        <th scope="col" colspan="2" class="button text-center" v-on:click="changeYear(1)">⟶</th>
       </tr>
       <tr>
-        <th scope="col" colspan="2" class="button text-center">⟵</th>
-        <th id="currMonth" scope="col" colspan="3" class="text-center">November</th>
-        <th scope="col" colspan="2" class="button text-center">⟶</th>
+        <th scope="col" colspan="2" class="button text-center" v-on:click="changeMonth(-1)">⟵</th>
+        <th scope="col" colspan="3" class="text-center">{{ this.selectedMonthName }}</th>
+        <th scope="col" colspan="2" class="button text-center" v-on:click="changeMonth(+1)">⟶</th>
       </tr>
       <tr>
         <th scope="col" class="day button text-center">Sun</th>
@@ -110,13 +110,99 @@
         <td id="Sa6" class="day button text-center"></td>
       </tr>
       <tr>
-        <th scope="col" colspan="2" class="button text-center">Yesterday</th>
-        <th scope="col" colspan="3" class="button text-center">Today</th>
-        <th scope="col" colspan="2" class="button text-center" onclick="tomorrow()">Tomorrow</th>
+        <th scope="col" colspan="2" class="button text-center" v-on:click="setYesterday()">Yesterday</th>
+        <th scope="col" colspan="3" class="button text-center" v-on:click="setToday()">Today</th>
+        <th scope="col" colspan="2" class="button text-center" v-on:click="setTomorrow()">Tomorrow</th>
       </tr>
     </tbody>
   </table>
 </template>
 
 <script>
+export default {
+  props: {
+    date: {
+      required: true,
+      type: Date,
+      default: new Date()
+    }
+  },
+  data() {
+    return {
+      selectedDate: this.date,
+      months: [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+      ]
+    };
+  },
+  computed: {
+    selectedDay: function() {
+      return this.selectedDate.getDate();
+    },
+    selectedYear: function() {
+      return this.selectedDate.getFullYear();
+    },
+    selectedMonth: function() {
+      return this.selectedDate.getMonth();
+    },
+    selectedMonthName: function() {
+      return this.months[this.selectedMonth];
+    },
+    selectedDateTitle: function() {
+      return (
+        this.selectedDay +
+        " " +
+        this.selectedMonthName +
+        " " +
+        this.selectedYear
+      );
+    }
+  },
+  mounted() {},
+  methods: {
+    changeMonth(incrBy) {
+      var d = new Date();
+      d.setFullYear(this.selectedDate.getFullYear());
+      d.setDate(this.selectedDate.getDate());
+      d.setMonth(this.selectedDate.getMonth() + incrBy);
+      this.selectedDate = d;
+    },
+    changeYear(incrBy) {
+      var d = new Date();
+      d.setFullYear(this.selectedDate.getFullYear() + incrBy);
+      d.setDate(this.selectedDate.getDate());
+      d.setMonth(this.selectedDate.getMonth());
+      this.selectedDate = d;
+    },
+    setToday: function() {
+      this.selectedDate = new Date();
+    },
+    setYesterday: function() {
+      var d = new Date();
+      d.setDate(d.getDate() - 1);
+      this.selectedDate = d;
+    },
+    setTomorrow: function() {
+      var d = new Date();
+      d.setDate(d.getDate() + 1);
+      this.selectedDate = d;
+    }
+  },
+  watch: {
+    selectedDate: function() {
+      this.$emit("change-date", this.selectedDate);
+    }
+  }
+};
 </script>

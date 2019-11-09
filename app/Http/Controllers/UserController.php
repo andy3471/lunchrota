@@ -4,22 +4,40 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Rules\CurrentPassword;
-use Hash;
+use App\User;
 use Auth;
 
 class UserController extends Controller
 {
-    public function changePassword(Request $request) {
+    public function changePassword(Request $request)
+    {
 
         $this->validate($request, [
             'currentpassword' => ['required', new CurrentPassword],
-            'newpassword' => 'required|string|min:6|confirmed',
+            'newpassword' => 'required|string|min:6|confirmed|different:currentpassword',
         ]);
 
         $user = Auth::user();
         $user->password = bcrypt($request->newpassword);
         $user->save();
 
-        return redirect()->back()->with( "message", __('Password Changed') );
+        return redirect()->back()->with("message", 'Password Changed');
+    }
+
+    public function store(Request $request)
+    {
+        $this->validate($request, [
+            'email' => 'required|email|unique:users',
+            'name' => 'required',
+            'password' => 'required|string|min:6|confirmed',
+        ]);
+
+        $user = new User;
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = bcrypt($request->password);
+        $user->save();
+
+        return redirect()->back()->with("message", 'User Created');
     }
 }

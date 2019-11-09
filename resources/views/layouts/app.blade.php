@@ -97,7 +97,7 @@
                 <ul class="nav navbar-nav">
                     @guest
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="modal" data-target="#loginModal">Login</a>
+                        <a class="nav-link modal-link" data-toggle="modal" data-target="#loginModal">Login</a>
                     </li>
                         @if( config('app.register_enabled') )
                             <li class="nav-item">
@@ -114,7 +114,7 @@
                         </li>
                     @endif
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="modal" data-target="#changePasswordModal">
+                        <a class="nav-link modal-link" data-toggle="modal" data-target="#changePasswordModal">
                             Change Password
                         </a>
                     </li>

@@ -1833,9 +1833,11 @@ module.exports = {
 /*!*********************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/DatePicker.vue?vue&type=script&lang=js& ***!
   \*********************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
+__webpack_require__.r(__webpack_exports__);
 //
 //
 //
@@ -1956,6 +1958,73 @@ module.exports = {
 //
 //
 //
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    date: {
+      required: true,
+      type: Date,
+      "default": new Date()
+    }
+  },
+  data: function data() {
+    return {
+      selectedDate: this.date,
+      months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+    };
+  },
+  computed: {
+    selectedDay: function selectedDay() {
+      return this.selectedDate.getDate();
+    },
+    selectedYear: function selectedYear() {
+      return this.selectedDate.getFullYear();
+    },
+    selectedMonth: function selectedMonth() {
+      return this.selectedDate.getMonth();
+    },
+    selectedMonthName: function selectedMonthName() {
+      return this.months[this.selectedMonth];
+    },
+    selectedDateTitle: function selectedDateTitle() {
+      return this.selectedDay + " " + this.selectedMonthName + " " + this.selectedYear;
+    }
+  },
+  mounted: function mounted() {},
+  methods: {
+    changeMonth: function changeMonth(incrBy) {
+      var d = new Date();
+      d.setFullYear(this.selectedDate.getFullYear());
+      d.setDate(this.selectedDate.getDate());
+      d.setMonth(this.selectedDate.getMonth() + incrBy);
+      this.selectedDate = d;
+    },
+    changeYear: function changeYear(incrBy) {
+      var d = new Date();
+      d.setFullYear(this.selectedDate.getFullYear() + incrBy);
+      d.setDate(this.selectedDate.getDate());
+      d.setMonth(this.selectedDate.getMonth());
+      this.selectedDate = d;
+    },
+    setToday: function setToday() {
+      this.selectedDate = new Date();
+    },
+    setYesterday: function setYesterday() {
+      var d = new Date();
+      d.setDate(d.getDate() - 1);
+      this.selectedDate = d;
+    },
+    setTomorrow: function setTomorrow() {
+      var d = new Date();
+      d.setDate(d.getDate() + 1);
+      this.selectedDate = d;
+    }
+  },
+  watch: {
+    selectedDate: function selectedDate() {
+      this.$emit("change-date", this.selectedDate);
+    }
+  }
+});
 
 /***/ }),
 
@@ -2091,12 +2160,14 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      date: null,
-      csrf: window.Laravel.csrfToken
+      date: new Date()
     };
   },
-  mounted: function mounted() {
-    this.date = Date();
+  mounted: function mounted() {},
+  methods: {
+    changeDate: function changeDate(e) {
+      this.date = e;
+    }
   }
 });
 
@@ -2205,9 +2276,11 @@ __webpack_require__.r(__webpack_exports__);
 /*!***************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Rota.vue?vue&type=script&lang=js& ***!
   \***************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
+__webpack_require__.r(__webpack_exports__);
 //
 //
 //
@@ -2226,6 +2299,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: {},
+  data: function data() {
+    return {
+      date: new Date()
+    };
+  },
+  mounted: function mounted() {},
+  methods: {
+    changeDate: function changeDate(e) {
+      this.date = e;
+    }
+  }
+});
 
 /***/ }),
 
@@ -37535,528 +37622,592 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("table", { staticClass: "table datepicker" }, [
+    _c("tbody", [
+      _c("tr", [
+        _c("th", { attrs: { colspan: "7" } }, [
+          _c("h4", { staticClass: "text-center", attrs: { id: "date" } }, [
+            _vm._v(_vm._s(this.selectedDateTitle))
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("tr", [
+        _c(
+          "th",
+          {
+            staticClass: "button text-center",
+            attrs: { scope: "col", colspan: "2" },
+            on: {
+              click: function($event) {
+                return _vm.changeYear(-1)
+              }
+            }
+          },
+          [_vm._v("⟵")]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          { staticClass: "text-center", attrs: { scope: "col", colspan: "3" } },
+          [_vm._v(_vm._s(this.selectedYear))]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticClass: "button text-center",
+            attrs: { scope: "col", colspan: "2" },
+            on: {
+              click: function($event) {
+                return _vm.changeYear(1)
+              }
+            }
+          },
+          [_vm._v("⟶")]
+        )
+      ]),
+      _vm._v(" "),
+      _c("tr", [
+        _c(
+          "th",
+          {
+            staticClass: "button text-center",
+            attrs: { scope: "col", colspan: "2" },
+            on: {
+              click: function($event) {
+                return _vm.changeMonth(-1)
+              }
+            }
+          },
+          [_vm._v("⟵")]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          { staticClass: "text-center", attrs: { scope: "col", colspan: "3" } },
+          [_vm._v(_vm._s(this.selectedMonthName))]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticClass: "button text-center",
+            attrs: { scope: "col", colspan: "2" },
+            on: {
+              click: function($event) {
+                return _vm.changeMonth(+1)
+              }
+            }
+          },
+          [_vm._v("⟶")]
+        )
+      ]),
+      _vm._v(" "),
+      _vm._m(0),
+      _vm._v(" "),
+      _vm._m(1),
+      _vm._v(" "),
+      _vm._m(2),
+      _vm._v(" "),
+      _vm._m(3),
+      _vm._v(" "),
+      _vm._m(4),
+      _vm._v(" "),
+      _vm._m(5),
+      _vm._v(" "),
+      _vm._m(6),
+      _vm._v(" "),
+      _c("tr", [
+        _c(
+          "th",
+          {
+            staticClass: "button text-center",
+            attrs: { scope: "col", colspan: "2" },
+            on: {
+              click: function($event) {
+                return _vm.setYesterday()
+              }
+            }
+          },
+          [_vm._v("Yesterday")]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticClass: "button text-center",
+            attrs: { scope: "col", colspan: "3" },
+            on: {
+              click: function($event) {
+                return _vm.setToday()
+              }
+            }
+          },
+          [_vm._v("Today")]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticClass: "button text-center",
+            attrs: { scope: "col", colspan: "2" },
+            on: {
+              click: function($event) {
+                return _vm.setTomorrow()
+              }
+            }
+          },
+          [_vm._v("Tomorrow")]
+        )
+      ])
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("table", { staticClass: "table datepicker" }, [
-      _c("tbody", [
-        _c("tr", [
-          _c("th", { attrs: { colspan: "7" } }, [
-            _c(
-              "h4",
-              {
-                staticClass: "text-center",
-                attrs: { id: "date", dbmaindate: "2019-11-27" }
-              },
-              [_vm._v("27 November 2019")]
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("tr", [
-          _c(
-            "th",
-            {
-              staticClass: "button text-center",
-              attrs: { scope: "col", colspan: "2" }
-            },
-            [_vm._v("⟵")]
-          ),
-          _vm._v(" "),
-          _c(
-            "th",
-            {
-              staticClass: "text-center",
-              attrs: { id: "currYear", scope: "col", colspan: "3" }
-            },
-            [_vm._v("2019")]
-          ),
-          _vm._v(" "),
-          _c(
-            "th",
-            {
-              staticClass: "button text-center",
-              attrs: { scope: "col", colspan: "2" }
-            },
-            [_vm._v("⟶")]
-          )
-        ]),
-        _vm._v(" "),
-        _c("tr", [
-          _c(
-            "th",
-            {
-              staticClass: "button text-center",
-              attrs: { scope: "col", colspan: "2" }
-            },
-            [_vm._v("⟵")]
-          ),
-          _vm._v(" "),
-          _c(
-            "th",
-            {
-              staticClass: "text-center",
-              attrs: { id: "currMonth", scope: "col", colspan: "3" }
-            },
-            [_vm._v("November")]
-          ),
-          _vm._v(" "),
-          _c(
-            "th",
-            {
-              staticClass: "button text-center",
-              attrs: { scope: "col", colspan: "2" }
-            },
-            [_vm._v("⟶")]
-          )
-        ]),
-        _vm._v(" "),
-        _c("tr", [
-          _c(
-            "th",
-            { staticClass: "day button text-center", attrs: { scope: "col" } },
-            [_vm._v("Sun")]
-          ),
-          _vm._v(" "),
-          _c(
-            "th",
-            { staticClass: "day button text-center", attrs: { scope: "col" } },
-            [_vm._v("Mon")]
-          ),
-          _vm._v(" "),
-          _c(
-            "th",
-            { staticClass: "day button text-center", attrs: { scope: "col" } },
-            [_vm._v("Tues")]
-          ),
-          _vm._v(" "),
-          _c(
-            "th",
-            { staticClass: "day button text-center", attrs: { scope: "col" } },
-            [_vm._v("Wed")]
-          ),
-          _vm._v(" "),
-          _c(
-            "th",
-            { staticClass: "day button text-center", attrs: { scope: "col" } },
-            [_vm._v("Thur")]
-          ),
-          _vm._v(" "),
-          _c(
-            "th",
-            { staticClass: "day button text-center", attrs: { scope: "col" } },
-            [_vm._v("Fri")]
-          ),
-          _vm._v(" "),
-          _c(
-            "th",
-            { staticClass: "day button text-center", attrs: { scope: "col" } },
-            [_vm._v("Sat")]
-          )
-        ]),
-        _vm._v(" "),
-        _c("tr", [
-          _c(
-            "td",
-            {
-              staticClass: "day button text-center",
-              staticStyle: { color: "rgb(136, 136, 136)" },
-              attrs: { id: "Su1", date: "27-9-2019" }
-            },
-            [_vm._v("27")]
-          ),
-          _vm._v(" "),
-          _c(
-            "td",
-            {
-              staticClass: "day button text-center",
-              staticStyle: { color: "rgb(136, 136, 136)" },
-              attrs: { id: "Mo1", date: "28-9-2019" }
-            },
-            [_vm._v("28")]
-          ),
-          _vm._v(" "),
-          _c(
-            "td",
-            {
-              staticClass: "day button text-center",
-              staticStyle: { color: "rgb(136, 136, 136)" },
-              attrs: { id: "Tu1", date: "29-9-2019" }
-            },
-            [_vm._v("29")]
-          ),
-          _vm._v(" "),
-          _c(
-            "td",
-            {
-              staticClass: "day button text-center",
-              staticStyle: { color: "rgb(136, 136, 136)" },
-              attrs: { id: "We1", date: "30-9-2019" }
-            },
-            [_vm._v("30")]
-          ),
-          _vm._v(" "),
-          _c(
-            "td",
-            {
-              staticClass: "day button text-center",
-              staticStyle: { color: "rgb(136, 136, 136)" },
-              attrs: { id: "Th1", date: "31-9-2019" }
-            },
-            [_vm._v("31")]
-          ),
-          _vm._v(" "),
-          _c(
-            "td",
-            {
-              staticClass: "day button text-center",
-              attrs: { id: "Fr1", date: "1-10-2019" }
-            },
-            [_vm._v("1")]
-          ),
-          _vm._v(" "),
-          _c(
-            "td",
-            {
-              staticClass: "day button text-center",
-              attrs: { id: "Sa1", date: "2-10-2019" }
-            },
-            [_vm._v("2")]
-          )
-        ]),
-        _vm._v(" "),
-        _c("tr", [
-          _c(
-            "td",
-            {
-              staticClass: "day button text-center",
-              attrs: { id: "Su2", date: "3-10-2019" }
-            },
-            [_vm._v("3")]
-          ),
-          _vm._v(" "),
-          _c(
-            "td",
-            {
-              staticClass: "day button text-center",
-              attrs: { id: "Mo2", date: "4-10-2019" }
-            },
-            [_vm._v("4")]
-          ),
-          _vm._v(" "),
-          _c(
-            "td",
-            {
-              staticClass: "day button text-center",
-              attrs: { id: "Tu2", date: "5-10-2019" }
-            },
-            [_vm._v("5")]
-          ),
-          _vm._v(" "),
-          _c(
-            "td",
-            {
-              staticClass: "day button text-center",
-              attrs: { id: "We2", date: "6-10-2019" }
-            },
-            [_vm._v("6")]
-          ),
-          _vm._v(" "),
-          _c(
-            "td",
-            {
-              staticClass: "day button text-center",
-              attrs: { id: "Th2", date: "7-10-2019" }
-            },
-            [_vm._v("7")]
-          ),
-          _vm._v(" "),
-          _c(
-            "td",
-            {
-              staticClass: "day button text-center",
-              attrs: { id: "Fr2", date: "8-10-2019" }
-            },
-            [_vm._v("8")]
-          ),
-          _vm._v(" "),
-          _c(
-            "td",
-            {
-              staticClass: "day button text-center",
-              attrs: { id: "Sa2", date: "9-10-2019" }
-            },
-            [_vm._v("9")]
-          )
-        ]),
-        _vm._v(" "),
-        _c("tr", [
-          _c(
-            "td",
-            {
-              staticClass: "day button text-center",
-              attrs: { id: "Su3", date: "10-10-2019" }
-            },
-            [_vm._v("10")]
-          ),
-          _vm._v(" "),
-          _c(
-            "td",
-            {
-              staticClass: "day button text-center",
-              attrs: { id: "Mo3", date: "11-10-2019" }
-            },
-            [_vm._v("11")]
-          ),
-          _vm._v(" "),
-          _c(
-            "td",
-            {
-              staticClass: "day button text-center",
-              attrs: { id: "Tu3", date: "12-10-2019" }
-            },
-            [_vm._v("12")]
-          ),
-          _vm._v(" "),
-          _c(
-            "td",
-            {
-              staticClass: "day button text-center",
-              attrs: { id: "We3", date: "13-10-2019" }
-            },
-            [_vm._v("13")]
-          ),
-          _vm._v(" "),
-          _c(
-            "td",
-            {
-              staticClass: "day button text-center",
-              attrs: { id: "Th3", date: "14-10-2019" }
-            },
-            [_vm._v("14")]
-          ),
-          _vm._v(" "),
-          _c(
-            "td",
-            {
-              staticClass: "day button text-center",
-              attrs: { id: "Fr3", date: "15-10-2019" }
-            },
-            [_vm._v("15")]
-          ),
-          _vm._v(" "),
-          _c(
-            "td",
-            {
-              staticClass: "day button text-center",
-              attrs: { id: "Sa3", date: "16-10-2019" }
-            },
-            [_vm._v("16")]
-          )
-        ]),
-        _vm._v(" "),
-        _c("tr", [
-          _c(
-            "td",
-            {
-              staticClass: "day button text-center",
-              attrs: { id: "Su4", date: "17-10-2019" }
-            },
-            [_vm._v("17")]
-          ),
-          _vm._v(" "),
-          _c(
-            "td",
-            {
-              staticClass: "day button text-center",
-              attrs: { id: "Mo4", date: "18-10-2019" }
-            },
-            [_vm._v("18")]
-          ),
-          _vm._v(" "),
-          _c(
-            "td",
-            {
-              staticClass: "day button text-center",
-              attrs: { id: "Tu4", date: "19-10-2019" }
-            },
-            [_vm._v("19")]
-          ),
-          _vm._v(" "),
-          _c(
-            "td",
-            {
-              staticClass: "day button text-center",
-              attrs: { id: "We4", date: "20-10-2019" }
-            },
-            [_vm._v("20")]
-          ),
-          _vm._v(" "),
-          _c(
-            "td",
-            {
-              staticClass: "day button text-center",
-              attrs: { id: "Th4", date: "21-10-2019" }
-            },
-            [_vm._v("21")]
-          ),
-          _vm._v(" "),
-          _c(
-            "td",
-            {
-              staticClass: "day button text-center",
-              attrs: { id: "Fr4", date: "22-10-2019" }
-            },
-            [_vm._v("22")]
-          ),
-          _vm._v(" "),
-          _c(
-            "td",
-            {
-              staticClass: "day button text-center",
-              attrs: { id: "Sa4", date: "23-10-2019" }
-            },
-            [_vm._v("23")]
-          )
-        ]),
-        _vm._v(" "),
-        _c("tr", { attrs: { id: "row5" } }, [
-          _c(
-            "td",
-            {
-              staticClass: "day button text-center",
-              attrs: { id: "Su5", date: "24-10-2019" }
-            },
-            [_vm._v("24")]
-          ),
-          _vm._v(" "),
-          _c(
-            "td",
-            {
-              staticClass: "day button text-center",
-              attrs: { id: "Mo5", date: "25-10-2019" }
-            },
-            [_vm._v("25")]
-          ),
-          _vm._v(" "),
-          _c(
-            "td",
-            {
-              staticClass: "day button text-center",
-              attrs: { id: "Tu5", date: "26-10-2019" }
-            },
-            [_vm._v("26")]
-          ),
-          _vm._v(" "),
-          _c(
-            "td",
-            {
-              staticClass: "day button text-center",
-              staticStyle: { "background-color": "orange" },
-              attrs: { id: "We5", date: "27-10-2019" }
-            },
-            [_vm._v("27")]
-          ),
-          _vm._v(" "),
-          _c(
-            "td",
-            {
-              staticClass: "day button text-center",
-              attrs: { id: "Th5", date: "28-10-2019" }
-            },
-            [_vm._v("28")]
-          ),
-          _vm._v(" "),
-          _c(
-            "td",
-            {
-              staticClass: "day button text-center",
-              attrs: { id: "Fr5", date: "29-10-2019" }
-            },
-            [_vm._v("29")]
-          ),
-          _vm._v(" "),
-          _c(
-            "td",
-            {
-              staticClass: "day button text-center",
-              attrs: { id: "Sa5", date: "30-10-2019" }
-            },
-            [_vm._v("30")]
-          )
-        ]),
-        _vm._v(" "),
-        _c("tr", { staticStyle: { display: "none" }, attrs: { id: "row6" } }, [
-          _c("td", {
-            staticClass: "day button text-center",
-            attrs: { id: "Su6" }
-          }),
-          _vm._v(" "),
-          _c("td", {
-            staticClass: "day button text-center",
-            attrs: { id: "Mo6" }
-          }),
-          _vm._v(" "),
-          _c("td", {
-            staticClass: "day button text-center",
-            attrs: { id: "Tu6" }
-          }),
-          _vm._v(" "),
-          _c("td", {
-            staticClass: "day button text-center",
-            attrs: { id: "We6" }
-          }),
-          _vm._v(" "),
-          _c("td", {
-            staticClass: "day button text-center",
-            attrs: { id: "Th6" }
-          }),
-          _vm._v(" "),
-          _c("td", {
-            staticClass: "day button text-center",
-            attrs: { id: "Fr6" }
-          }),
-          _vm._v(" "),
-          _c("td", {
-            staticClass: "day button text-center",
-            attrs: { id: "Sa6" }
-          })
-        ]),
-        _vm._v(" "),
-        _c("tr", [
-          _c(
-            "th",
-            {
-              staticClass: "button text-center",
-              attrs: { scope: "col", colspan: "2" }
-            },
-            [_vm._v("Yesterday")]
-          ),
-          _vm._v(" "),
-          _c(
-            "th",
-            {
-              staticClass: "button text-center",
-              attrs: { scope: "col", colspan: "3" }
-            },
-            [_vm._v("Today")]
-          ),
-          _vm._v(" "),
-          _c(
-            "th",
-            {
-              staticClass: "button text-center",
-              attrs: { scope: "col", colspan: "2", onclick: "tomorrow()" }
-            },
-            [_vm._v("Tomorrow")]
-          )
-        ])
-      ])
+    return _c("tr", [
+      _c(
+        "th",
+        { staticClass: "day button text-center", attrs: { scope: "col" } },
+        [_vm._v("Sun")]
+      ),
+      _vm._v(" "),
+      _c(
+        "th",
+        { staticClass: "day button text-center", attrs: { scope: "col" } },
+        [_vm._v("Mon")]
+      ),
+      _vm._v(" "),
+      _c(
+        "th",
+        { staticClass: "day button text-center", attrs: { scope: "col" } },
+        [_vm._v("Tues")]
+      ),
+      _vm._v(" "),
+      _c(
+        "th",
+        { staticClass: "day button text-center", attrs: { scope: "col" } },
+        [_vm._v("Wed")]
+      ),
+      _vm._v(" "),
+      _c(
+        "th",
+        { staticClass: "day button text-center", attrs: { scope: "col" } },
+        [_vm._v("Thur")]
+      ),
+      _vm._v(" "),
+      _c(
+        "th",
+        { staticClass: "day button text-center", attrs: { scope: "col" } },
+        [_vm._v("Fri")]
+      ),
+      _vm._v(" "),
+      _c(
+        "th",
+        { staticClass: "day button text-center", attrs: { scope: "col" } },
+        [_vm._v("Sat")]
+      )
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c(
+        "td",
+        {
+          staticClass: "day button text-center",
+          staticStyle: { color: "rgb(136, 136, 136)" },
+          attrs: { id: "Su1", date: "27-9-2019" }
+        },
+        [_vm._v("27")]
+      ),
+      _vm._v(" "),
+      _c(
+        "td",
+        {
+          staticClass: "day button text-center",
+          staticStyle: { color: "rgb(136, 136, 136)" },
+          attrs: { id: "Mo1", date: "28-9-2019" }
+        },
+        [_vm._v("28")]
+      ),
+      _vm._v(" "),
+      _c(
+        "td",
+        {
+          staticClass: "day button text-center",
+          staticStyle: { color: "rgb(136, 136, 136)" },
+          attrs: { id: "Tu1", date: "29-9-2019" }
+        },
+        [_vm._v("29")]
+      ),
+      _vm._v(" "),
+      _c(
+        "td",
+        {
+          staticClass: "day button text-center",
+          staticStyle: { color: "rgb(136, 136, 136)" },
+          attrs: { id: "We1", date: "30-9-2019" }
+        },
+        [_vm._v("30")]
+      ),
+      _vm._v(" "),
+      _c(
+        "td",
+        {
+          staticClass: "day button text-center",
+          staticStyle: { color: "rgb(136, 136, 136)" },
+          attrs: { id: "Th1", date: "31-9-2019" }
+        },
+        [_vm._v("31")]
+      ),
+      _vm._v(" "),
+      _c(
+        "td",
+        {
+          staticClass: "day button text-center",
+          attrs: { id: "Fr1", date: "1-10-2019" }
+        },
+        [_vm._v("1")]
+      ),
+      _vm._v(" "),
+      _c(
+        "td",
+        {
+          staticClass: "day button text-center",
+          attrs: { id: "Sa1", date: "2-10-2019" }
+        },
+        [_vm._v("2")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c(
+        "td",
+        {
+          staticClass: "day button text-center",
+          attrs: { id: "Su2", date: "3-10-2019" }
+        },
+        [_vm._v("3")]
+      ),
+      _vm._v(" "),
+      _c(
+        "td",
+        {
+          staticClass: "day button text-center",
+          attrs: { id: "Mo2", date: "4-10-2019" }
+        },
+        [_vm._v("4")]
+      ),
+      _vm._v(" "),
+      _c(
+        "td",
+        {
+          staticClass: "day button text-center",
+          attrs: { id: "Tu2", date: "5-10-2019" }
+        },
+        [_vm._v("5")]
+      ),
+      _vm._v(" "),
+      _c(
+        "td",
+        {
+          staticClass: "day button text-center",
+          attrs: { id: "We2", date: "6-10-2019" }
+        },
+        [_vm._v("6")]
+      ),
+      _vm._v(" "),
+      _c(
+        "td",
+        {
+          staticClass: "day button text-center",
+          attrs: { id: "Th2", date: "7-10-2019" }
+        },
+        [_vm._v("7")]
+      ),
+      _vm._v(" "),
+      _c(
+        "td",
+        {
+          staticClass: "day button text-center",
+          attrs: { id: "Fr2", date: "8-10-2019" }
+        },
+        [_vm._v("8")]
+      ),
+      _vm._v(" "),
+      _c(
+        "td",
+        {
+          staticClass: "day button text-center",
+          attrs: { id: "Sa2", date: "9-10-2019" }
+        },
+        [_vm._v("9")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c(
+        "td",
+        {
+          staticClass: "day button text-center",
+          attrs: { id: "Su3", date: "10-10-2019" }
+        },
+        [_vm._v("10")]
+      ),
+      _vm._v(" "),
+      _c(
+        "td",
+        {
+          staticClass: "day button text-center",
+          attrs: { id: "Mo3", date: "11-10-2019" }
+        },
+        [_vm._v("11")]
+      ),
+      _vm._v(" "),
+      _c(
+        "td",
+        {
+          staticClass: "day button text-center",
+          attrs: { id: "Tu3", date: "12-10-2019" }
+        },
+        [_vm._v("12")]
+      ),
+      _vm._v(" "),
+      _c(
+        "td",
+        {
+          staticClass: "day button text-center",
+          attrs: { id: "We3", date: "13-10-2019" }
+        },
+        [_vm._v("13")]
+      ),
+      _vm._v(" "),
+      _c(
+        "td",
+        {
+          staticClass: "day button text-center",
+          attrs: { id: "Th3", date: "14-10-2019" }
+        },
+        [_vm._v("14")]
+      ),
+      _vm._v(" "),
+      _c(
+        "td",
+        {
+          staticClass: "day button text-center",
+          attrs: { id: "Fr3", date: "15-10-2019" }
+        },
+        [_vm._v("15")]
+      ),
+      _vm._v(" "),
+      _c(
+        "td",
+        {
+          staticClass: "day button text-center",
+          attrs: { id: "Sa3", date: "16-10-2019" }
+        },
+        [_vm._v("16")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c(
+        "td",
+        {
+          staticClass: "day button text-center",
+          attrs: { id: "Su4", date: "17-10-2019" }
+        },
+        [_vm._v("17")]
+      ),
+      _vm._v(" "),
+      _c(
+        "td",
+        {
+          staticClass: "day button text-center",
+          attrs: { id: "Mo4", date: "18-10-2019" }
+        },
+        [_vm._v("18")]
+      ),
+      _vm._v(" "),
+      _c(
+        "td",
+        {
+          staticClass: "day button text-center",
+          attrs: { id: "Tu4", date: "19-10-2019" }
+        },
+        [_vm._v("19")]
+      ),
+      _vm._v(" "),
+      _c(
+        "td",
+        {
+          staticClass: "day button text-center",
+          attrs: { id: "We4", date: "20-10-2019" }
+        },
+        [_vm._v("20")]
+      ),
+      _vm._v(" "),
+      _c(
+        "td",
+        {
+          staticClass: "day button text-center",
+          attrs: { id: "Th4", date: "21-10-2019" }
+        },
+        [_vm._v("21")]
+      ),
+      _vm._v(" "),
+      _c(
+        "td",
+        {
+          staticClass: "day button text-center",
+          attrs: { id: "Fr4", date: "22-10-2019" }
+        },
+        [_vm._v("22")]
+      ),
+      _vm._v(" "),
+      _c(
+        "td",
+        {
+          staticClass: "day button text-center",
+          attrs: { id: "Sa4", date: "23-10-2019" }
+        },
+        [_vm._v("23")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", { attrs: { id: "row5" } }, [
+      _c(
+        "td",
+        {
+          staticClass: "day button text-center",
+          attrs: { id: "Su5", date: "24-10-2019" }
+        },
+        [_vm._v("24")]
+      ),
+      _vm._v(" "),
+      _c(
+        "td",
+        {
+          staticClass: "day button text-center",
+          attrs: { id: "Mo5", date: "25-10-2019" }
+        },
+        [_vm._v("25")]
+      ),
+      _vm._v(" "),
+      _c(
+        "td",
+        {
+          staticClass: "day button text-center",
+          attrs: { id: "Tu5", date: "26-10-2019" }
+        },
+        [_vm._v("26")]
+      ),
+      _vm._v(" "),
+      _c(
+        "td",
+        {
+          staticClass: "day button text-center",
+          staticStyle: { "background-color": "orange" },
+          attrs: { id: "We5", date: "27-10-2019" }
+        },
+        [_vm._v("27")]
+      ),
+      _vm._v(" "),
+      _c(
+        "td",
+        {
+          staticClass: "day button text-center",
+          attrs: { id: "Th5", date: "28-10-2019" }
+        },
+        [_vm._v("28")]
+      ),
+      _vm._v(" "),
+      _c(
+        "td",
+        {
+          staticClass: "day button text-center",
+          attrs: { id: "Fr5", date: "29-10-2019" }
+        },
+        [_vm._v("29")]
+      ),
+      _vm._v(" "),
+      _c(
+        "td",
+        {
+          staticClass: "day button text-center",
+          attrs: { id: "Sa5", date: "30-10-2019" }
+        },
+        [_vm._v("30")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "tr",
+      { staticStyle: { display: "none" }, attrs: { id: "row6" } },
+      [
+        _c("td", {
+          staticClass: "day button text-center",
+          attrs: { id: "Su6" }
+        }),
+        _vm._v(" "),
+        _c("td", {
+          staticClass: "day button text-center",
+          attrs: { id: "Mo6" }
+        }),
+        _vm._v(" "),
+        _c("td", {
+          staticClass: "day button text-center",
+          attrs: { id: "Tu6" }
+        }),
+        _vm._v(" "),
+        _c("td", {
+          staticClass: "day button text-center",
+          attrs: { id: "We6" }
+        }),
+        _vm._v(" "),
+        _c("td", {
+          staticClass: "day button text-center",
+          attrs: { id: "Th6" }
+        }),
+        _vm._v(" "),
+        _c("td", {
+          staticClass: "day button text-center",
+          attrs: { id: "Fr6" }
+        }),
+        _vm._v(" "),
+        _c("td", {
+          staticClass: "day button text-center",
+          attrs: { id: "Sa6" }
+        })
+      ]
+    )
   }
 ]
 render._withStripped = true
@@ -38260,7 +38411,12 @@ var render = function() {
       _c(
         "div",
         { staticClass: "col-lg-6 order-lg-2", attrs: { id: "DatePicker" } },
-        [_c("date-picker")],
+        [
+          _c("date-picker", {
+            attrs: { date: _vm.date },
+            on: { "change-date": _vm.changeDate }
+          })
+        ],
         1
       )
     ])
@@ -38442,7 +38598,17 @@ var render = function() {
     _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-lg-4 order-lg-1" }, [_c("roles")], 1),
       _vm._v(" "),
-      _c("div", { staticClass: "col-lg-4 order-lg-2" }, [_c("date-picker")], 1),
+      _c(
+        "div",
+        { staticClass: "col-lg-4 order-lg-2" },
+        [
+          _c("date-picker", {
+            attrs: { date: _vm.date },
+            on: { "change-date": _vm.changeDate }
+          })
+        ],
+        1
+      ),
       _vm._v(" "),
       _c("div", { staticClass: "col-lg-4 order-lg-3" }, [_c("lunches")], 1)
     ])
@@ -50683,15 +50849,14 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /*!************************************************!*\
   !*** ./resources/js/components/DatePicker.vue ***!
   \************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _DatePicker_vue_vue_type_template_id_fa816ef2___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DatePicker.vue?vue&type=template&id=fa816ef2& */ "./resources/js/components/DatePicker.vue?vue&type=template&id=fa816ef2&");
 /* harmony import */ var _DatePicker_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DatePicker.vue?vue&type=script&lang=js& */ "./resources/js/components/DatePicker.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _DatePicker_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _DatePicker_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -50721,15 +50886,13 @@ component.options.__file = "resources/js/components/DatePicker.vue"
 /*!*************************************************************************!*\
   !*** ./resources/js/components/DatePicker.vue?vue&type=script&lang=js& ***!
   \*************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DatePicker_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./DatePicker.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/DatePicker.vue?vue&type=script&lang=js&");
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DatePicker_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DatePicker_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DatePicker_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DatePicker_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DatePicker_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0___default.a); 
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DatePicker_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
@@ -51037,15 +51200,14 @@ __webpack_require__.r(__webpack_exports__);
 /*!******************************************!*\
   !*** ./resources/js/components/Rota.vue ***!
   \******************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Rota_vue_vue_type_template_id_bdab9956___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Rota.vue?vue&type=template&id=bdab9956& */ "./resources/js/components/Rota.vue?vue&type=template&id=bdab9956&");
 /* harmony import */ var _Rota_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Rota.vue?vue&type=script&lang=js& */ "./resources/js/components/Rota.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _Rota_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _Rota_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -51075,15 +51237,13 @@ component.options.__file = "resources/js/components/Rota.vue"
 /*!*******************************************************************!*\
   !*** ./resources/js/components/Rota.vue?vue&type=script&lang=js& ***!
   \*******************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Rota_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./Rota.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Rota.vue?vue&type=script&lang=js&");
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Rota_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Rota_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Rota_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Rota_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Rota_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0___default.a); 
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Rota_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
@@ -51123,8 +51283,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/andy/git/rota/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/andy/git/rota/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/vagrant/code/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/vagrant/code/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
