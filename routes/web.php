@@ -13,6 +13,7 @@
 
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/about', 'HomeController@about')->name('about');
+Route::post('changepassword', 'UserController@changePassword')->name('changepassword');
 
 //Admin - Needs Admin Middleware
 Route::get('admin/roles', 'AdminController@roles')->name('rolesadmin');

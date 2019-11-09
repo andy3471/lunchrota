@@ -24,16 +24,30 @@
         <script type="text/javascript">
             window.onload = function() {
                     $('#loginModal').modal('show');
-                    $('#loginModal').modal('show');
             };
         </script>
-    @enderror
+    @endif
 
     @error('password')
         <script type="text/javascript">
             window.onload = function() {
                     $('#loginModal').modal('show');
-                    $('#loginModal').modal('show');
+            };
+        </script>
+    @enderror
+
+    @error('newpassword')
+        <script type="text/javascript">
+            window.onload = function() {
+                    $('#changePasswordModal').modal('show');
+            };
+        </script>
+    @enderror
+
+    @error('currentpassword')
+        <script type="text/javascript">
+            window.onload = function() {
+                    $('#changePasswordModal').modal('show');
             };
         </script>
     @enderror
@@ -122,6 +136,18 @@
             </div>
         </nav>
 
+
+        @if(session()->has('message'))
+            <div class="container">
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ session()->get('message') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+        @endif
+
         <main class="py-4">
             @yield('content')
         </main>
@@ -149,43 +175,56 @@
     @auth
     <div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-            <div class="modal-header bg-primary">
-                <h5 class="modal-title" id="changePasswordModalLabel">Change Password</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="form-group row">
-                    <label for="Current Password" class="col-md-4 col-form-label text-md-right">Current Password</label>
-
-                    <div class="col-md-6">
-                        <input id="email" type="password" class="form-control" name="currentpassword" required autofocus>
-                    </div>
+            <form method="POST" action="{{ route('changepassword') }}">
+                @csrf
+                <div class="modal-content">
+                <div class="modal-header bg-primary">
+                    <h5 class="modal-title" id="changePasswordModalLabel">Change Password</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <label for="Current Password" class="col-md-4 col-form-label text-md-right">Current Password</label>
 
-                <div class="form-group row">
-                    <label for="New Password" class="col-md-4 col-form-label text-md-right">New Password</label>
-
-                    <div class="col-md-6">
-                        <input id="email" type="password" class="form-control" name="newpassword" required autofocus>
+                        <div class="col-md-6">
+                            <input id="email" type="password" class="form-control @error('currentpassword') is-invalid @enderror" name="currentpassword" required autofocus>
+                            @error('currentpassword')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group row">
-                    <label for="Confirm Password" class="col-md-4 col-form-label text-md-right">Confirm Password</label>
+                    <div class="form-group row">
+                        <label for="New Password" class="col-md-4 col-form-label text-md-right">New Password</label>
 
-                    <div class="col-md-6">
-                        <input id="email" type="password" class="form-control" name="confirmpassword" required autofocus>
+                        <div class="col-md-6">
+                            <input id="email" type="password" class="form-control @error('newpassword') is-invalid @enderror" name="newpassword" required>
+                            @error('newpassword')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
                     </div>
-                </div>
 
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Change Password</button>
-            </div>
-            </div>
+                    <div class="form-group row">
+                        <label for="Confirm Password" class="col-md-4 col-form-label text-md-right">Confirm Password</label>
+
+                        <div class="col-md-6">
+                            <input id="email" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="newpassword_confirmation" required>
+                        </div>
+                    </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Change Password</button>
+                </div>
+                </div>
+            </form>
         </div>
     </div>
     @else
