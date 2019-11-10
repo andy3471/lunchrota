@@ -143,7 +143,12 @@ export default {
         "October",
         "November",
         "December"
-      ]
+      ],
+      days: ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"],
+      datesThisMonth: [],
+      dayToday: new Date().getDay(),
+      dateToday: new Date().getDate(),
+      daysHeader: []
     };
   },
   computed: {
@@ -167,9 +172,32 @@ export default {
         " " +
         this.selectedYear
       );
+    },
+    daysThisMonth: function() {
+      return new Date(
+        this.selectedDate.getFullYear(),
+        this.selectedDate.getMonth() + 1,
+        0
+      ).getDate();
+    },
+    daysLastMonth: function() {
+      return new Date(
+        this.selectedDate.getFullYear(),
+        this.selectedDate.getMonth(),
+        0
+      ).getDate();
+    },
+    thisMonthStartDay: function() {
+      return new Date(
+        this.selectedDate.getFullYear(),
+        this.selectedDate.getMonth(),
+        "1"
+      ).getDay();
     }
   },
-  mounted() {},
+  mounted() {
+    this.calculateMonth();
+  },
   methods: {
     changeMonth(incrBy) {
       var d = new Date();
@@ -197,10 +225,57 @@ export default {
       var d = new Date();
       d.setDate(d.getDate() + 1);
       this.selectedDate = d;
+    },
+    calculateMonth: function() {
+      this.datesThisMonth = [];
+      this.daysHeader = [];
+      var d = this.daysLastMonth;
+
+      for (let i = 0; i < this.thisMonthStartDay; i++) {
+        this.datesThisMonth.unshift({
+          date: d,
+          month: -1
+        });
+        d--;
+      }
+      for (let i = 0; i < this.daysThisMonth; i++) {
+        this.datesThisMonth.push({
+          date: i + 1,
+          month: 0
+        });
+      }
+      d = 1;
+      for (let i = this.datesThisMonth.length; i < 35; i++) {
+        this.datesThisMonth.push({
+          date: d,
+          month: +1
+        });
+        d++;
+      }
+
+      //Month Header
+      d = this.dayToday;
+      console.log(d);
+      for (let i = this.dayToday; i > 0; i--) {
+        this.daysHeader.unshift({
+          day: i,
+          dayname: this.Days[i],
+          date: null
+        });
+      }
+
+      for (let i = this.dayToday; i < 7; i++) {
+        this.daysHeader.push({
+          day: i,
+          dayname: this.Days[i],
+          date: null
+        });
+      }
     }
   },
   watch: {
     selectedDate: function() {
+      this.calculateMonth();
       this.$emit("change-date", this.selectedDate);
     }
   }
