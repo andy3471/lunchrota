@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-lg-4 order-lg-1">
-        <roles></roles>
+        <roles :date="date"></roles>
       </div>
 
       <div class="col-lg-4 order-lg-2">

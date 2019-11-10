@@ -11132,7 +11132,7 @@ body {
 }
 
 .button:hover {
-  background: red;
+  background: #f2f2f2;
 }
 
 .date-grid-container {
@@ -11150,12 +11150,14 @@ body {
   grid-column: span 2;
   border-top: 1px solid #dee2e6;
   padding: 0.75rem;
+  font-weight: bold;
 }
 
 .date-grid-container .date-title-small {
   grid-column: span 3;
   border-top: 1px solid #dee2e6;
   padding: 0.75rem;
+  font-weight: bold;
 }
 
 .date-grid-container .day {
@@ -11169,7 +11171,7 @@ body {
 }
 
 .date-grid-container .selected {
-  background-color: green;
+  background-color: #ffc107;
 }
 
 .date-grid-container .disabled {
@@ -11177,7 +11179,7 @@ body {
   background-color: white;
 }
 
-.date-grid-container .date:hover {
-  background-color: red;
+.unavailable {
+  background-color: #f2f2f2;
 }
 

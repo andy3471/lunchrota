@@ -1,28 +1,33 @@
 <template>
-      <div class="date-grid-container">
-        <div class="date-title">
-          <h4 id="date" class="text-center">{{ this.selectedDateTitle }}</h4>
-        </div>
+  <div class="date-grid-container">
+    <div class="date-title">
+      <h4 id="date" class="text-center">{{ this.selectedDateTitle }}</h4>
+    </div>
 
-        <div class="button text-center arrow-button" v-on:click="changeYear(-1)">⟵</div>
-        <div class="text-center date-title-small">{{ this.selectedYear }}</div>
-        <div class="button text-center arrow-button" v-on:click="changeYear(1)">⟶</div>
-        <div class="button text-center arrow-button" v-on:click="changeMonth(-1)">⟵</div>
-        <div class="text-center date-title-small">{{ this.selectedMonthName }}</div>
-        <div class="button text-center arrow-button" v-on:click="changeMonth(+1)">⟶</div>
+    <div class="button text-center arrow-button" v-on:click="changeYear(-1)">⟵</div>
+    <div class="text-center date-title-small">{{ this.selectedYear }}</div>
+    <div class="button text-center arrow-button" v-on:click="changeYear(1)">⟶</div>
+    <div class="button text-center arrow-button" v-on:click="changeMonth(-1)">⟵</div>
+    <div class="text-center date-title-small">{{ this.selectedMonthName }}</div>
+    <div class="button text-center arrow-button" v-on:click="changeMonth(+1)">⟶</div>
 
-        <div class="date button text-center day" v-for="day in days" v-bind:Key="day">{{day}}</div>
-        <div
-          v-for="date in datesThisMonth"
-          v-bind:key="date"
-          v-on:click="changeDate(date.date, date.month)"
-          class="date button text-center"
-          v-bind:class="{ selected: (date.date == selectedDay), disabled: (date.month !== 0) }"
-        >{{date.date}}</div>
-        <div class="button text-center arrow-button" v-on:click="setYesterday()">Yesterday</div>
-        <div class="button text-center date-title-small" v-on:click="setToday()">Today</div>
-        <div class="button text-center arrow-button" v-on:click="setTomorrow()">Tomorrow</div>
-      </div>
+    <div
+      class="date button text-center day"
+      v-for="day in daysHeader"
+      v-bind:Key="day.day"
+      v-on:click="setDate(day.date)"
+    >{{day.dayName}}</div>
+    <div
+      v-for="date in datesThisMonth"
+      v-bind:key="date"
+      v-on:click="changeDate(date.date, date.month)"
+      class="date button text-center"
+      v-bind:class="{ selected: (date.date == selectedDay), disabled: (date.month !== 0) }"
+    >{{date.date}}</div>
+    <div class="button text-center arrow-button" v-on:click="setYesterday()">Yesterday</div>
+    <div class="button text-center date-title-small" v-on:click="setToday()">Today</div>
+    <div class="button text-center arrow-button" v-on:click="setTomorrow()">Tomorrow</div>
+  </div>
 </template>
 
 <script>
@@ -51,8 +56,9 @@ export default {
         "November",
         "December"
       ],
-      days: ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"],
+      days: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
       datesThisMonth: [],
+      today: new Date(),
       dayToday: new Date().getDay(),
       dateToday: new Date().getDate(),
       daysHeader: []
@@ -70,6 +76,11 @@ export default {
     },
     selectedMonthName: function() {
       return this.months[this.selectedMonth];
+    },
+    selectedMonthYear: function() {
+      return (
+        this.selectedDate.getMonth() + " " + this.selectedDate.getFullYear()
+      );
     },
     selectedDateTitle: function() {
       return (
@@ -104,8 +115,12 @@ export default {
   },
   mounted() {
     this.calculateMonth();
+    this.calculateHeaders();
   },
   methods: {
+    setDate(d) {
+      this.selectedDate = d;
+    },
     changeMonth(incrBy) {
       var d = new Date();
       d.setFullYear(this.selectedDate.getFullYear());
@@ -121,8 +136,6 @@ export default {
       this.selectedDate = d;
     },
     changeDate(date, month) {
-      console.log(date);
-      console.log(month);
       var d = new Date();
       d.setFullYear(this.selectedDate.getFullYear());
       d.setMonth(this.selectedDate.getMonth() + month);
@@ -142,10 +155,31 @@ export default {
       d.setDate(d.getDate() + 1);
       this.selectedDate = d;
     },
+    calculateHeaders: function() {
+      this.daysHeader = [];
+      var d = new Date();
+
+      for (let i = this.dayToday; i > 0; i--) {
+        this.daysHeader.unshift({
+          day: i,
+          date: d,
+          dayName: this.days[i]
+        });
+        d = new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1);
+      }
+      d = new Date();
+      for (let i = this.dayToday; i < 7; i++) {
+        this.daysHeader.push({
+          day: i,
+          date: d,
+          dayName: this.days[i]
+        });
+        d = new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1);
+      }
+    },
 
     calculateMonth: function() {
       this.datesThisMonth = [];
-      this.daysHeader = [];
       var d = this.daysLastMonth;
 
       for (let i = 0; i < this.thisMonthStartDay; i++) {
@@ -162,7 +196,7 @@ export default {
         });
       }
       d = 1;
-      
+
       for (let i = this.datesThisMonth.length; i % 7 !== 0; i++) {
         this.datesThisMonth.push({
           date: d,
@@ -170,31 +204,14 @@ export default {
         });
         d++;
       }
-
-      //Month Header
-      d = new Date();
-      for (let i = this.dayToday; i > 0; i--) {
-        console.log(i);
-        this.daysHeader.unshift({
-          day: i,
-          date: d
-        });
-        d.setDate(d.getDate() -1 );
-      }
-      d = new Date();
-      for (let i = this.dayToday; i < 7; i++) {
-        this.daysHeader.push({
-          day: i,
-          date: d
-        });
-        d.setDate(d.getDate() +1 );
-      }
     }
   },
   watch: {
     selectedDate: function() {
-      this.calculateMonth();
       this.$emit("change-date", this.selectedDate);
+    },
+    selectedMonthYear: function() {
+      this.calculateMonth();
     }
   }
 };

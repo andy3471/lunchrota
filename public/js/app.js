@@ -1865,6 +1865,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     date: {
@@ -1877,8 +1882,9 @@ __webpack_require__.r(__webpack_exports__);
     return {
       selectedDate: this.date,
       months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-      days: ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"],
+      days: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
       datesThisMonth: [],
+      today: new Date(),
       dayToday: new Date().getDay(),
       dateToday: new Date().getDate(),
       daysHeader: []
@@ -1897,6 +1903,9 @@ __webpack_require__.r(__webpack_exports__);
     selectedMonthName: function selectedMonthName() {
       return this.months[this.selectedMonth];
     },
+    selectedMonthYear: function selectedMonthYear() {
+      return this.selectedDate.getMonth() + " " + this.selectedDate.getFullYear();
+    },
     selectedDateTitle: function selectedDateTitle() {
       return this.selectedDay + " " + this.selectedMonthName + " " + this.selectedYear;
     },
@@ -1912,8 +1921,12 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.calculateMonth();
+    this.calculateHeaders();
   },
   methods: {
+    setDate: function setDate(d) {
+      this.selectedDate = d;
+    },
     changeMonth: function changeMonth(incrBy) {
       var d = new Date();
       d.setFullYear(this.selectedDate.getFullYear());
@@ -1929,8 +1942,6 @@ __webpack_require__.r(__webpack_exports__);
       this.selectedDate = d;
     },
     changeDate: function changeDate(date, month) {
-      console.log(date);
-      console.log(month);
       var d = new Date();
       d.setFullYear(this.selectedDate.getFullYear());
       d.setMonth(this.selectedDate.getMonth() + month);
@@ -1950,9 +1961,32 @@ __webpack_require__.r(__webpack_exports__);
       d.setDate(d.getDate() + 1);
       this.selectedDate = d;
     },
+    calculateHeaders: function calculateHeaders() {
+      this.daysHeader = [];
+      var d = new Date();
+
+      for (var i = this.dayToday; i > 0; i--) {
+        this.daysHeader.unshift({
+          day: i,
+          date: d,
+          dayName: this.days[i]
+        });
+        d = new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1);
+      }
+
+      d = new Date();
+
+      for (var _i = this.dayToday; _i < 7; _i++) {
+        this.daysHeader.push({
+          day: _i,
+          date: d,
+          dayName: this.days[_i]
+        });
+        d = new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1);
+      }
+    },
     calculateMonth: function calculateMonth() {
       this.datesThisMonth = [];
-      this.daysHeader = [];
       var d = this.daysLastMonth;
 
       for (var i = 0; i < this.thisMonthStartDay; i++) {
@@ -1963,50 +1997,30 @@ __webpack_require__.r(__webpack_exports__);
         d--;
       }
 
-      for (var _i = 0; _i < this.daysThisMonth; _i++) {
+      for (var _i2 = 0; _i2 < this.daysThisMonth; _i2++) {
         this.datesThisMonth.push({
-          date: _i + 1,
+          date: _i2 + 1,
           month: 0
         });
       }
 
       d = 1;
 
-      for (var _i2 = this.datesThisMonth.length; _i2 % 7 !== 0; _i2++) {
+      for (var _i3 = this.datesThisMonth.length; _i3 % 7 !== 0; _i3++) {
         this.datesThisMonth.push({
           date: d,
           month: +1
         });
         d++;
-      } //Month Header
-
-
-      d = new Date();
-
-      for (var _i3 = this.dayToday; _i3 > 0; _i3--) {
-        console.log(_i3);
-        this.daysHeader.unshift({
-          day: _i3,
-          date: d
-        });
-        d.setDate(d.getDate() - 1);
-      }
-
-      d = new Date();
-
-      for (var _i4 = this.dayToday; _i4 < 7; _i4++) {
-        this.daysHeader.push({
-          day: _i4,
-          date: d
-        });
-        d.setDate(d.getDate() + 1);
       }
     }
   },
   watch: {
     selectedDate: function selectedDate() {
-      this.calculateMonth();
       this.$emit("change-date", this.selectedDate);
+    },
+    selectedMonthYear: function selectedMonthYear() {
+      this.calculateMonth();
     }
   }
 });
@@ -2188,6 +2202,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     csrf: {
@@ -2210,10 +2225,43 @@ __webpack_require__.r(__webpack_exports__);
       selectedRole: "None"
     };
   },
-  mounted: function mounted() {},
+  mounted: function mounted() {
+    this.getRole();
+  },
   methods: {
+    getRole: function getRole() {
+      var _this = this;
+
+      axios.get("/roles/get", {
+        params: {
+          date: this.date,
+          user_id: this.userid
+        }
+      }).then(function (response) {
+        return _this.selectedRole = response.data;
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
     selectRole: function selectRole(role) {
+      var _this2 = this;
+
+      axios.post("/roles/post", {
+        date: this.date,
+        user_id: this.userid,
+        role: role
+      }).then(function (response) {
+        return _this2.selectedRole = response.data;
+      })["catch"](function (error) {
+        console.log(error);
+      });
       this.selectedRole = role.name;
+    }
+  },
+  watch: {
+    date: function date() {
+      console.log("changes");
+      this.getRole();
     }
   }
 });
@@ -2224,9 +2272,11 @@ __webpack_require__.r(__webpack_exports__);
 /*!****************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Roles.vue?vue&type=script&lang=js& ***!
   \****************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
+__webpack_require__.r(__webpack_exports__);
 //
 //
 //
@@ -2253,7 +2303,57 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    date: {
+      required: true,
+      type: Date,
+      "default": new Date()
+    },
+    csrf: {
+      reqiured: true,
+      type: String
+    }
+  },
+  data: function data() {
+    return {
+      userRoles: [{
+        id: 1,
+        name: "Andrew Hargrave",
+        role: "Annual Leave",
+        available: false
+      }, {
+        id: 2,
+        name: "James Phillips",
+        role: "Coordinator",
+        available: true
+      }]
+    };
+  },
+  mounted: function mounted() {
+    this.getRoles();
+  },
+  methods: {
+    getRoles: function getRoles() {
+      var _this = this;
+
+      axios.get("/roles", {
+        params: {
+          date: this.date
+        }
+      }).then(function (response) {
+        return _this.userRoles = response.data;
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    }
+  },
+  watch: {
+    date: function date() {
+      this.getRoles();
+    }
+  }
+});
 
 /***/ }),
 
@@ -37677,11 +37777,19 @@ var render = function() {
         [_vm._v("⟶")]
       ),
       _vm._v(" "),
-      _vm._l(_vm.days, function(day) {
+      _vm._l(_vm.daysHeader, function(day) {
         return _c(
           "div",
-          { staticClass: "date button text-center day", attrs: { Key: day } },
-          [_vm._v(_vm._s(day))]
+          {
+            staticClass: "date button text-center day",
+            attrs: { Key: day.day },
+            on: {
+              click: function($event) {
+                return _vm.setDate(day.date)
+              }
+            }
+          },
+          [_vm._v(_vm._s(day.dayName))]
         )
       }),
       _vm._v(" "),
@@ -38021,23 +38129,38 @@ var render = function() {
     _c(
       "div",
       { staticClass: "dropdown-menu scrollable-menu" },
-      _vm._l(_vm.roles, function(role) {
-        return _c(
+      [
+        _vm._l(_vm.roles, function(role) {
+          return _c(
+            "a",
+            {
+              key: role.id,
+              staticClass: "dropdown-item",
+              attrs: { value: role.id },
+              on: {
+                click: function($event) {
+                  return _vm.selectRole(role.id)
+                }
+              }
+            },
+            [_vm._v(_vm._s(role.name))]
+          )
+        }),
+        _vm._v(" "),
+        _c(
           "a",
           {
-            key: role.id,
             staticClass: "dropdown-item",
-            attrs: { value: role.id },
             on: {
               click: function($event) {
-                return _vm.selectRole(role)
+                return _vm.selectRole("0")
               }
             }
           },
-          [_vm._v(_vm._s(role.name))]
+          [_vm._v("None")]
         )
-      }),
-      0
+      ],
+      2
     )
   ])
 }
@@ -38063,51 +38186,55 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("table", { staticClass: "table table-bordered" }, [
+    _c(
+      "tbody",
+      [
+        _vm._m(0),
+        _vm._v(" "),
+        _vm._m(1),
+        _vm._v(" "),
+        _vm._l(_vm.userRoles, function(user) {
+          return _c(
+            "tr",
+            { key: user.id, class: { unavailable: !user.available } },
+            [
+              _c("td", [_vm._v(_vm._s(user.name))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(user.role))]),
+              _vm._v(" "),
+              user.available
+                ? _c("td", [_vm._v("Available")])
+                : _c("td", [_vm._v("Unavailable")])
+            ]
+          )
+        })
+      ],
+      2
+    )
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("table", { staticClass: "table table-bordered" }, [
-      _c("tbody", [
-        _c("tr", [
-          _c("th", { attrs: { colspan: "3" } }, [
-            _c("h4", { staticClass: "text-center" }, [_vm._v("Roles")])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("tr", [
-          _c("th", [_vm._v("Person")]),
-          _vm._v(" "),
-          _c("th", [_vm._v("Role")]),
-          _vm._v(" "),
-          _c("th", [_vm._v("Type")])
-        ]),
-        _vm._v(" "),
-        _c("tr", [
-          _c("td", { staticStyle: { "background-color": "#f2f2f2" } }, [
-            _vm._v("Craig Wood")
-          ]),
-          _vm._v(" "),
-          _c("td", { staticStyle: { "background-color": "#f2f2f2" } }, [
-            _vm._v("Annual Leave")
-          ]),
-          _vm._v(" "),
-          _c("td", { staticStyle: { "background-color": "#f2f2f2" } }, [
-            _vm._v("Unavailable")
-          ])
-        ]),
-        _vm._v(" "),
-        _c("tr", [
-          _c("td", [_vm._v("Bradley Shrewsbury")]),
-          _vm._v(" "),
-          _c("td", [_vm._v("Backlog")]),
-          _vm._v(" "),
-          _c("td", [_vm._v("Available")])
-        ])
+    return _c("tr", [
+      _c("th", { attrs: { colspan: "3" } }, [
+        _c("h4", { staticClass: "text-center" }, [_vm._v("Roles")])
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("th", [_vm._v("Person")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Role")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Type")])
     ])
   }
 ]
@@ -38134,7 +38261,12 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container-fluid" }, [
     _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-lg-4 order-lg-1" }, [_c("roles")], 1),
+      _c(
+        "div",
+        { staticClass: "col-lg-4 order-lg-1" },
+        [_c("roles", { attrs: { date: _vm.date } })],
+        1
+      ),
       _vm._v(" "),
       _c(
         "div",
@@ -50666,15 +50798,14 @@ __webpack_require__.r(__webpack_exports__);
 /*!*******************************************!*\
   !*** ./resources/js/components/Roles.vue ***!
   \*******************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Roles_vue_vue_type_template_id_312d3e3c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Roles.vue?vue&type=template&id=312d3e3c& */ "./resources/js/components/Roles.vue?vue&type=template&id=312d3e3c&");
 /* harmony import */ var _Roles_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Roles.vue?vue&type=script&lang=js& */ "./resources/js/components/Roles.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _Roles_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _Roles_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -50704,15 +50835,13 @@ component.options.__file = "resources/js/components/Roles.vue"
 /*!********************************************************************!*\
   !*** ./resources/js/components/Roles.vue?vue&type=script&lang=js& ***!
   \********************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Roles_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./Roles.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Roles.vue?vue&type=script&lang=js&");
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Roles_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Roles_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Roles_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Roles_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Roles_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0___default.a); 
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Roles_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 

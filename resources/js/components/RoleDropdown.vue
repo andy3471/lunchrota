@@ -13,8 +13,9 @@
         v-for="role in roles"
         v-bind:key="role.id"
         v-bind:value="role.id"
-        v-on:click="selectRole(role)"
+        v-on:click="selectRole(role.id)"
       >{{ role.name }}</a>
+      <a class="dropdown-item" v-on:click="selectRole('0')">None</a>
     </div>
   </div>
 </template>
@@ -42,10 +43,41 @@ export default {
       selectedRole: "None"
     };
   },
-  mounted() {},
+  mounted() {
+    this.getRole();
+  },
   methods: {
+    getRole: function() {
+      axios
+        .get("/roles/get", {
+          params: {
+            date: this.date,
+            user_id: this.userid
+          }
+        })
+        .then(response => (this.selectedRole = response.data))
+        .catch(function(error) {
+          console.log(error);
+        });
+    },
     selectRole: function(role) {
+      axios
+        .post("/roles/post", {
+          date: this.date,
+          user_id: this.userid,
+          role: role
+        })
+        .then(response => (this.selectedRole = response.data))
+        .catch(function(error) {
+          console.log(error);
+        });
       this.selectedRole = role.name;
+    }
+  },
+  watch: {
+    date: function() {
+      console.log("changes");
+      this.getRole();
     }
   }
 };

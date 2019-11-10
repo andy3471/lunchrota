@@ -14,6 +14,10 @@
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/about', 'HomeController@about')->name('about');
 Route::post('changepassword', 'UserController@changePassword')->name('changepassword');
+Route::get('/roles', 'RoleController@index');
+
+Route::get('roles/get', 'RoleController@get');
+Route::post('roles/post', 'RoleController@post');
 
 Route::middleware('can:admin')->group(function () {
     Route::get('admin/roles', 'AdminController@roles')->name('rolesadmin');
