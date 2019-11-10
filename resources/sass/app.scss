@@ -42,3 +42,50 @@ body {
 .button:hover {
     background: red;
 }
+
+.date-grid-container {
+    display: grid;
+    border: 1px solid #dee2e6;
+    grid-template-columns: auto auto auto auto auto auto auto;
+
+
+    .date-title {
+        grid-column: 1/8;
+        padding: .75rem;
+    }
+
+    .arrow-button {
+        grid-column: span 2;
+        border-top: 1px solid #dee2e6;
+        padding: .75rem;
+    }
+
+    .date-title-small {
+        grid-column: span 3;
+        border-top: 1px solid #dee2e6;
+        padding: .75rem;
+    }
+
+    .day {
+        font-weight: bold;
+    }
+
+    .date {
+        border-top: 1px solid #dee2e6;
+        color: #212529;
+        padding: .75rem;
+    }
+
+    .selected {
+        background-color: green;
+    }
+
+    .disabled {
+        color: #888888;
+        background-color: white;
+    }
+
+    .date:hover {
+        background-color: red;
+    }
+}
