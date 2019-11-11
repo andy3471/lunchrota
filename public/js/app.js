@@ -2203,6 +2203,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     csrf: {
@@ -2222,7 +2227,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      selectedRole: "None"
+      selectedRole: null,
+      loading: true
     };
   },
   mounted: function mounted() {
@@ -2232,13 +2238,15 @@ __webpack_require__.r(__webpack_exports__);
     getRole: function getRole() {
       var _this = this;
 
+      this.selectedRole = null;
+      this.loading = true;
       axios.get("/roles/get", {
         params: {
           date: this.date,
           user_id: this.userid
         }
       }).then(function (response) {
-        return _this.selectedRole = response.data;
+        return [_this.selectedRole = response.data, _this.loading = false];
       })["catch"](function (error) {
         console.log(error);
       });
@@ -2246,21 +2254,21 @@ __webpack_require__.r(__webpack_exports__);
     selectRole: function selectRole(role) {
       var _this2 = this;
 
+      this.selectedRole = null;
+      this.loading = true;
       axios.post("/roles/post", {
         date: this.date,
         user_id: this.userid,
         role: role
       }).then(function (response) {
-        return _this2.selectedRole = response.data;
+        return [_this2.selectedRole = response.data, _this2.loading = false];
       })["catch"](function (error) {
         console.log(error);
       });
-      this.selectedRole = role.name;
     }
   },
   watch: {
     date: function date() {
-      console.log("changes");
       this.getRole();
     }
   }
@@ -2303,6 +2311,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     date: {
@@ -2317,17 +2332,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      userRoles: [{
-        id: 1,
-        name: "Andrew Hargrave",
-        role: "Annual Leave",
-        available: false
-      }, {
-        id: 2,
-        name: "James Phillips",
-        role: "Coordinator",
-        available: true
-      }]
+      userRoles: [],
+      loading: true
     };
   },
   mounted: function mounted() {
@@ -2337,12 +2343,14 @@ __webpack_require__.r(__webpack_exports__);
     getRoles: function getRoles() {
       var _this = this;
 
+      this.userRoles = [];
+      this.loading = true;
       axios.get("/roles", {
         params: {
           date: this.date
         }
       }).then(function (response) {
-        return _this.userRoles = response.data;
+        return [_this.userRoles = response.data, _this.loading = false];
       })["catch"](function (error) {
         console.log(error);
       });
@@ -38123,7 +38131,19 @@ var render = function() {
           changed: "0"
         }
       },
-      [_vm._v(_vm._s(this.selectedRole))]
+      [
+        _vm._v("\n    " + _vm._s(this.selectedRole) + "\n    "),
+        this.loading
+          ? _c(
+              "div",
+              {
+                staticClass: "spinner-border spinner-border-sm text-light",
+                attrs: { role: "status" }
+              },
+              [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
+            )
+          : _vm._e()
+      ]
     ),
     _vm._v(" "),
     _c(
@@ -38208,7 +38228,9 @@ var render = function() {
                 : _c("td", [_vm._v("Unavailable")])
             ]
           )
-        })
+        }),
+        _vm._v(" "),
+        this.loading == true ? _c("tr", [_vm._m(2)]) : _vm._e()
       ],
       2
     )
@@ -38235,6 +38257,21 @@ var staticRenderFns = [
       _c("th", [_vm._v("Role")]),
       _vm._v(" "),
       _c("th", [_vm._v("Type")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", { attrs: { colspan: "3" } }, [
+      _c(
+        "div",
+        {
+          staticClass: "spinner-border spinner-border-sm",
+          attrs: { role: "status" }
+        },
+        [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
+      )
     ])
   }
 ]

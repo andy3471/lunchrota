@@ -6,7 +6,12 @@
       data-toggle="dropdown"
       id="dropdown9"
       changed="0"
-    >{{this.selectedRole}}</button>
+    >
+      {{this.selectedRole}}
+      <div v-if="this.loading" class="spinner-border spinner-border-sm text-light" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </button>
     <div class="dropdown-menu scrollable-menu">
       <a
         class="dropdown-item"
@@ -40,7 +45,8 @@ export default {
   },
   data() {
     return {
-      selectedRole: "None"
+      selectedRole: null,
+      loading: true
     };
   },
   mounted() {
@@ -48,6 +54,8 @@ export default {
   },
   methods: {
     getRole: function() {
+      this.selectedRole = null;
+      this.loading = true;
       axios
         .get("/roles/get", {
           params: {
@@ -55,28 +63,34 @@ export default {
             user_id: this.userid
           }
         })
-        .then(response => (this.selectedRole = response.data))
+        .then(response => [
+          (this.selectedRole = response.data),
+          (this.loading = false)
+        ])
         .catch(function(error) {
           console.log(error);
         });
     },
     selectRole: function(role) {
+      this.selectedRole = null;
+      this.loading = true;
       axios
         .post("/roles/post", {
           date: this.date,
           user_id: this.userid,
           role: role
         })
-        .then(response => (this.selectedRole = response.data))
+        .then(response => [
+          (this.selectedRole = response.data),
+          (this.loading = false)
+        ])
         .catch(function(error) {
           console.log(error);
         });
-      this.selectedRole = role.name;
     }
   },
   watch: {
     date: function() {
-      console.log("changes");
       this.getRole();
     }
   }

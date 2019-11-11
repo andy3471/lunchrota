@@ -21,6 +21,13 @@
         <td v-if="user.available">Available</td>
         <td v-else>Unavailable</td>
       </tr>
+      <tr v-if="this.loading == true">
+        <td colspan="3">
+          <div class="spinner-border spinner-border-sm" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </td>
+      </tr>
     </tbody>
   </table>
 </template>
@@ -39,15 +46,8 @@ export default {
   },
   data() {
     return {
-      userRoles: [
-        {
-          id: 1,
-          name: "Andrew Hargrave",
-          role: "Annual Leave",
-          available: false
-        },
-        { id: 2, name: "James Phillips", role: "Coordinator", available: true }
-      ]
+      userRoles: [],
+      loading: true
     };
   },
   mounted() {
@@ -55,13 +55,18 @@ export default {
   },
   methods: {
     getRoles() {
+      this.userRoles = [];
+      this.loading = true;
       axios
         .get("/roles", {
           params: {
             date: this.date
           }
         })
-        .then(response => (this.userRoles = response.data))
+        .then(response => [
+          (this.userRoles = response.data),
+          (this.loading = false)
+        ])
         .catch(function(error) {
           console.log(error);
         });
