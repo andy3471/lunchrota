@@ -1966,12 +1966,12 @@ __webpack_require__.r(__webpack_exports__);
       var d = new Date();
 
       for (var i = this.dayToday; i > 0; i--) {
+        d = new Date(d.getFullYear(), d.getMonth(), d.getDate() - 1);
         this.daysHeader.unshift({
-          day: i,
+          day: i - 1,
           date: d,
-          dayName: this.days[i]
+          dayName: this.days[i - 1]
         });
-        d = new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1);
       }
 
       d = new Date();
@@ -38092,9 +38092,9 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("tr", [
-      _c("th", [_vm._v("Person")]),
+      _c("th", [_vm._v("Name")]),
       _vm._v(" "),
-      _c("th", [_vm._v("Override")])
+      _c("th", [_vm._v("Role")])
     ])
   }
 ]

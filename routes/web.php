@@ -33,7 +33,3 @@ if (config('app.register_enabled')) {
 } else {
     Auth::routes(['register' => false]);
 }
-
-
-//TBR
-Route::get('/dsp', 'HomeController@dsptest');

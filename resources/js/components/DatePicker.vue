@@ -160,12 +160,12 @@ export default {
       var d = new Date();
 
       for (let i = this.dayToday; i > 0; i--) {
+        d = new Date(d.getFullYear(), d.getMonth(), d.getDate() - 1);
         this.daysHeader.unshift({
-          day: i,
+          day: i - 1,
           date: d,
-          dayName: this.days[i]
+          dayName: this.days[i - 1]
         });
-        d = new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1);
       }
       d = new Date();
       for (let i = this.dayToday; i < 7; i++) {

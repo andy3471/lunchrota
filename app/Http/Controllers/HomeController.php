@@ -35,12 +35,4 @@ class HomeController extends Controller
         $admins = User::Select('name')->where('admin', true)->get();
         return view('about')->with('admins', $admins);
     }
-
-    public function dsptest()
-    {
-        $dsp = Cache::remember('dsp', 600, function () {
-            $today = Carbon::now()->toDateString();
-            return DailyPassword::where('date', $today)->get();
-        });
-    }
 }
