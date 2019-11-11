@@ -11,8 +11,8 @@
                 </th>
               </tr>
               <tr>
-                <th>Person</th>
-                <th>Override</th>
+                <th>Name</th>
+                <th>Role</th>
               </tr>
               <tr v-for="user in users" v-bind:key="user.id">
                 <td>{{ user.name }}</td>

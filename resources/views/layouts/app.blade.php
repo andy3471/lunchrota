@@ -105,12 +105,12 @@
                             </li>
                         @endif
                     @else
-                    @if( config('app.support_code') )
+                    @if( config('app.support_code') and (!$dsp->isEmpty()) )
                         <li class="nav-item">
-                            <span class="navbar-text" disabled="">12345</span>
+                            <span class="navbar-text" disabled="">{{$dsp[0]->code}}</span>
                         </li>
                         <li class="nav-item">
-                            <span class="navbar-text" disabled="">PASSWORD</span>
+                            <span class="navbar-text" disabled="">{{$dsp[0]->password}}</span>
                         </li>
                     @endif
                     <li class="nav-item">

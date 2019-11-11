@@ -16,14 +16,15 @@ Route::get('/about', 'HomeController@about')->name('about');
 Route::post('changepassword', 'UserController@changePassword')->name('changepassword');
 Route::get('/roles', 'RoleController@index');
 
-Route::get('roles/get', 'RoleController@get');
-Route::post('roles/post', 'RoleController@post');
+
 
 Route::middleware('can:admin')->group(function () {
     Route::get('admin/roles', 'AdminController@roles')->name('rolesadmin');
     Route::get('admin/upload', 'AdminController@upload')->name('upload');
     Route::get('admin/users', 'AdminController@users')->name('usersadmin');
     Route::post('admin/users/store', 'UserController@store')->name('storeuser');
+    Route::get('roles/get', 'RoleController@get');
+    Route::post('roles/post', 'RoleController@post');
 });
 
 //Disable Register Route if Registration Disabled
@@ -32,3 +33,7 @@ if (config('app.register_enabled')) {
 } else {
     Auth::routes(['register' => false]);
 }
+
+
+//TBR
+Route::get('/dsp', 'HomeController@dsptest');
