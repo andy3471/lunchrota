@@ -12,10 +12,16 @@
 */
 
 Route::get('/', 'HomeController@index')->name('home');
-Route::get('/about', 'HomeController@about')->name('about');
-Route::post('changepassword', 'UserController@changePassword')->name('changepassword');
-Route::get('/roles', 'RoleController@index');
+Route::get('about', 'HomeController@about')->name('about');
+Route::get('roles', 'RoleController@index');
+Route::get('lunchslots', 'LunchSlotController@index');
 
+
+Route::middleware('auth')->group(function () {
+    Route::post('changepassword', 'UserController@changePassword')->name('changepassword');
+    Route::post('lunchslots/store', 'LunchSlotController@store');
+    Route::post('lunchslots/destroy', 'LunchSlotController@destroy');
+});
 
 
 Route::middleware('can:admin')->group(function () {

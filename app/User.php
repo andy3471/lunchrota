@@ -43,4 +43,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\Role')->withPivot('date');
     }
+
+    public function lunches()
+    {
+        return $this->belongsToMany('App\LunchSlot')->withPivot('date');
+    }
 }

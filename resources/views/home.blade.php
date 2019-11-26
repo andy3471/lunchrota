@@ -1,5 +1,5 @@
 @extends('layouts.app')
 
 @section('content')
-    <rota></rota>
+    <rota :LunchSlots="{{ $lunchSlots }}"></rota>
 @endsection

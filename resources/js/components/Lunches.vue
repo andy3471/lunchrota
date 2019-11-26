@@ -7,48 +7,21 @@
         </th>
       </tr>
       <tr>
-        <td colspan="3" id="WarningBox" style="display: none; text-align: center;">
-          <div id="Warning"></div>
-        </td>
-      </tr>
-      <tr>
         <td colspan="3">
-          <div id="Warning"></div>
           <div class="btn-group btn-block" style="height: 46px">
             <button
-              type="submit"
-              disabled
+              v-for="lunchslot in this.lunchslots"
+              v-bind:key="lunchslot.id"
               class="btn btn-primary lunchbtn"
               style="width:100%;"
-              id="1"
               value="12:30"
-            >12:30</button>
+              v-on:click="setLunch(lunchslot.id, 1)"
+            >{{ lunchslot.time }}</button>
             <button
-              type="submit"
-              disabled
               class="btn btn-primary lunchbtn"
-              style="width:100%;"
-              id="2"
-              value="13:30"
-            >13:30</button>
-            <button
-              type="submit"
-              disabled
-              class="btn btn-primary lunchbtn"
-              style="width:100%;"
-              id="3"
-              value="14:30"
-            >14:30</button>
-            <button
-              type="submit"
-              class="btn btn-primary lunchbtn"
-              style="width: 20%; display: none;"
-              id="X"
-              disabled
+              style="width: 20%;"
+              v-on:click="removeLunch()"
             >X</button>
-          </div>
-          <div>
-            <div id="4"></div>
           </div>
         </td>
       </tr>
@@ -60,9 +33,62 @@
         <td>Phill Renyard</td>
         <td>12:30</td>
       </tr>
+      <tr v-if="this.loading == true">
+        <td colspan="3">
+          <div class="spinner-border spinner-border-sm" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </td>
+      </tr>
     </tbody>
   </table>
 </template>
 
 <script>
+export default {
+  props: {
+    lunchslots: {
+      required: true,
+      type: Array
+    }
+  },
+  data() {
+    return {
+      userLunches: [],
+      loading: false
+    };
+  },
+  mounted() {},
+  methods: {
+    setLunch(id, a) {
+      this.loading = true;
+      if (a !== 0) {
+        axios
+          .post("/lunchslots/store", {
+            id: id
+          })
+          .then(response => [
+            (this.lunchSlots = response.data),
+            (this.loading = false)
+          ])
+          .catch(function(error) {
+            console.log(error);
+          });
+      }
+    },
+    removeLunch() {
+      this.loading = true;
+      console.log("removelunch");
+      axios
+        .post("/lunchslots/destroy")
+        .then(response => [
+          (this.lunchSlots = response.data),
+          (this.loading = false)
+        ])
+        .catch(function(error) {
+          console.log(error);
+        });
+    }
+  }
+};
 </script>

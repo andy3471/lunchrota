@@ -10,7 +10,7 @@
       </div>
 
       <div class="col-lg-4 order-lg-3">
-        <lunches></lunches>
+        <lunches :lunchslots="lunchslots"></lunches>
       </div>
     </div>
   </div>
@@ -18,7 +18,12 @@
 
 <script>
 export default {
-  props: {},
+  props: {
+    lunchslots: {
+      required: true,
+      type: Array
+    }
+  },
   data() {
     return {
       date: new Date()
