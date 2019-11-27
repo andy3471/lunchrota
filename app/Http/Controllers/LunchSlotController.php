@@ -5,18 +5,13 @@ namespace App\Http\Controllers;
 use App\LunchSlot;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
-use App\User;
 use Auth;
 
 class LunchSlotController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function getSlots()
     {
 
         $lunchslots = Cache::remember('lunchslots', 86400, function () {
@@ -26,72 +21,52 @@ class LunchSlotController extends Controller
         return $lunchslots;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function userLunches()
     {
-        //
+        $date = Carbon::today()->toDateString();
+
+        $userLunches = DB::table('users')
+            ->select('users.id', 'users.name', 'lunch_slots.time')
+            ->join('lunch_slot_user', 'users.id', '=', 'lunch_slot_user.user_id')
+            ->join('lunch_slots', 'lunch_slots.id', '=', 'lunch_slot_user.lunch_slot_id')
+            ->where('lunch_slot_user.date', $date)
+            ->orderBy('users.name')
+            ->get();
+
+        return $userLunches;
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function claim(Request $request)
     {
         $date = Carbon::today()->toDateString();
 
         Auth::User()->lunches()->detach();
         Auth::User()->lunches()->attach($request->id, ['date' => $date]);
+
+        return $this->userLunches();
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\LunchSlot  $lunchSlot
-     * @return \Illuminate\Http\Response
-     */
-    public function show(LunchSlot $lunchSlot)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\LunchSlot  $lunchSlot
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(LunchSlot $lunchSlot)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\LunchSlot  $lunchSlot
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, LunchSlot $lunchSlot)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\LunchSlot  $lunchSlot
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(LunchSlot $lunchSlot)
+    public function unclaim()
     {
         Auth::User()->lunches()->detach();
+        return $this->userLunches();
     }
+
+    public function index()
+    { }
+
+    public function create()
+    { }
+
+    public function show(LunchSlot $lunchSlot)
+    { }
+
+    public function edit(LunchSlot $lunchSlot)
+    { }
+
+    public function update(Request $request, LunchSlot $lunchSlot)
+    { }
+
+    public function destroy(LunchSlot $lunchSlot)
+    { }
 }

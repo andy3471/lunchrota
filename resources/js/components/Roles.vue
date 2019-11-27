@@ -7,7 +7,7 @@
         </th>
       </tr>
       <tr>
-        <th>Person</th>
+        <th>Name</th>
         <th>Role</th>
         <th>Type</th>
       </tr>

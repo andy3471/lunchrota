@@ -6,7 +6,6 @@ use App\Role;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 
 class RoleController extends Controller
@@ -118,5 +117,15 @@ class RoleController extends Controller
     public function destroy(Role $role)
     {
         //
+    }
+
+    public function downloadCsv()
+    {
+        return 'hello';
+    }
+
+    public function uploadCsv(Request $request)
+    {
+        return 'hello';
     }
 }

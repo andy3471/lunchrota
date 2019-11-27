@@ -10,7 +10,7 @@
       </div>
 
       <div class="col-lg-4 order-lg-3">
-        <lunches :lunchslots="lunchslots"></lunches>
+        <lunches :lunchslots="lunchslots" :loggedin="loggedn"></lunches>
       </div>
     </div>
   </div>
@@ -20,8 +20,12 @@
 export default {
   props: {
     lunchslots: {
-      required: true,
+      default: false,
       type: Array
+    },
+    loggedin: {
+      required: true,
+      type: Boolean
     }
   },
   data() {

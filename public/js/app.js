@@ -2082,11 +2082,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     lunchslots: {
       required: true,
       type: Array
+    },
+    loggedin: {
+      required: true,
+      type: Boolean
     }
   },
   data: function data() {
@@ -2095,30 +2101,43 @@ __webpack_require__.r(__webpack_exports__);
       loading: false
     };
   },
-  mounted: function mounted() {},
+  mounted: function mounted() {
+    this.getUserLunches();
+  },
   methods: {
-    setLunch: function setLunch(id, a) {
+    getUserLunches: function getUserLunches() {
       var _this = this;
 
       this.loading = true;
+      axios.get("/lunchslots/users").then(function (response) {
+        return [_this.userLunches = response.data, _this.loading = false];
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    setLunch: function setLunch(id, a) {
+      var _this2 = this;
+
+      this.loading = true;
+      this.userLunches = [];
 
       if (a !== 0) {
-        axios.post("/lunchslots/store", {
+        axios.post("/lunchslots/claim", {
           id: id
         }).then(function (response) {
-          return [_this.lunchSlots = response.data, _this.loading = false];
+          return [_this2.userLunches = response.data, _this2.loading = false];
         })["catch"](function (error) {
           console.log(error);
         });
       }
     },
     removeLunch: function removeLunch() {
-      var _this2 = this;
+      var _this3 = this;
 
       this.loading = true;
-      console.log("removelunch");
-      axios.post("/lunchslots/destroy").then(function (response) {
-        return [_this2.lunchSlots = response.data, _this2.loading = false];
+      this.userLunches = [];
+      axios.post("/lunchslots/unclaim").then(function (response) {
+        return [_this3.userLunches = response.data, _this3.loading = false];
       })["catch"](function (error) {
         console.log(error);
       });
@@ -2420,8 +2439,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     lunchslots: {
-      required: true,
+      "default": false,
       type: Array
+    },
+    loggedin: {
+      required: true,
+      type: Boolean
     }
   },
   data: function data() {
@@ -37916,61 +37939,75 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("table", { staticClass: "table table-bordered" }, [
-    _c("tbody", [
-      _vm._m(0),
-      _vm._v(" "),
-      _c("tr", [
-        _c("td", { attrs: { colspan: "3" } }, [
-          _c(
-            "div",
-            {
-              staticClass: "btn-group btn-block",
-              staticStyle: { height: "46px" }
-            },
-            [
-              _vm._l(this.lunchslots, function(lunchslot) {
-                return _c(
+    _c(
+      "tbody",
+      [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("tr", [
+          _c("td", { attrs: { colspan: "3" } }, [
+            _c(
+              "div",
+              {
+                staticClass: "btn-group btn-block",
+                staticStyle: { height: "46px" }
+              },
+              [
+                _vm._l(this.lunchslots, function(lunchslot) {
+                  return _c(
+                    "button",
+                    {
+                      key: lunchslot.id,
+                      staticClass: "btn btn-primary lunchbtn",
+                      staticStyle: { width: "100%" },
+                      attrs: {
+                        value: "12:30",
+                        disabled: _vm.loggedin == false
+                      },
+                      on: {
+                        click: function($event) {
+                          return _vm.setLunch(lunchslot.id, 1)
+                        }
+                      }
+                    },
+                    [_vm._v(_vm._s(lunchslot.time))]
+                  )
+                }),
+                _vm._v(" "),
+                _c(
                   "button",
                   {
-                    key: lunchslot.id,
                     staticClass: "btn btn-primary lunchbtn",
-                    staticStyle: { width: "100%" },
-                    attrs: { value: "12:30" },
+                    staticStyle: { width: "20%" },
+                    attrs: { disabled: _vm.loggedin == false },
                     on: {
                       click: function($event) {
-                        return _vm.setLunch(lunchslot.id, 1)
+                        return _vm.removeLunch()
                       }
                     }
                   },
-                  [_vm._v(_vm._s(lunchslot.time))]
+                  [_vm._v("X")]
                 )
-              }),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-primary lunchbtn",
-                  staticStyle: { width: "20%" },
-                  on: {
-                    click: function($event) {
-                      return _vm.removeLunch()
-                    }
-                  }
-                },
-                [_vm._v("X")]
-              )
-            ],
-            2
-          )
-        ])
-      ]),
-      _vm._v(" "),
-      _vm._m(1),
-      _vm._v(" "),
-      _vm._m(2),
-      _vm._v(" "),
-      this.loading == true ? _c("tr", [_vm._m(3)]) : _vm._e()
-    ])
+              ],
+              2
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _vm._m(1),
+        _vm._v(" "),
+        _vm._l(_vm.userLunches, function(user) {
+          return _c("tr", { key: user.id }, [
+            _c("td", [_vm._v(_vm._s(user.name))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(user.time))])
+          ])
+        }),
+        _vm._v(" "),
+        this.loading == true ? _c("tr", [_vm._m(2)]) : _vm._e()
+      ],
+      2
+    )
   ])
 }
 var staticRenderFns = [
@@ -37989,19 +38026,9 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("tr", [
-      _c("th", [_vm._v("Person")]),
+      _c("th", [_vm._v("Name")]),
       _vm._v(" "),
       _c("th", [_vm._v("Lunch Slot")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("tr", [
-      _c("td", [_vm._v("Phill Renyard")]),
-      _vm._v(" "),
-      _c("td", [_vm._v("12:30")])
     ])
   },
   function() {
@@ -38274,7 +38301,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("tr", [
-      _c("th", [_vm._v("Person")]),
+      _c("th", [_vm._v("Name")]),
       _vm._v(" "),
       _c("th", [_vm._v("Role")]),
       _vm._v(" "),
@@ -38342,7 +38369,11 @@ var render = function() {
       _c(
         "div",
         { staticClass: "col-lg-4 order-lg-3" },
-        [_c("lunches", { attrs: { lunchslots: _vm.lunchslots } })],
+        [
+          _c("lunches", {
+            attrs: { lunchslots: _vm.lunchslots, loggedin: _vm.loggedn }
+          })
+        ],
         1
       )
     ])
