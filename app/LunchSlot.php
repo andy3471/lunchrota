@@ -10,6 +10,10 @@ class LunchSlot extends Model
 {
     protected $appends = ['available_today'];
 
+    protected $hidden = [
+        'created_at', 'updated_at',
+    ];
+
     public function users()
     {
         return $this->belongsToMany('App\User')->withPivot('date');
@@ -19,13 +23,19 @@ class LunchSlot extends Model
     {
         $date = Carbon::today()->toDateString();
 
-        $rolesToday = DB::Table('role_user')
-            ->join('roles', 'role_user.role_id', 'roles.id')
-            ->where('role_user.date', $date)
-            ->where('roles.available', true)
-            ->count();
+        if (config('app.lunch_slot_calculated')) {
+            $ratio = config('app.lunch_slot_calculated_ratio');
 
-        $totalAvailable = floor(1 + (($rolesToday - 1) * (1 / 3)));
+            $rolesToday = DB::Table('role_user')
+                ->join('roles', 'role_user.role_id', 'roles.id')
+                ->where('role_user.date', $date)
+                ->where('roles.available', true)
+                ->count();
+
+            $totalAvailable = floor(1 + (($rolesToday - 1) * ($ratio)));
+        } else {
+            $totalAvailable = 5;
+        }
 
         $totalClaimed = DB::Table('lunch_slot_user')
             ->where('date', $date)

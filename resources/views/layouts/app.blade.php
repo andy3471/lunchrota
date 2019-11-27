@@ -87,9 +87,11 @@
                             Admin
                         </a>
                         <div class="dropdown-menu">
-                        <a class="dropdown-item" href="{{ route('usersadmin') }}">Users</a>
-                            <a class="dropdown-item" href="{{ route('rolesadmin') }}">Roles</a>
-                        <a class="dropdown-item" href="{{ route('upload') }}">Bulk Upload</a>
+                            <a class="dropdown-item" href="{{ route('usersadmin') }}">Users</a>
+                            @if( config('app.roles_enabled') )
+                                <a class="dropdown-item" href="{{ route('rolesadmin') }}">Roles</a>
+                                <a class="dropdown-item" href="{{ route('upload') }}">Bulk Upload</a>
+                            @endif
                         </div>
                     </li>
                     @endcan
@@ -163,8 +165,6 @@
                                 {{ Auth::user()->name }}
                             @endauth
                         </h4>
-                    </div>
-                    <div class="container-fluid">
                         <h5 class="text-right">Information for Care. Everywhere.</h5>
                     </div>
                 </div>
