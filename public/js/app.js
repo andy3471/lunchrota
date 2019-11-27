@@ -38393,8 +38393,7 @@ var render = function() {
         [_c("lunches", { attrs: { lunchslots: _vm.lunchslots } })],
         1
       )
-    ]),
-    _vm._v(">>>>>>> f26f30375daa522cfbf31ec5f17606ad4db55f3f\n")
+    ])
   ])
 }
 var staticRenderFns = []
