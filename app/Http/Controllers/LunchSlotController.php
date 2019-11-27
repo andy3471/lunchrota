@@ -6,8 +6,8 @@ use App\LunchSlot;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Carbon\Carbon;
-use App\User;
 use Auth;
+use Illuminate\Support\Facades\DB;
 
 class LunchSlotController extends Controller
 {
