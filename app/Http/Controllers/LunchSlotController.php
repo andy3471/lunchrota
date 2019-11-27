@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\LunchSlot;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Auth;
 use Illuminate\Support\Facades\DB;

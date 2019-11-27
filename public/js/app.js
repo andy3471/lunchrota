@@ -2091,7 +2091,7 @@ __webpack_require__.r(__webpack_exports__);
       type: Array
     },
     loggedin: {
-      required: true,
+      "default": false,
       type: Boolean
     }
   },
@@ -2436,8 +2436,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     lunchslots: {
@@ -2445,7 +2443,7 @@ __webpack_require__.r(__webpack_exports__);
       type: Array
     },
     loggedin: {
-      required: true,
+      "default": false,
       type: Boolean
     },
     rolesenabled: {
@@ -38384,13 +38382,6 @@ var render = function() {
             attrs: { lunchslots: _vm.lunchslots, loggedin: _vm.loggedn }
           })
         ],
-        1
-      ),
-      _vm._v("=======\n    "),
-      _c(
-        "div",
-        { staticClass: "col-lg-4 order-lg-3" },
-        [_c("lunches", { attrs: { lunchslots: _vm.lunchslots } })],
         1
       )
     ])

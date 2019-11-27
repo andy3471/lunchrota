@@ -54,7 +54,7 @@ export default {
       type: Array
     },
     loggedin: {
-      required: true,
+      default: false,
       type: Boolean
     }
   },

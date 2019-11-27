@@ -8,11 +8,9 @@
       <div class="col-lg-4 order-lg-2" v-if="rolesenabled">
         <date-picker :date="date" @change-date="changeDate"></date-picker>
       </div>
+
       <div class="col-lg-4 order-lg-3">
         <lunches :lunchslots="lunchslots" :loggedin="loggedn"></lunches>
-      </div>=======
-      <div class="col-lg-4 order-lg-3">
-        <lunches :lunchslots="lunchslots"></lunches>
       </div>
     </div>
   </div>
@@ -26,7 +24,7 @@ export default {
       type: Array
     },
     loggedin: {
-      required: true,
+      default: false,
       type: Boolean
     },
     rolesenabled: {
