@@ -1,16 +1,18 @@
 <template>
   <div class="container-fluid">
     <div class="row">
-      <div class="col-lg-4 order-lg-1">
+      <div class="col-lg-4 order-lg-1" v-if="rolesenabled">
         <roles :date="date"></roles>
       </div>
 
-      <div class="col-lg-4 order-lg-2">
+      <div class="col-lg-4 order-lg-2" v-if="rolesenabled">
         <date-picker :date="date" @change-date="changeDate"></date-picker>
       </div>
-
       <div class="col-lg-4 order-lg-3">
         <lunches :lunchslots="lunchslots" :loggedin="loggedn"></lunches>
+      </div>=======
+      <div class="col-lg-4 order-lg-3">
+        <lunches :lunchslots="lunchslots"></lunches>
       </div>
     </div>
   </div>
@@ -26,6 +28,10 @@ export default {
     loggedin: {
       required: true,
       type: Boolean
+    },
+    rolesenabled: {
+      type: Boolean,
+      default: false
     }
   },
   data() {

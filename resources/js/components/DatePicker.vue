@@ -18,8 +18,8 @@
       v-on:click="setDate(day.date)"
     >{{day.dayName}}</div>
     <div
-      v-for="date in datesThisMonth"
-      v-bind:key="date"
+      v-for="(date, index) in datesThisMonth"
+      v-bind:key="index"
       v-on:click="changeDate(date.date, date.month)"
       class="date button text-center"
       v-bind:class="{ selected: (date.date == selectedDay), disabled: (date.month !== 0) }"

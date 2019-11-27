@@ -135,6 +135,9 @@ return [
     'version' => '4.0.0',
     'register_enabled' => env('APP_REGISTER_ENABLED', true),
     'support_code' => env('APP_SUPPORT_CODE', false),
+    'roles_enabled' => env('APP_ROLES_ENABLED', true),
+    'lunch_slot_calculated' => env('LUNCH_SLOT_CALCLULATED', false),
+    'lunch_slot_calculated_ratio' => env('LUNCH_SLOT_CALCULATED_RATIO', '0.33'),
 
     /*
     |--------------------------------------------------------------------------

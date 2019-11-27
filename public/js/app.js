@@ -2436,6 +2436,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     lunchslots: {
@@ -2445,6 +2447,10 @@ __webpack_require__.r(__webpack_exports__);
     loggedin: {
       required: true,
       type: Boolean
+    },
+    rolesenabled: {
+      type: Boolean,
+      "default": false
     }
   },
   data: function data() {
@@ -37854,11 +37860,11 @@ var render = function() {
         )
       }),
       _vm._v(" "),
-      _vm._l(_vm.datesThisMonth, function(date) {
+      _vm._l(_vm.datesThisMonth, function(date, index) {
         return _c(
           "div",
           {
-            key: date,
+            key: index,
             staticClass: "date button text-center",
             class: {
               selected: date.date == _vm.selectedDay,
@@ -38347,24 +38353,28 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container-fluid" }, [
     _c("div", { staticClass: "row" }, [
-      _c(
-        "div",
-        { staticClass: "col-lg-4 order-lg-1" },
-        [_c("roles", { attrs: { date: _vm.date } })],
-        1
-      ),
+      _vm.rolesenabled
+        ? _c(
+            "div",
+            { staticClass: "col-lg-4 order-lg-1" },
+            [_c("roles", { attrs: { date: _vm.date } })],
+            1
+          )
+        : _vm._e(),
       _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "col-lg-4 order-lg-2" },
-        [
-          _c("date-picker", {
-            attrs: { date: _vm.date },
-            on: { "change-date": _vm.changeDate }
-          })
-        ],
-        1
-      ),
+      _vm.rolesenabled
+        ? _c(
+            "div",
+            { staticClass: "col-lg-4 order-lg-2" },
+            [
+              _c("date-picker", {
+                attrs: { date: _vm.date },
+                on: { "change-date": _vm.changeDate }
+              })
+            ],
+            1
+          )
+        : _vm._e(),
       _vm._v(" "),
       _c(
         "div",
@@ -38375,8 +38385,16 @@ var render = function() {
           })
         ],
         1
+      ),
+      _vm._v("=======\n    "),
+      _c(
+        "div",
+        { staticClass: "col-lg-4 order-lg-3" },
+        [_c("lunches", { attrs: { lunchslots: _vm.lunchslots } })],
+        1
       )
-    ])
+    ]),
+    _vm._v(">>>>>>> f26f30375daa522cfbf31ec5f17606ad4db55f3f\n")
   ])
 }
 var staticRenderFns = []

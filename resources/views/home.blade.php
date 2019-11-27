@@ -1,6 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
-
-    <rota :LunchSlots="{{ $lunchSlots }}" @auth :loggedin="true" @endauth></rota>
+    <rota
+        :LunchSlots="{{ $lunchSlots }}"
+        @if( config('app.roles_enabled') )
+            :rolesenabled="true"
+        @endif
+        @auth
+            :loggedin="true"
+        @endauth
+    >
+    </rota>
 @endsection
