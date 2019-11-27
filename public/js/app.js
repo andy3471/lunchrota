@@ -37831,11 +37831,11 @@ var render = function() {
         )
       }),
       _vm._v(" "),
-      _vm._l(_vm.datesThisMonth, function(date) {
+      _vm._l(_vm.datesThisMonth, function(date, index) {
         return _c(
           "div",
           {
-            key: date,
+            key: index,
             staticClass: "date button text-center",
             class: {
               selected: date.date == _vm.selectedDay,
