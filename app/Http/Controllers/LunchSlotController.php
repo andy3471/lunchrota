@@ -43,6 +43,12 @@ class LunchSlotController extends Controller
         Auth::User()->lunches()->detach();
         Auth::User()->lunches()->attach($request->id, ['date' => $date]);
 
+        $lunchslot = LunchSlot::find($request->id);
+
+        if ($lunchslot->available_today < 1) {
+            return response()->json('This lunch slot has been claimed by another user', 403);
+        }
+
         return $this->userLunches();
     }
 

@@ -7,6 +7,11 @@
         </th>
       </tr>
       <tr>
+        <td colspan="3" v-if="error">
+          <div class="alert alert-danger">{{ this.error }}</div>
+        </td>
+      </tr>
+      <tr>
         <td colspan="3">
           <div class="btn-group btn-block" style="height: 46px">
             <button
@@ -16,12 +21,12 @@
               style="width:100%;"
               value="12:30"
               v-on:click="setLunch(lunchslot.id, 1)"
-              v-bind:disabled="loggedin == false"
+              v-bind:disabled="loggedin == false || lunchslot.available_today == 0 || lunchslot.id == selectedLunch"
             >{{ lunchslot.time }}</button>
             <button
               class="btn btn-primary lunchbtn"
               style="width: 20%;"
-              v-bind:disabled="loggedin == false"
+              v-bind:disabled="loggedin == false || selectedLunch == null"
               v-on:click="removeLunch()"
             >X</button>
           </div>
@@ -56,12 +61,18 @@ export default {
     loggedin: {
       default: false,
       type: Boolean
+    },
+    initialLunch: {
+      default: null,
+      type: Number
     }
   },
   data() {
     return {
       userLunches: [],
-      loading: false
+      selectedLunch: this.initialLunch,
+      loading: false,
+      error: null
     };
   },
   mounted() {
@@ -76,12 +87,13 @@ export default {
           (this.userLunches = response.data),
           (this.loading = false)
         ])
-        .catch(function(error) {
-          console.log(error);
+        .catch(error => {
+          (this.error = error.response.data)((this.loading = false));
         });
     },
     setLunch(id, a) {
       this.loading = true;
+      this.error = null;
       this.userLunches = [];
 
       if (a !== 0) {
@@ -91,25 +103,28 @@ export default {
           })
           .then(response => [
             (this.userLunches = response.data),
-            (this.loading = false)
+            (this.loading = false),
+            (this.selectedLunch = id)
           ])
-          .catch(function(error) {
-            console.log(error);
+          .catch(error => {
+            (this.error = error.response.data)((this.loading = false));
           });
       }
     },
     removeLunch() {
       this.loading = true;
+      this.error = null;
       this.userLunches = [];
 
       axios
         .post("/lunchslots/unclaim")
         .then(response => [
           (this.userLunches = response.data),
-          (this.loading = false)
+          (this.loading = false),
+          (this.selectedLunch = null)
         ])
-        .catch(function(error) {
-          console.log(error);
+        .catch(error => {
+          (this.error = error.response.data)((this.loading = false));
         });
     }
   }

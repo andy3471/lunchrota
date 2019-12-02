@@ -33,6 +33,8 @@ class LunchSlot extends Model
                 ->count();
 
             $totalAvailable = floor(1 + (($rolesToday - 1) * ($ratio)));
+            return $rolesToday;
+            return $totalAvailable;
         } else {
             $totalAvailable = 5;
         }

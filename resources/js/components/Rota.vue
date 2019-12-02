@@ -10,7 +10,7 @@
       </div>
 
       <div class="col-lg-4 order-lg-3">
-        <lunches :lunchslots="lunchslots" :loggedin="loggedn"></lunches>
+        <lunches :lunchslots="lunchslots" :loggedin="loggedin" :initialLunch="initialLunch"></lunches>
       </div>
     </div>
   </div>
@@ -30,6 +30,10 @@ export default {
     rolesenabled: {
       type: Boolean,
       default: false
+    },
+    initialLunch: {
+      default: null,
+      type: Number
     }
   },
   data() {
