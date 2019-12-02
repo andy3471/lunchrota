@@ -35,14 +35,14 @@ class HomeController extends Controller
 
         $date = Carbon::today()->toDateString();
 
-        $selectedLunch = DB::table('users')
-            ->select('lunch_slots.id')
-            ->join('lunch_slot_user', 'users.id', '=', 'lunch_slot_user.user_id')
-            ->join('lunch_slots', 'lunch_slots.id', '=', 'lunch_slot_user.lunch_slot_id')
-            ->where('lunch_slot_user.date', $date)
-            ->where('users.id', Auth::User()->id)
-            ->orderBy('users.name')
-            ->get();
+        // $selectedLunch = DB::table('users')
+        //     ->select('lunch_slots.id')
+        //     ->join('lunch_slot_user', 'users.id', '=', 'lunch_slot_user.user_id')
+        //     ->join('lunch_slots', 'lunch_slots.id', '=', 'lunch_slot_user.lunch_slot_id')
+        //     ->where('lunch_slot_user.date', $date)
+        //     ->where('users.id', Auth::User()->id)
+        //     ->orderBy('users.name')
+        //     ->get();
 
 
         //$selectedLunch = $selectedLunch[0]->id;

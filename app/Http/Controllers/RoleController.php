@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+
 class RoleController extends Controller
 {
     /**
@@ -121,7 +122,35 @@ class RoleController extends Controller
 
     public function downloadCsv()
     {
-        return 'hello';
+        $filename = "commrotaexport.csv";
+
+        $headers = [
+            'Cache-Control'       => 'must-revalidate, post-check=0, pre-check=0',
+            'Content-type'        => 'text/csv',
+            'Content-Disposition' => 'attachment; filename=galleries.csv',
+            'Expires'             => '0',
+            'Pragma'              => 'public'
+        ];
+
+        $roles = DB::table('users')
+            ->select('users.name', 'role_user.date', 'roles.name as role')
+            ->join('role_user', 'users.id', '=', 'role_user.user_id')
+            ->join('roles', 'roles.id', '=', 'role_user.role_id')
+            ->orderBy('role_user.date')
+            ->get();
+
+        $roles = json_decode(json_encode($roles), true);
+        array_unshift($roles, array_keys($roles[0]));
+
+        $callback = function () use ($roles) {
+            $FH = fopen('php://output', 'w');
+            foreach ($roles as $row) {
+                fputcsv($FH, $row);
+            }
+            fclose($FH);
+        };
+
+        return response()->streamDownload($callback, $filename, $headers);
     }
 
     public function uploadCsv(Request $request)
