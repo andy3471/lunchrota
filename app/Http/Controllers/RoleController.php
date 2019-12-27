@@ -7,7 +7,7 @@ use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Storage;
 
 class RoleController extends Controller
 {
@@ -84,7 +84,8 @@ class RoleController extends Controller
 
 
     public function show(Role $role)
-    { }
+    {
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -155,6 +156,43 @@ class RoleController extends Controller
 
     public function uploadCsv(Request $request)
     {
-        return 'hello';
+        $this->validate($request, [
+            'csv' => 'required|file',
+        ]);
+
+        $path = $request->file('csv')->storeAs('/csv', 'commrotaupload.csv');
+        $file = Storage::url($path);
+
+        $file = fopen(base_path() . '/storage/app/csv/commrotaupload.csv', 'r');
+        while (!feof($file)) {
+            $content[] = fgetcsv($file);
+        }
+        fclose($file);
+
+        $messages = collect();
+
+        DB::table('role_user')->truncate();
+
+        $count =  count($content);
+
+        for ($i = 1; $i < $count - 1; $i++) {
+            $user = User::where('name', $content[$i][0])->first();
+            $date = Carbon::createFromFormat('d/m/Y', $content[$i][1])->toDateString();
+            $role = Role::where('name', $content[$i][2])->first();
+
+            if (!$user) {
+                $messages->push(['message' => "User " . $content[$i][0] . " does not exist", 'type' => 'danger']);
+            } else if (!$role) {
+                $messages->push(['message' => "Role " . $content[$i][2] . " does not exist", 'type' => 'danger']);
+            } else if (!$date) {
+                $messages->push(['message' => "Date " . $content[$i][1] . " is not valid", 'type' => 'danger']);
+            } else {
+                $user->roles()->attach($role, ['date' => $date]);
+                $messages->push(['message' => "Added Role of " . $role->name . " for user " . $user->name . " on " . $date, 'type' => 'success']);
+            }
+        };
+
+        //return $messages->all();
+        return view('admin.roles.confirmupload')->withMessages($messages->all());
     }
 }

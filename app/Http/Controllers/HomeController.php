@@ -17,7 +17,8 @@ class HomeController extends Controller
      * @return void
      */
     public function __construct()
-    { }
+    {
+    }
 
     /**
      * Show the application dashboard.
@@ -28,26 +29,11 @@ class HomeController extends Controller
 
     public function index()
     {
-
         $lunchslots = Cache::remember('lunchslots', 86400, function () {
             return LunchSlot::all();
         });
 
-        $date = Carbon::today()->toDateString();
-
-        // $selectedLunch = DB::table('users')
-        //     ->select('lunch_slots.id')
-        //     ->join('lunch_slot_user', 'users.id', '=', 'lunch_slot_user.user_id')
-        //     ->join('lunch_slots', 'lunch_slots.id', '=', 'lunch_slot_user.lunch_slot_id')
-        //     ->where('lunch_slot_user.date', $date)
-        //     ->where('users.id', Auth::User()->id)
-        //     ->orderBy('users.name')
-        //     ->get();
-
-
-        //$selectedLunch = $selectedLunch[0]->id;
-
-        return view('home')->withLunchSlots($lunchslots); //->withSelectedLunch($selectedLunch);
+        return view('home')->withLunchSlots($lunchslots);
     }
 
     public function about()

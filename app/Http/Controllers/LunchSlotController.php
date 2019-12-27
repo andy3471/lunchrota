@@ -59,20 +59,29 @@ class LunchSlotController extends Controller
     }
 
     public function index()
-    { }
+    {
+        $lunchSlots = LunchSlot::all();
+        //  return $lunchSlots;
+        return view('admin.lunches.index')->withLunchSlots($lunchSlots);
+    }
 
     public function create()
-    { }
+    {
+    }
 
     public function show(LunchSlot $lunchSlot)
-    { }
+    {
+    }
 
     public function edit(LunchSlot $lunchSlot)
-    { }
+    {
+    }
 
     public function update(Request $request, LunchSlot $lunchSlot)
-    { }
+    {
+    }
 
     public function destroy(LunchSlot $lunchSlot)
-    { }
+    {
+    }
 }

@@ -4,19 +4,29 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-4 order-lg-1">
-                Please download one of the following Exports, these will provide templates that you can use to upload. Once edited, you can upload it and it will post the changes to the MySQL Server. More Templates will be available. Custom made Templates can be provided by Curtis. <br>
+                Please download the export. Once edited, you can upload it to override all roles in bulk <br>
             </div>
             <div class="col-lg-4 order-lg-2" id="corePane">
                 <a href="{{ route('downloadcsv') }}"> Download All Current Data </a>
             </div>
             <div class="col-xl-4 order-xl-3" id="corePane">
+                @error('csv')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
                 <form action="{{ route('uploadcsv') }}" method="post" enctype="multipart/form-data">
                     @csrf
                     Select amended export:
-                    <input type="file" name="fileToUpload" id="fileToUpload">
+                    <input type="file" name="csv" id="csv">
                     <input type="submit" value="Upload CSV" name="submit">
                 </form>
             </div>
         </div>
+
+
+        @isset ($messages)
+            {{$messages}}
+        @endisset
     </div>
 @endsection
