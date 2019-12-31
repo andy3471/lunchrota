@@ -45,7 +45,7 @@ class LunchSlotController extends Controller
 
         $lunchslot = LunchSlot::find($request->id);
 
-        if ($lunchslot->available_today < 1) {
+        if ($lunchslot->available_today < 0) {
             return response()->json('This lunch slot has been claimed by another user', 403);
         }
 

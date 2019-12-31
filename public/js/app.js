@@ -2109,6 +2109,7 @@ __webpack_require__.r(__webpack_exports__);
       userLunches: [],
       selectedLunch: this.initialLunch,
       loading: false,
+      rolesLoading: false,
       error: null
     };
   },
@@ -2129,18 +2130,20 @@ __webpack_require__.r(__webpack_exports__);
     setLunch: function setLunch(id, a) {
       var _this2 = this;
 
-      this.loading = true;
-      this.error = null;
-      this.userLunches = [];
+      if (this.rolesLoading == false) {
+        this.rolesLoading = true;
+        this.error = null;
+        this.userLunches = [];
 
-      if (a !== 0) {
-        axios.post("/lunchslots/claim", {
-          id: id
-        }).then(function (response) {
-          return [_this2.userLunches = response.data, _this2.loading = false, _this2.selectedLunch = id];
-        })["catch"](function (error) {
-          (_this2.error = error.response.data)(_this2.loading = false);
-        });
+        if (a !== 0) {
+          axios.post("/lunchslots/claim", {
+            id: id
+          }).then(function (response) {
+            return [_this2.userLunches = response.data, _this2.rolesLoading = false, _this2.selectedLunch = id];
+          })["catch"](function (error) {
+            (_this2.error = error.response.data)(_this2.loading = false);
+          });
+        }
       }
     },
     removeLunch: function removeLunch() {
@@ -38127,7 +38130,9 @@ var render = function() {
           ])
         }),
         _vm._v(" "),
-        this.loading == true ? _c("tr", [_vm._m(2)]) : _vm._e()
+        this.loading == true || this.rolesLoading == true
+          ? _c("tr", [_vm._m(2)])
+          : _vm._e()
       ],
       2
     )
@@ -38149,9 +38154,9 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("tr", [
-      _c("th", [_vm._v("Name")]),
+      _c("th", { staticClass: "col-8" }, [_vm._v("Name")]),
       _vm._v(" "),
-      _c("th", [_vm._v("Lunch Slot")])
+      _c("th", { staticClass: "col-4" }, [_vm._v("Lunch Slot")])
     ])
   },
   function() {
@@ -38264,9 +38269,9 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("tr", [
-      _c("th", [_vm._v("Name")]),
+      _c("th", { staticClass: "col-8" }, [_vm._v("Name")]),
       _vm._v(" "),
-      _c("th", [_vm._v("Role")])
+      _c("th", { staticClass: "col-4" }, [_vm._v("Role")])
     ])
   }
 ]
@@ -38424,11 +38429,11 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("tr", [
-      _c("th", [_vm._v("Name")]),
+      _c("th", { staticClass: "col-5" }, [_vm._v("Name")]),
       _vm._v(" "),
-      _c("th", [_vm._v("Role")]),
+      _c("th", { staticClass: "col-4" }, [_vm._v("Role")]),
       _vm._v(" "),
-      _c("th", [_vm._v("Type")])
+      _c("th", { staticClass: "col-3" }, [_vm._v("Type")])
     ])
   },
   function() {
@@ -38469,7 +38474,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container-fluid" }, [
-    _c("div", { staticClass: "row" }, [
+    _c("div", { staticClass: "row justify-content-center" }, [
       _vm.rolesenabled
         ? _c(
             "div",

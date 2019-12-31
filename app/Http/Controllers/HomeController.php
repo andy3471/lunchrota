@@ -29,9 +29,7 @@ class HomeController extends Controller
 
     public function index()
     {
-        $lunchslots = Cache::remember('lunchslots', 86400, function () {
-            return LunchSlot::all();
-        });
+        $lunchslots = LunchSlot::all();
 
         return view('home')->withLunchSlots($lunchslots);
     }

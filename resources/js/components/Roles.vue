@@ -7,9 +7,9 @@
         </th>
       </tr>
       <tr>
-        <th>Name</th>
-        <th>Role</th>
-        <th>Type</th>
+        <th class="col-5">Name</th>
+        <th class="col-4">Role</th>
+        <th class="col-3">Type</th>
       </tr>
       <tr
         v-for="user in userRoles"

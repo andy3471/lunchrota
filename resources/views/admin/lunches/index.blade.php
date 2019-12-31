@@ -7,9 +7,9 @@
                 <table class="table table-bordered">
                     <tbody>
                         <tr>
-                            <th>Time</th>
-                            <th>Available</th>
-                            <th>Delete</th>
+                            <th class="col-8">Time</th>
+                            <th class="col-2">Available</th>
+                            <th class="col-2">Delete</th>
                         </tr>
                         @foreach ($lunchSlots as $lunchSlot)
                             <tr>

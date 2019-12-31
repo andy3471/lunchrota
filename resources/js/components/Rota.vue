@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid">
-    <div class="row">
+    <div class="row justify-content-center">
       <div class="col-lg-4 order-lg-1" v-if="rolesenabled">
         <roles :date="date"></roles>
       </div>

@@ -33,14 +33,14 @@
         </td>
       </tr>
       <tr>
-        <th>Name</th>
-        <th>Lunch Slot</th>
+        <th class="col-8">Name</th>
+        <th class="col-4">Lunch Slot</th>
       </tr>
       <tr v-for="user in userLunches" v-bind:key="user.id">
         <td>{{ user.name }}</td>
         <td>{{ user.time }}</td>
       </tr>
-      <tr v-if="this.loading == true">
+      <tr v-if="this.loading == true || this.rolesLoading == true">
         <td colspan="3">
           <div class="spinner-border spinner-border-sm" role="status">
             <span class="sr-only">Loading...</span>
@@ -72,6 +72,7 @@ export default {
       userLunches: [],
       selectedLunch: this.initialLunch,
       loading: false,
+      rolesLoading: false,
       error: null
     };
   },
@@ -92,23 +93,25 @@ export default {
         });
     },
     setLunch(id, a) {
-      this.loading = true;
-      this.error = null;
-      this.userLunches = [];
+      if (this.rolesLoading == false) {
+        this.rolesLoading = true;
+        this.error = null;
+        this.userLunches = [];
 
-      if (a !== 0) {
-        axios
-          .post("/lunchslots/claim", {
-            id: id
-          })
-          .then(response => [
-            (this.userLunches = response.data),
-            (this.loading = false),
-            (this.selectedLunch = id)
-          ])
-          .catch(error => {
-            (this.error = error.response.data)((this.loading = false));
-          });
+        if (a !== 0) {
+          axios
+            .post("/lunchslots/claim", {
+              id: id
+            })
+            .then(response => [
+              (this.userLunches = response.data),
+              (this.rolesLoading = false),
+              (this.selectedLunch = id)
+            ])
+            .catch(error => {
+              (this.error = error.response.data)((this.loading = false));
+            });
+        }
       }
     },
     removeLunch() {
