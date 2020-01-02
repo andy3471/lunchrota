@@ -60,7 +60,7 @@
                 <div class="col-lg-2">
                 <a href="{{ route('home') }}"><img src="{{ asset('img/logo.png')}}" style="width:10rem"></a>
                 </div>
-                <div class="col-sm-10">
+                <div class="col-sm-10 title">
                     <h1 class="">{{ config('app.name', 'Rota') }}</h1>
                 </div>
             </div>

@@ -4,30 +4,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-12" id="corePane">
-                <table class="table table-bordered">
-                    <tbody>
-                        <tr>
-                            <th class="col-8">Time</th>
-                            <th class="col-2">Available</th>
-                            <th class="col-2">Delete</th>
-                        </tr>
-                        @foreach ($lunchSlots as $lunchSlot)
-                            <tr>
-                                <td>{{ $lunchSlot->time }}</td>
-                                <td><input type="text" class="form-control" placeholder="{{ $lunchSlot->available }}"></td>
-                                <td>
-                                    No
-                                </td>
-                            </tr>
-                        @endforeach
-
-                        <tr>
-                            <td colspan="7">
-                            <button type="submit" class="btn btn-primary" id="updateusers">Apply Changes</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+            <lunch-slot-admin></lunch-slot-admin>
         </div>
     </div>
 </div>

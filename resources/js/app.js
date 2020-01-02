@@ -30,6 +30,8 @@ Vue.component(
     require("./components/RoleDropdown.vue").default
 );
 
+Vue.component("lunch-slot-admin", require("./components/LunchSlotAdmin.vue").default);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
