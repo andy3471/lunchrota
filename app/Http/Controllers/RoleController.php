@@ -68,7 +68,7 @@ class RoleController extends Controller
 
     public function roleAdminGetRoles()
     {
-        return Role::all();
+        return Role::orderBy('name')->get();
     }
 
     public function roleAdminUpdateRoles(Request $request)
@@ -79,20 +79,27 @@ class RoleController extends Controller
         ]);
 
         $roles = collect($request->roles);
-        $updatedRoles = $roles->pluck('id');
+        $deletedRoles = Role::whereNotIn('id', $roles->where('id', '!=', null)->pluck('id')->toArray())->get();
 
-        return $updatedRoles;
+        foreach ($deletedRoles as $role) {
+            $role->users()->detach();
+            $role->delete();
+        };
 
-        $removedRoles = Role::whereNotIn('id', $roles->pluck('id')->all());
-        return $removedRoles;
-        //Role::whereIn('id', $removedRoles)->delete();
+        foreach ($roles as $r) {
 
-        $roles->each(function ($role, $key) {
-            return $role;
-        });
+            if ($r['id'] == 0) {
+                $role = new Role;
+                $role->name = $r['name'];
+            } else {
+                $role = Role::find($r['id']);
+            }
 
+            $role->available = $r['available'];
+            $role->save;
+        }
 
-        // return Role::all();
+        return Role::all();
     }
 
     public function userRolesAdmin()

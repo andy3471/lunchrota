@@ -67,7 +67,7 @@ export default {
     return {
       roles: [],
       loading: true,
-      newRole: { name: null, available: false }
+      newRole: { id: 0, name: null, available: 0 }
     };
   },
   mounted() {
@@ -87,13 +87,13 @@ export default {
         });
     },
     createRole() {
-      if (this.newRole.available !== null && this.newRole.name !== null) {
+      if (this.newRole.name !== null) {
         this.roles.push(this.newRole);
-        this.newRole = { name: null, available: null };
+        this.newRole = { id: 0, name: null, available: 0 };
       }
     },
     deleteRole(i) {
-      this.roles.splice(i);
+      this.roles.splice(i, 1);
     },
     postRoles() {
       console.log(this.roles);

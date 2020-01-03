@@ -2367,8 +2367,9 @@ __webpack_require__.r(__webpack_exports__);
       roles: [],
       loading: true,
       newRole: {
+        id: 0,
         name: null,
-        available: false
+        available: 0
       }
     };
   },
@@ -2387,16 +2388,17 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     createRole: function createRole() {
-      if (this.newRole.available !== null && this.newRole.name !== null) {
+      if (this.newRole.name !== null) {
         this.roles.push(this.newRole);
         this.newRole = {
+          id: 0,
           name: null,
-          available: null
+          available: 0
         };
       }
     },
     deleteRole: function deleteRole(i) {
-      this.roles.splice(i);
+      this.roles.splice(i, 1);
     },
     postRoles: function postRoles() {
       var _this2 = this;
