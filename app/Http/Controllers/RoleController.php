@@ -61,64 +61,50 @@ class RoleController extends Controller
         }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function roleAdmin()
     {
-        //
+        return view('admin.roles.index');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function roleAdminGetRoles()
     {
-        //
+        return Role::all();
     }
 
-
-    public function show(Role $role)
+    public function roleAdminUpdateRoles(Request $request)
     {
+        $this->validate($request, [
+            'roles.*.name' => 'required|string',
+            'roles.*.available'    => 'required|boolean',
+        ]);
+
+        $roles = collect($request->roles);
+        $updatedRoles = $roles->pluck('id');
+
+        return $updatedRoles;
+
+        $removedRoles = Role::whereNotIn('id', $roles->pluck('id')->all());
+        return $removedRoles;
+        //Role::whereIn('id', $removedRoles)->delete();
+
+        $roles->each(function ($role, $key) {
+            return $role;
+        });
+
+
+        // return Role::all();
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Role  $role
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Role $role)
+    public function userRolesAdmin()
     {
-        //
+        $users = User::all();
+        $roles = Role::all();
+        return view('admin.userroles.index')->withUsers($users)->withRoles($roles);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Role  $role
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Role $role)
+    public function userRolesUpload()
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Role  $role
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Role $role)
-    {
-        //
+        return view('admin.userroles.upload');
     }
 
     public function downloadCsv()
@@ -193,6 +179,6 @@ class RoleController extends Controller
         };
 
         //return $messages->all();
-        return view('admin.roles.confirmupload')->withMessages($messages->all());
+        return view('admin.userroles.confirmupload')->withMessages($messages->all());
     }
 }

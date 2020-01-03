@@ -14,8 +14,11 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware('can:admin')->group(function () {
-    Route::get('admin/roles', 'AdminController@roles')->name('rolesadmin');
-    Route::get('admin/upload', 'AdminController@upload')->name('upload');
+    Route::get('admin/userroles', 'RoleController@userRolesAdmin')->name('userrolesadmin');
+    Route::get('admin/roles', 'RoleController@roleAdmin')->name('roleadmin');
+    Route::post('admin/roles', 'RoleController@roleAdminUpdateRoles');
+    Route::get('admin/roles/get', 'RoleController@roleAdminGetRoles');
+    Route::get('admin/upload', 'RoleController@userRolesUpload')->name('upload');
     Route::get('admin/upload/downloadcsv', 'RoleController@downloadCsv')->name('downloadcsv');
     Route::Post('admin/upload/uploadcsv', 'RoleController@uploadCsv')->name('uploadcsv');
     Route::get('admin/users', 'AdminController@users')->name('usersadmin');

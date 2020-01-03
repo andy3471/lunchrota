@@ -90,7 +90,8 @@
                             <a class="dropdown-item" href="{{ route('usersadmin') }}">Users</a>
                             <a class="dropdown-item" href="{{ route('lunchadmin') }}">Lunch Slots</a>
                             @if( config('app.roles_enabled') )
-                                <a class="dropdown-item" href="{{ route('rolesadmin') }}">Roles</a>
+                                <a class="dropdown-item" href="{{ route('roleadmin') }}">Roles</a>
+                                <a class="dropdown-item" href="{{ route('userrolesadmin') }}">User Roles</a>
                                 <a class="dropdown-item" href="{{ route('upload') }}">Bulk Upload</a>
                             @endif
                         </div>

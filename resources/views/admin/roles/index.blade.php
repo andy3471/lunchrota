@@ -1,5 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-<role-admin :users="{{$users}}" :roles="{{$roles}}"></role-admin>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12" id="corePane">
+            <role-admin></role-admin>
+        </div>
+    </div>
+</div>
 @endsection

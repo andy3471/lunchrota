@@ -1,58 +1,117 @@
 <template>
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-lg-6 order-lg-1" id="role">
-        <form action method="post" id="roleOverride">
-          <table class="table table-bordered">
-            <tbody>
-              <tr>
-                <th colspan="3">
-                  <h4 class="text-center">Roles</h4>
-                </th>
-              </tr>
-              <tr>
-                <th class="col-6">Name</th>
-                <th class="col-6">Role</th>
-              </tr>
-              <tr v-for="user in users" v-bind:key="user.id">
-                <td>{{ user.name }}</td>
-                <td>
-                  <role-dropdown :userid="user.id" :roles="roles" :date="date" :csrf="csrf"></role-dropdown>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </form>
-      </div>
-
-      <div class="col-lg-6 order-lg-2" id="DatePicker">
-        <date-picker :date="date" @change-date="changeDate"></date-picker>
-      </div>
-    </div>
+  <div>
+    <table class="table table-bordered">
+      <tbody>
+        <tr>
+          <th class="col-7">Role</th>
+          <th class="col-4">Available</th>
+          <th class="col-1"></th>
+        </tr>
+        <tr v-for="(role, index) in this.roles" v-bind:key="role.id">
+          <td>{{ role.name }}</td>
+          <td>
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" v-model="role.available" />
+            </div>
+          </td>
+          <td>
+            <button type="button" class="btn btn-danger" v-on:click="deleteRole(index)">Delete</button>
+          </td>
+        </tr>
+        <tr v-if="this.loading == true">
+          <td colspan="3">
+            <div class="spinner-border spinner-border-sm" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+          </td>
+        </tr>
+        <tr v-if="!this.loading == true">
+          <td>
+            <input
+              type="text"
+              class="form-control"
+              v-model="newRole.name"
+              @keyup.enter="createRole()"
+            />
+          </td>
+          <td>
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" v-model.number="newRole.available" />
+            </div>
+          </td>
+          <td>
+            <button type="button" class="btn btn-primary" @click="createRole()">Add</button>
+          </td>
+        </tr>
+        <tr v-if="!this.loading == true">
+          <td colspan="3">
+            <button type="button" class="btn btn-primary" @click="postRoles()">Save</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 
 <script>
+import VueTimepicker from "vue2-timepicker";
+
 export default {
   props: {
-    users: {
-      required: true,
-      type: Array
-    },
-    roles: {
-      required: true,
-      type: Array
+    autoCalculatedEnabled: {
+      default: false,
+      type: Boolean
     }
   },
   data() {
     return {
-      date: new Date()
+      roles: [],
+      loading: true,
+      newRole: { name: null, available: false }
     };
   },
-  mounted() {},
+  mounted() {
+    this.getRoles();
+  },
   methods: {
-    changeDate(e) {
-      this.date = e;
+    getRoles() {
+      this.loading = true;
+      axios
+        .get("/admin/roles/get")
+        .then(response => [
+          (this.roles = response.data),
+          (this.loading = false)
+        ])
+        .catch(error => {
+          (this.error = error.response.data)((this.loading = false));
+        });
+    },
+    createRole() {
+      if (this.newRole.available !== null && this.newRole.name !== null) {
+        this.roles.push(this.newRole);
+        this.newRole = { name: null, available: null };
+      }
+    },
+    deleteRole(i) {
+      this.roles.splice(i);
+    },
+    postRoles() {
+      console.log(this.roles);
+      if (this.loading == false) {
+        this.loading = true;
+
+        axios
+          .post("/admin/roles", {
+            roles: this.roles
+          })
+          .then(response => [
+            (this.roles = response.data),
+            (this.loading = false)
+          ])
+          .catch(function(error) {
+            console.log(error);
+          });
+      }
     }
   }
 };

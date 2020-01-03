@@ -13,16 +13,4 @@ class AdminController extends Controller
         $users = User::withTrashed()->get();
         return view('admin.users.index')->withUsers($users);
     }
-
-    public function roles()
-    {
-        $users = User::all();
-        $roles = Role::all();
-        return view('admin.roles.index')->withUsers($users)->withRoles($roles);
-    }
-
-    public function upload()
-    {
-        return view('admin.roles.upload');
-    }
 }

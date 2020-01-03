@@ -26,11 +26,18 @@ Vue.component("roles", require("./components/Roles.vue").default);
 
 Vue.component("role-admin", require("./components/RoleAdmin.vue").default);
 Vue.component(
+    "user-role-admin",
+    require("./components/UserRoleAdmin.vue").default
+);
+Vue.component(
     "role-dropdown",
     require("./components/RoleDropdown.vue").default
 );
 
-Vue.component("lunch-slot-admin", require("./components/LunchSlotAdmin.vue").default);
+Vue.component(
+    "lunch-slot-admin",
+    require("./components/LunchSlotAdmin.vue").default
+);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

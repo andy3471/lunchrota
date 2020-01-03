@@ -28,9 +28,6 @@
 <script>
 export default {
   props: {
-    csrf: {
-      required: true
-    },
     roles: {
       required: true,
       default: []
