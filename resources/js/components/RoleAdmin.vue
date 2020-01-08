@@ -54,8 +54,6 @@
 </template>
 
 <script>
-import VueTimepicker from "vue2-timepicker";
-
 export default {
   props: {
     autoCalculatedEnabled: {
@@ -96,7 +94,6 @@ export default {
       this.roles.splice(i, 1);
     },
     postRoles() {
-      console.log(this.roles);
       if (this.loading == false) {
         this.loading = true;
 

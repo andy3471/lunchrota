@@ -23,15 +23,9 @@
             </div>
           </td>
         </tr>
-        <tr>
+        <tr v-if="!this.loading == true">
           <td>
-            <input
-              type="text"
-              class="form-control"
-              v-model="newSlot.time"
-              @keyup.enter="createSlot()"
-            />
-            <!-- <vue-timepicker format="HH:mm" :minute-interval="15" v-model="newTimeSlot.time"></vue-timepicker> -->
+            <time-picker></time-picker>
           </td>
           <td>
             <input
@@ -57,8 +51,6 @@
 </template>
 
 <script>
-import VueTimepicker from "vue2-timepicker";
-
 export default {
   props: {
     autoCalculatedEnabled: {
@@ -70,7 +62,7 @@ export default {
     return {
       lunchSlots: [],
       loading: true,
-      newSlot: { time: null, available: null }
+      newSlot: { id: 0, time: null, available: 0 }
     };
   },
   mounted() {
@@ -92,17 +84,27 @@ export default {
     createSlot() {
       if (this.newSlot.available !== null && this.newSlot.time !== null) {
         this.lunchSlots.push(this.newSlot);
-        this.newSlot = { time: null, available: null };
+        this.newSlot = { id: 0, time: null, available: 0 };
       }
     },
     deleteSlot(i) {
-      this.lunchSlots.splice(i);
+      this.lunchSlots.splice(i, 1);
     },
     postSlots() {
-      console.log(this.lunchSlots);
       if (this.loading == false) {
         this.loading = true;
-        //Make Post Request
+
+        axios
+          .post("/admin/lunches", {
+            slots: this.lunchSlots
+          })
+          .then(response => [
+            (this.lunchSlots = response.data),
+            (this.loading = false)
+          ])
+          .catch(function(error) {
+            console.log(error);
+          });
       }
     }
   }

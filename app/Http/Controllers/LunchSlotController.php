@@ -68,6 +68,36 @@ class LunchSlotController extends Controller
         return LunchSlot::orderBy('Time')->get();
     }
 
+    public function adminUpdateSlots(Request $request)
+    {
+        $this->validate($request, [
+            'slots.*.time' => 'required',
+            'roles.*.available'    => 'required|integer',
+        ]);
+
+        $slots = collect($request->slots);
+        $deletedSlots = LunchSlot::whereNotIn('id', $slots->where('id', '!=', null)->pluck('id')->toArray())->get();
+
+        foreach ($deletedSlots as $slot) {
+            $slot->users()->detach();
+            $slot->delete();
+        };
+
+        foreach ($slots as $s) {
+            if ($s['id'] == 0) {
+                $slot = new LunchSlot;
+                $slot->time = $s['time'];
+            } else {
+                $slot = LunchSlot::find($s['id']);
+            }
+
+            $slot->available = $s['available'];
+            $slot->save();
+        }
+
+        return LunchSlot::orderBy('time')->get();
+    }
+
     public function create()
     {
     }

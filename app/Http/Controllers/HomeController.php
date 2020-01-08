@@ -20,16 +20,9 @@ class HomeController extends Controller
     {
     }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-
-
     public function index()
     {
-        $lunchslots = LunchSlot::all();
+        $lunchslots = LunchSlot::orderBy('time')->get();
 
         return view('home')->withLunchSlots($lunchslots);
     }

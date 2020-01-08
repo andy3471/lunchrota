@@ -24,7 +24,7 @@ Route::middleware('can:admin')->group(function () {
     Route::get('admin/users', 'AdminController@users')->name('usersadmin');
     Route::get('admin/lunches', 'LunchSlotController@index')->name('lunchadmin');
     Route::get('admin/lunches/get', 'LunchSlotController@getAdminSlots');
-    Route::post('admin/lunches/destroy', 'LunchSlotController@destroy');
+    Route::post('admin/lunches', 'LunchSlotController@adminUpdateSlots');
     Route::post('admin/users/store', 'UserController@store')->name('storeuser');
     Route::get('roles/get', 'RoleController@get');
     Route::post('roles/post', 'RoleController@post');

@@ -95,3 +95,33 @@ body {
 .title {
     margin: auto;
 }
+
+//Time dropdown
+.timedropdown {
+    position: absolute;
+    height: 10em;
+    width: 10em;
+    display: flex;
+    flex-flow: row nowrap;
+    background: #fff;
+    border: 1px solid #ced4da;
+}
+
+.timeselect {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    width: 5em;
+    text-align: center;
+    cursor: pointer;
+
+    .header {
+        color: gray;
+    }
+
+    .selected {
+        background-color: #ffc107;
+    }
+}
