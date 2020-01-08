@@ -87,7 +87,6 @@ class RoleController extends Controller
         };
 
         foreach ($roles as $r) {
-
             if ($r['id'] == 0) {
                 $role = new Role;
                 $role->name = $r['name'];
@@ -96,16 +95,16 @@ class RoleController extends Controller
             }
 
             $role->available = $r['available'];
-            $role->save;
+            $role->save();
         }
 
-        return Role::all();
+        return Role::orderBy('name')->get();
     }
 
     public function userRolesAdmin()
     {
         $users = User::all();
-        $roles = Role::all();
+        $roles = Role::orderBy('name')->get();
         return view('admin.userroles.index')->withUsers($users)->withRoles($roles);
     }
 
