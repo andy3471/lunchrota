@@ -16,7 +16,7 @@
                 <lunches
                     :lunchslots="lunchslots"
                     :loggedin="loggedin"
-                    :initialLunch="initialLunch"
+                    :initiallunch="initiallunch"
                 ></lunches>
             </div>
         </div>
@@ -37,6 +37,9 @@ export default {
         rolesenabled: {
             type: Boolean,
             default: false
+        },
+        initiallunch: {
+            type: Number
         }
     },
     data() {

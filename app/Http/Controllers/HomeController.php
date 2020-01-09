@@ -23,8 +23,18 @@ class HomeController extends Controller
     public function index()
     {
         $lunchslots = LunchSlot::orderBy('time')->get();
+        $date = Carbon::today()->toDateString();
 
-        return view('home')->withLunchSlots($lunchslots);
+        $initialSlot = DB::table('users')
+            ->select('lunch_slots.id')
+            ->join('lunch_slot_user', 'users.id', '=', 'lunch_slot_user.user_id')
+            ->join('lunch_slots', 'lunch_slots.id', '=', 'lunch_slot_user.lunch_slot_id')
+            ->where('lunch_slot_user.date', $date)
+            ->where('users.id', Auth::user()->id)
+            ->orderBy('users.name')
+            ->first();
+
+        return view('home')->withLunchSlots($lunchslots)->withInitialSlot($initialSlot->id);
     }
 
     public function about()

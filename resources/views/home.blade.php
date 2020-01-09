@@ -3,6 +3,7 @@
 @section('content')
     <rota
         :LunchSlots="{{ $lunchSlots }}"
+        :initiallunch="{{ $initialSlot }}"
         @if( config('app.roles_enabled') )
             :rolesenabled="true"
         @endif
