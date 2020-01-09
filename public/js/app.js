@@ -2182,9 +2182,43 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
-    autoCalculatedEnabled: {
+    lunchcalculated: {
       "default": false,
       type: Boolean
     }
@@ -2195,7 +2229,7 @@ __webpack_require__.r(__webpack_exports__);
       loading: true,
       newSlot: {
         id: 0,
-        time: null,
+        time: "00:00",
         available: 0
       }
     };
@@ -2219,7 +2253,7 @@ __webpack_require__.r(__webpack_exports__);
         this.lunchSlots.push(this.newSlot);
         this.newSlot = {
           id: 0,
-          time: null,
+          time: "00:00",
           available: 0
         };
       }
@@ -2727,6 +2761,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     lunchslots: {
@@ -2740,10 +2781,6 @@ __webpack_require__.r(__webpack_exports__);
     rolesenabled: {
       type: Boolean,
       "default": false
-    },
-    initialLunch: {
-      "default": null,
-      type: Number
     }
   },
   data: function data() {
@@ -2794,16 +2831,42 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: {},
+  props: {
+    value: {
+      type: String,
+      "default": "00:00",
+      required: true
+    },
+    minInterval: {
+      type: Number,
+      "default": 1
+    }
+  },
   data: function data() {
     return {
       dropdownOpen: false,
       hours: [],
       mins: [],
-      selectedHour: null,
-      selectedMin: null
+      selectedHour: this.value.substring(0, 2),
+      selectedMin: this.value.substring(3, 5)
     };
+  },
+  computed: {
+    selectedTime: function selectedTime() {
+      return this.selectedHour + ":" + this.selectedMin;
+    }
   },
   mounted: function mounted() {
     this.calculateHoursList();
@@ -2813,10 +2876,21 @@ __webpack_require__.r(__webpack_exports__);
   destroyed: function destroyed() {
     document.removeEventListener("click", this.handleClickOutside);
   },
+  watch: {
+    value: function value(newVal, oldVal) {
+      this.selectedHour = this.value.substring(0, 2);
+      this.selectedMin = this.value.substring(3, 5);
+    }
+  },
   methods: {
     calculateHoursList: function calculateHoursList() {
       for (var i = 0; i < 24; i++) {
-        this.hours.push(i);
+        this.hours.push(i < 10 ? "0" + i : i);
+      }
+    },
+    calculateMinutesList: function calculateMinutesList() {
+      for (var i = 0; i < 60; i = i + this.minInterval) {
+        this.mins.push(i < 10 ? "0" + i : i);
       }
     },
     handleClickOutside: function handleClickOutside(evt) {
@@ -2824,18 +2898,13 @@ __webpack_require__.r(__webpack_exports__);
         this.dropdownOpen = false;
       }
     },
-    calculateMinutesList: function calculateMinutesList() {
-      for (var i = 0; i < 60; i++) {
-        this.mins.push(i);
-      }
-    },
     selectHour: function selectHour(h) {
-      console.log(h);
       this.selectedHour = h;
+      this.$emit("input", this.selectedTime);
     },
     selectMin: function selectMin(m) {
-      console.log(m);
       this.selectedMin = m;
+      this.$emit("input", this.selectedTime);
     },
     openDropdown: function openDropdown() {
       this.dropdownOpen = true;
@@ -38459,43 +38528,55 @@ var render = function() {
       _c(
         "tbody",
         [
-          _vm._m(0),
+          _c("tr", [
+            _c("th", { staticClass: "col-7" }, [_vm._v("Time")]),
+            _vm._v(" "),
+            this.lunchcalculated == false
+              ? _c("th", { staticClass: "col-4" }, [
+                  _vm._v("\n                    Available\n                ")
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _c("th", { staticClass: "col-1" })
+          ]),
           _vm._v(" "),
           _vm._l(this.lunchSlots, function(lunchSlot, index) {
             return _c("tr", { key: lunchSlot.id }, [
               _c("td", [_vm._v(_vm._s(lunchSlot.time))]),
               _vm._v(" "),
-              _c("td", [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model.number",
-                      value: lunchSlot.available,
-                      expression: "lunchSlot.available",
-                      modifiers: { number: true }
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: { type: "number", min: "0" },
-                  domProps: { value: lunchSlot.available },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
+              _vm.lunchcalculated == false
+                ? _c("td", [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model.number",
+                          value: lunchSlot.available,
+                          expression: "lunchSlot.available",
+                          modifiers: { number: true }
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { type: "number", min: "0" },
+                      domProps: { value: lunchSlot.available },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            lunchSlot,
+                            "available",
+                            _vm._n($event.target.value)
+                          )
+                        },
+                        blur: function($event) {
+                          return _vm.$forceUpdate()
+                        }
                       }
-                      _vm.$set(
-                        lunchSlot,
-                        "available",
-                        _vm._n($event.target.value)
-                      )
-                    },
-                    blur: function($event) {
-                      return _vm.$forceUpdate()
-                    }
-                  }
-                })
-              ]),
+                    })
+                  ])
+                : _vm._e(),
               _vm._v(" "),
               _c("td", [
                 _c(
@@ -38509,64 +38590,85 @@ var render = function() {
                       }
                     }
                   },
-                  [_vm._v("Delete")]
+                  [
+                    _vm._v(
+                      "\n                        Delete\n                    "
+                    )
+                  ]
                 )
               ])
             ])
           }),
           _vm._v(" "),
-          this.loading == true ? _c("tr", [_vm._m(1)]) : _vm._e(),
+          this.loading == true ? _c("tr", [_vm._m(0)]) : _vm._e(),
           _vm._v(" "),
           !this.loading == true
             ? _c("tr", [
-                _c("td", [_c("time-picker")], 1),
+                _c(
+                  "td",
+                  [
+                    _c("time-picker", {
+                      attrs: { minInterval: 5 },
+                      model: {
+                        value: _vm.newSlot.time,
+                        callback: function($$v) {
+                          _vm.$set(_vm.newSlot, "time", $$v)
+                        },
+                        expression: "newSlot.time"
+                      }
+                    })
+                  ],
+                  1
+                ),
                 _vm._v(" "),
-                _c("td", [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model.number",
-                        value: _vm.newSlot.available,
-                        expression: "newSlot.available",
-                        modifiers: { number: true }
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: { type: "number", min: "0" },
-                    domProps: { value: _vm.newSlot.available },
-                    on: {
-                      keyup: function($event) {
-                        if (
-                          !$event.type.indexOf("key") &&
-                          _vm._k(
-                            $event.keyCode,
-                            "enter",
-                            13,
-                            $event.key,
-                            "Enter"
-                          )
-                        ) {
-                          return null
+                this.lunchcalculated == false
+                  ? _c("td", [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model.number",
+                            value: _vm.newSlot.available,
+                            expression: "newSlot.available",
+                            modifiers: { number: true }
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { type: "number", min: "0" },
+                        domProps: { value: _vm.newSlot.available },
+                        on: {
+                          keyup: function($event) {
+                            if (
+                              !$event.type.indexOf("key") &&
+                              _vm._k(
+                                $event.keyCode,
+                                "enter",
+                                13,
+                                $event.key,
+                                "Enter"
+                              )
+                            ) {
+                              return null
+                            }
+                            return _vm.createSlot()
+                          },
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.newSlot,
+                              "available",
+                              _vm._n($event.target.value)
+                            )
+                          },
+                          blur: function($event) {
+                            return _vm.$forceUpdate()
+                          }
                         }
-                        return _vm.createSlot()
-                      },
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(
-                          _vm.newSlot,
-                          "available",
-                          _vm._n($event.target.value)
-                        )
-                      },
-                      blur: function($event) {
-                        return _vm.$forceUpdate()
-                      }
-                    }
-                  })
-                ]),
+                      })
+                    ])
+                  : _vm._e(),
                 _vm._v(" "),
                 _c("td", [
                   _c(
@@ -38580,7 +38682,11 @@ var render = function() {
                         }
                       }
                     },
-                    [_vm._v("Add")]
+                    [
+                      _vm._v(
+                        "\n                        Add\n                    "
+                      )
+                    ]
                   )
                 ])
               ])
@@ -38599,7 +38705,7 @@ var render = function() {
                     }
                   }
                 },
-                [_vm._v("Save")]
+                [_vm._v("\n                        Save\n                    ")]
               )
             ])
           ])
@@ -38610,18 +38716,6 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("tr", [
-      _c("th", { staticClass: "col-7" }, [_vm._v("Time")]),
-      _vm._v(" "),
-      _c("th", { staticClass: "col-4" }, [_vm._v("Available")]),
-      _vm._v(" "),
-      _c("th", { staticClass: "col-1" })
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -39314,6 +39408,7 @@ var render = function() {
     _c("input", {
       staticClass: "form-control",
       attrs: { type: "text" },
+      domProps: { value: this.selectedTime },
       on: {
         click: function($event) {
           return _vm.openDropdown()
@@ -39327,7 +39422,7 @@ var render = function() {
             "ul",
             { staticClass: "timeselect hours" },
             [
-              _c("li", { staticClass: "header" }, [_vm._v("HH")]),
+              _c("li", { staticClass: "helper" }, [_vm._v("HH")]),
               _vm._v(" "),
               _vm._l(this.hours, function(hour, index) {
                 return _c(
@@ -39341,7 +39436,11 @@ var render = function() {
                       }
                     }
                   },
-                  [_vm._v(_vm._s(hour))]
+                  [
+                    _vm._v(
+                      "\n                " + _vm._s(hour) + "\n            "
+                    )
+                  ]
                 )
               })
             ],
@@ -39352,7 +39451,7 @@ var render = function() {
             "ul",
             { staticClass: "timeselect minutes" },
             [
-              _c("li", { staticClass: "header" }, [_vm._v("MM")]),
+              _c("li", { staticClass: "helper" }, [_vm._v("MM")]),
               _vm._v(" "),
               _vm._l(this.mins, function(min, index) {
                 return _c(
@@ -39366,7 +39465,11 @@ var render = function() {
                       }
                     }
                   },
-                  [_vm._v(_vm._s(min))]
+                  [
+                    _vm._v(
+                      "\n                " + _vm._s(min) + "\n            "
+                    )
+                  ]
                 )
               })
             ],

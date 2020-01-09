@@ -71,7 +71,7 @@ class LunchSlotController extends Controller
     public function adminUpdateSlots(Request $request)
     {
         $this->validate($request, [
-            'slots.*.time' => 'required',
+            'slots.*.time' => 'required|date_format:H:i',
             'roles.*.available'    => 'required|integer',
         ]);
 
@@ -91,7 +91,11 @@ class LunchSlotController extends Controller
                 $slot = LunchSlot::find($s['id']);
             }
 
-            $slot->available = $s['available'];
+            if (config('app.lunch_slot_calculated')) {
+            } else {
+                $slot->available = $s['available'];
+            }
+
             $slot->save();
         }
 

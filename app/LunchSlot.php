@@ -19,6 +19,11 @@ class LunchSlot extends Model
         return $this->belongsToMany('App\User')->withPivot('date');
     }
 
+    public function getTimeAttribute($value)
+    {
+        return substr($value, 0, 5);
+    }
+
     public function getAvailableTodayAttribute()
     {
         $date = Carbon::today()->toDateString();

@@ -11467,8 +11467,9 @@ body {
   cursor: pointer;
 }
 
-.timeselect .header {
+.timeselect .helper {
   color: gray;
+  cursor: default;
 }
 
 .timeselect .selected {

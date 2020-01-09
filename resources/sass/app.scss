@@ -48,23 +48,22 @@ body {
     border: 1px solid #dee2e6;
     grid-template-columns: auto auto auto auto auto auto auto;
 
-
     .date-title {
         grid-column: 1/8;
-        padding: .75rem;
+        padding: 0.75rem;
     }
 
     .arrow-button {
         grid-column: span 2;
         border-top: 1px solid #dee2e6;
-        padding: .75rem;
+        padding: 0.75rem;
         font-weight: bold;
     }
 
     .date-title-small {
         grid-column: span 3;
         border-top: 1px solid #dee2e6;
-        padding: .75rem;
+        padding: 0.75rem;
         font-weight: bold;
     }
 
@@ -75,7 +74,7 @@ body {
     .date {
         border-top: 1px solid #dee2e6;
         color: #212529;
-        padding: .75rem;
+        padding: 0.75rem;
     }
 
     .selected {
@@ -117,8 +116,9 @@ body {
     text-align: center;
     cursor: pointer;
 
-    .header {
+    .helper {
         color: gray;
+        cursor: default;
     }
 
     .selected {
