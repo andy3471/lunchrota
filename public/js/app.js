@@ -2355,16 +2355,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     lunchslots: {
@@ -2431,7 +2421,7 @@ __webpack_require__.r(__webpack_exports__);
       this.error = null;
       this.userLunches = [];
       axios.post("/lunchslots/unclaim").then(function (response) {
-        return [_this3.userLunches = response.data, _this3.loading = false, _this3.selectedLunch = null];
+        return [_this3.userLunches = response.data, _this3.loading = false, _this3.selectedLunch = null, _this3.getSlots()];
       })["catch"](function (error) {
         (_this3.error = error.response.data)(_this3.loading = false);
       });
@@ -38809,82 +38799,66 @@ var render = function() {
         _vm._v(" "),
         _c("tr", [
           _c("td", { attrs: { colspan: "3" } }, [
-            this.slotsLoading == true
-              ? _c(
-                  "div",
-                  {
-                    staticClass: "spinner-border spinner-border-sm",
-                    attrs: { role: "status" }
-                  },
-                  [
-                    _c("span", { staticClass: "sr-only" }, [
-                      _vm._v("Loading...")
-                    ])
-                  ]
-                )
-              : _c(
-                  "div",
-                  {
-                    staticClass: "btn-group btn-block",
-                    staticStyle: { height: "46px" }
-                  },
-                  [
-                    _vm._l(this.slots, function(lunchslot) {
-                      return _c(
-                        "button",
-                        {
-                          key: lunchslot.id,
-                          staticClass: "btn btn-primary lunchbtn",
-                          staticStyle: { width: "100%" },
-                          attrs: {
-                            value: "12:30",
-                            disabled:
-                              _vm.loggedin == false ||
-                              lunchslot.available_today == 0 ||
-                              lunchslot.id == _vm.selectedLunch
-                          },
-                          on: {
-                            click: function($event) {
-                              return _vm.setLunch(lunchslot.id, 1)
-                            }
-                          }
-                        },
-                        [
-                          _vm._v(
-                            "\n                        " +
-                              _vm._s(lunchslot.time) +
-                              " (" +
-                              _vm._s(lunchslot.available_today) +
-                              ")\n                    "
-                          )
-                        ]
-                      )
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-primary lunchbtn",
-                        staticStyle: { width: "20%" },
-                        attrs: {
-                          disabled:
-                            _vm.loggedin == false || _vm.selectedLunch == null
-                        },
-                        on: {
-                          click: function($event) {
-                            return _vm.removeLunch()
-                          }
-                        }
+            _c(
+              "div",
+              {
+                staticClass: "btn-group btn-block",
+                staticStyle: { height: "46px" }
+              },
+              [
+                _vm._l(this.slots, function(lunchslot) {
+                  return _c(
+                    "button",
+                    {
+                      key: lunchslot.id,
+                      staticClass: "btn btn-primary lunchbtn",
+                      staticStyle: { width: "100%" },
+                      attrs: {
+                        value: "12:30",
+                        disabled:
+                          _vm.loggedin == false ||
+                          lunchslot.available_today == 0 ||
+                          lunchslot.id == _vm.selectedLunch ||
+                          _vm.slotsLoading == true
                       },
-                      [
-                        _vm._v(
-                          "\n                        X\n                    "
-                        )
-                      ]
-                    )
-                  ],
-                  2
+                      on: {
+                        click: function($event) {
+                          return _vm.setLunch(lunchslot.id, 1)
+                        }
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                        " +
+                          _vm._s(lunchslot.time) +
+                          " (" +
+                          _vm._s(lunchslot.available_today) +
+                          ")\n                    "
+                      )
+                    ]
+                  )
+                }),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary lunchbtn",
+                    staticStyle: { width: "20%" },
+                    attrs: {
+                      disabled:
+                        _vm.loggedin == false || _vm.selectedLunch == null
+                    },
+                    on: {
+                      click: function($event) {
+                        return _vm.removeLunch()
+                      }
+                    }
+                  },
+                  [_vm._v("\n                        X\n                    ")]
                 )
+              ],
+              2
+            )
           ])
         ]),
         _vm._v(" "),

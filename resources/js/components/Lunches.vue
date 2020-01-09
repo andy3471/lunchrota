@@ -13,18 +13,7 @@
             </tr>
             <tr>
                 <td colspan="3">
-                    <div
-                        v-if="this.slotsLoading == true"
-                        class="spinner-border spinner-border-sm"
-                        role="status"
-                    >
-                        <span class="sr-only">Loading...</span>
-                    </div>
-                    <div
-                        v-else
-                        class="btn-group btn-block"
-                        style="height: 46px"
-                    >
+                    <div class="btn-group btn-block" style="height: 46px">
                         <button
                             v-for="lunchslot in this.slots"
                             v-bind:key="lunchslot.id"
@@ -35,7 +24,8 @@
                             v-bind:disabled="
                                 loggedin == false ||
                                     lunchslot.available_today == 0 ||
-                                    lunchslot.id == selectedLunch
+                                    lunchslot.id == selectedLunch ||
+                                    slotsLoading == true
                             "
                         >
                             {{ lunchslot.time }} ({{
@@ -122,6 +112,7 @@ export default {
                 this.rolesLoading = true;
                 this.error = null;
                 this.userLunches = [];
+                this.slotsLoading = true;
 
                 if (a !== 0) {
                     axios
