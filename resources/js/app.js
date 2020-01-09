@@ -19,16 +19,11 @@ window.Vue = require("vue");
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component("rota", require("./components/Rota.vue").default);
-Vue.component("date-picker", require("./components/DatePicker.vue").default);
-Vue.component("lunches", require("./components/Lunches.vue").default);
-Vue.component("roles", require("./components/Roles.vue").default);
-
-Vue.component("role-admin", require("./components/RoleAdmin.vue").default);
-Vue.component(
-    "user-role-admin",
-    require("./components/UserRoleAdmin.vue").default
-);
+//Pages
+Vue.component("rota", require("./pages/Rota.vue").default);
+Vue.component("role-admin", require("./pages/RoleAdmin.vue").default);
+Vue.component("user-role-admin", require("./pages/UserRoleAdmin.vue").default);
+Vue.component("user-admin", require("./pages/UserAdmin.vue").default);
 Vue.component(
     "role-dropdown",
     require("./components/RoleDropdown.vue").default
@@ -36,13 +31,14 @@ Vue.component(
 
 Vue.component(
     "lunch-slot-admin",
-    require("./components/LunchSlotAdmin.vue").default
+    require("./pages/LunchSlotAdmin.vue").default
 );
 
-Vue.component(
-    "time-picker",
-    require("./components/TimePicker.vue").default
-);
+//Components
+Vue.component("date-picker", require("./components/DatePicker.vue").default);
+Vue.component("lunches", require("./components/Lunches.vue").default);
+Vue.component("roles", require("./components/Roles.vue").default);
+Vue.component("time-picker", require("./components/TimePicker.vue").default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

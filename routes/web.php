@@ -21,7 +21,8 @@ Route::middleware('can:admin')->group(function () {
     Route::get('admin/upload', 'RoleController@userRolesUpload')->name('upload');
     Route::get('admin/upload/downloadcsv', 'RoleController@downloadCsv')->name('downloadcsv');
     Route::Post('admin/upload/uploadcsv', 'RoleController@uploadCsv')->name('uploadcsv');
-    Route::get('admin/users', 'AdminController@users')->name('usersadmin');
+    Route::get('admin/users', 'UserController@adminUsers')->name('usersadmin');
+    Route::get('admin/users/get', 'UserController@adminUsersGet');
     Route::get('admin/lunches', 'LunchSlotController@index')->name('lunchadmin');
     Route::get('admin/lunches/get', 'LunchSlotController@getAdminSlots');
     Route::post('admin/lunches', 'LunchSlotController@adminUpdateSlots');

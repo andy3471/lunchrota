@@ -13,12 +13,7 @@ class LunchSlotController extends Controller
 {
     public function getSlots()
     {
-
-        $lunchslots = Cache::remember('lunchslots', 86400, function () {
-            return LunchSlot::all();
-        });
-
-        return $lunchslots;
+        return LunchSlot::all();
     }
 
     public function userLunches()

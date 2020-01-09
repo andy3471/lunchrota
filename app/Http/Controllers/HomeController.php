@@ -25,16 +25,24 @@ class HomeController extends Controller
         $lunchslots = LunchSlot::orderBy('time')->get();
         $date = Carbon::today()->toDateString();
 
-        $initialSlot = DB::table('users')
-            ->select('lunch_slots.id')
-            ->join('lunch_slot_user', 'users.id', '=', 'lunch_slot_user.user_id')
-            ->join('lunch_slots', 'lunch_slots.id', '=', 'lunch_slot_user.lunch_slot_id')
-            ->where('lunch_slot_user.date', $date)
-            ->where('users.id', Auth::user()->id)
-            ->orderBy('users.name')
-            ->first();
+        if (Auth::check()) {
+            $initialSlot = DB::table('users')
+                ->select('lunch_slots.id')
+                ->join('lunch_slot_user', 'users.id', '=', 'lunch_slot_user.user_id')
+                ->join('lunch_slots', 'lunch_slots.id', '=', 'lunch_slot_user.lunch_slot_id')
+                ->where('lunch_slot_user.date', $date)
+                ->where('users.id', Auth::user()->id)
+                ->orderBy('users.name')
+                ->first();
+        }
 
-        return view('home')->withLunchSlots($lunchslots)->withInitialSlot($initialSlot->id);
+        if (isset($initialSlot->id)) {
+            $initialSlot = $initialSlot->id;
+        } else {
+            $initialSlot = '-1';
+        }
+
+        return view('home')->withLunchSlots($lunchslots)->withInitialSlot($initialSlot);
     }
 
     public function about()

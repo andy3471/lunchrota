@@ -40,4 +40,16 @@ class UserController extends Controller
 
         return redirect()->back()->with("message", 'User Created');
     }
+
+    public function adminUsers()
+    {
+        $users = User::withTrashed()->get();
+        return view('admin.users.index')->withUsers($users);
+    }
+
+    public function adminUsersGet()
+    {
+        $users = User::orderBy('name')->get();
+        return $users;
+    }
 }
