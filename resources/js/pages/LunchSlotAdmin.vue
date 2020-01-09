@@ -33,7 +33,7 @@
                     </td>
                 </tr>
                 <tr v-if="this.loading == true">
-                    <td colspan="3">
+                    <td colspan="3" class="text-center">
                         <div
                             class="spinner-border spinner-border-sm"
                             role="status"
