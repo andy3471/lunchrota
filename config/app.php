@@ -138,6 +138,8 @@ return [
     'roles_enabled' => env('APP_ROLES_ENABLED', true),
     'lunch_slot_calculated' => env('LUNCH_SLOT_CALCLULATED', false),
     'lunch_slot_calculated_ratio' => env('LUNCH_SLOT_CALCULATED_RATIO', '0.33'),
+    'demo_mode' => env('APP_DEMO_MODE', false),
+    'sd_rota' => env('APP_SD_ROTA', false),
 
     /*
     |--------------------------------------------------------------------------
