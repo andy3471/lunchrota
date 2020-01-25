@@ -16,6 +16,6 @@ class UsersTableSeeder extends Seeder
             'admin' => '1'
         ]);
 
-        factory(App\User::class, 20)->create();
+        factory(App\User::class, 10)->create();
     }
 }
