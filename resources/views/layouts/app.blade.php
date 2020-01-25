@@ -78,9 +78,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('about') }}">About</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="https://sd-rota.adastra.co.uk/Rota2/default.aspx" target="_blank">SDRota</a>
-                    </li>
+                    @if (config('app.sd_rota') == true)
+                        <li class="nav-item">
+                            <a class="nav-link" href="https://sd-rota.adastra.co.uk/Rota2/default.aspx" target="_blank">SDRota</a>
+                        </li>
+                    @endif
                     @can('admin',Auth::user())
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown" aria-expanded="false">
@@ -187,7 +189,11 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                    @if (config('app.demo_mode') == true)
+                        {{ __('auth.demochangepassword') }}
+                    @else
                     <div class="form-group row">
+                    
                         <label for="Current Password" class="col-md-4 col-form-label text-md-right">Current Password</label>
 
                         <div class="col-md-6">
@@ -220,10 +226,13 @@
                             <input id="email" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="newpassword_confirmation" required>
                         </div>
                     </div>
+                    @endif
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Change Password</button>
+                    @if (!config('app.demo_mode') == true)
+                        <button type="submit" class="btn btn-primary">Change Password</button>
+                    @endif
                 </div>
                 </div>
             </form>
@@ -242,11 +251,26 @@
                         </button>
                     </div>
                     <div class="modal-body">
+                        @if (config('app.demo_mode') == true)
+                            {{ __('auth.demomodelogin') }}
+                        @endif
                         <div class="form-group row">
                             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                                <input id="email" 
+                                    type="email" 
+                                    class="form-control @error('email') is-invalid @enderror" 
+                                    name="email" 
+                                    @if (config('app.demo_mode') == true)
+                                        value="admin@admin.com"
+                                    @else
+                                        value="{{ old('email') }}" 
+                                    @endif
+                                    required
+                                    autocomplete="email" 
+                                    autofocus
+                                >
 
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -260,7 +284,16 @@
                             <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
 
                             <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+                                <input id="password" 
+                                    type="password" 
+                                    class="form-control @error('password') is-invalid @enderror" 
+                                    name="password" 
+                                    @if (config('app.demo_mode') == true)
+                                        value="password"
+                                    @endif
+                                    required 
+                                    autocomplete="current-password"
+                                >
 
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
