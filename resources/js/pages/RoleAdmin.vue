@@ -15,17 +15,21 @@
             </div>
           </td>
           <td>
-            <button type="button" class="btn btn-danger" v-on:click="deleteRole(index)">Delete</button>
+            <button
+              type="button"
+              class="btn btn-danger btn-sm"
+              v-on:click="deleteRole(index)"
+            >Delete</button>
           </td>
         </tr>
-        <tr v-if="this.loading == true">
+        <tr v-if="this.loading == true" class="text-center">
           <td colspan="3">
             <div class="spinner-border spinner-border-sm" role="status">
               <span class="sr-only">Loading...</span>
             </div>
           </td>
         </tr>
-        <tr v-if="!this.loading == true">
+        <tr v-else>
           <td>
             <input
               type="text"
@@ -40,12 +44,16 @@
             </div>
           </td>
           <td>
-            <button type="button" class="btn btn-primary" @click="createRole()">Add</button>
+            <div class="text-right">
+              <button type="button" class="btn btn-primary btn-sm" @click="createRole()">Add</button>
+            </div>
           </td>
         </tr>
         <tr v-if="!this.loading == true">
           <td colspan="3">
-            <button type="button" class="btn btn-primary" @click="postRoles()">Save</button>
+            <div class="text-right">
+              <button type="button" class="btn btn-primary btn-sm" @click="postRoles()">Save</button>
+            </div>
           </td>
         </tr>
       </tbody>

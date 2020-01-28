@@ -9,7 +9,7 @@
                 <th>New Password</th>
             </tr>
             <tr v-if="this.loading == true">
-                <td colspan="5">
+                <td colspan="5" class="text-center">
                     <div class="spinner-border spinner-border-sm" role="status">
                         <span class="sr-only">Loading...</span>
                     </div>
