@@ -2812,6 +2812,35 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     autoCalculatedEnabled: {
@@ -38776,7 +38805,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("td", { attrs: { colspan: "3" } }, [
+    return _c("td", { staticClass: "text-center", attrs: { colspan: "3" } }, [
       _c(
         "div",
         {
@@ -38953,7 +38982,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("td", { attrs: { colspan: "3" } }, [
+    return _c("td", { staticClass: "text-center", attrs: { colspan: "3" } }, [
       _c(
         "div",
         {
@@ -39280,7 +39309,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("td", { attrs: { colspan: "3" } }, [
+    return _c("td", { staticClass: "text-center", attrs: { colspan: "3" } }, [
       _c(
         "div",
         {
@@ -39382,16 +39411,19 @@ var render = function() {
                       }
                     }
                   },
-                  [_vm._v("Delete")]
+                  [
+                    _vm._v(
+                      "\n                        Delete\n                    "
+                    )
+                  ]
                 )
               ])
             ])
           }),
           _vm._v(" "),
-          this.loading == true ? _c("tr", [_vm._m(1)]) : _vm._e(),
-          _vm._v(" "),
-          !this.loading == true
-            ? _c("tr", [
+          this.loading == true
+            ? _c("tr", { staticClass: "text-center" }, [_vm._m(1)])
+            : _c("tr", [
                 _c("td", [
                   _c("input", {
                     directives: [
@@ -39494,11 +39526,14 @@ var render = function() {
                         }
                       }
                     },
-                    [_vm._v("Add")]
+                    [
+                      _vm._v(
+                        "\n                        Add\n                    "
+                      )
+                    ]
                   )
                 ])
-              ])
-            : _vm._e(),
+              ]),
           _vm._v(" "),
           !this.loading == true
             ? _c("tr", [
@@ -39514,7 +39549,11 @@ var render = function() {
                         }
                       }
                     },
-                    [_vm._v("Save")]
+                    [
+                      _vm._v(
+                        "\n                        Save\n                    "
+                      )
+                    ]
                   )
                 ])
               ])
@@ -39788,7 +39827,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("td", { attrs: { colspan: "5" } }, [
+    return _c("td", { staticClass: "text-center", attrs: { colspan: "5" } }, [
       _c(
         "div",
         {
