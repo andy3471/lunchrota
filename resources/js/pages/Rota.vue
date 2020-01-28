@@ -7,8 +7,7 @@
 
             <div class="col-lg-4 order-lg-2" v-if="rolesenabled">
                 <date-picker
-                    :date="date"
-                    @change-date="changeDate"
+                    v-model="date"
                 ></date-picker>
             </div>
 
@@ -49,9 +48,6 @@ export default {
     },
     mounted() {},
     methods: {
-        changeDate(e) {
-            this.date = e;
-        }
     }
 };
 </script>

@@ -35,10 +35,12 @@ Vue.component(
 );
 
 //Components
-Vue.component("date-picker", require("./components/DatePicker.vue").default);
 Vue.component("lunches", require("./components/Lunches.vue").default);
 Vue.component("roles", require("./components/Roles.vue").default);
-Vue.component("time-picker", require("./components/TimePicker.vue").default);
+
+//External Components
+Vue.component("date-picker", require("andyh-datepicker").default);
+Vue.component("time-picker", require("andyh-timepicker").default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

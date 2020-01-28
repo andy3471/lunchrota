@@ -1,13 +1,10 @@
 // Fonts
 @import url("https://fonts.googleapis.com/css?family=Nunito");
 @import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
-
 // Variables
 @import "variables";
-
 // Bootstrap
 @import "~bootstrap/scss/bootstrap";
-
 body {
     background-color: #fff;
     color: #212529;
@@ -43,50 +40,6 @@ body {
     background: #f2f2f2;
 }
 
-.date-grid-container {
-    display: grid;
-    border: 1px solid #dee2e6;
-    grid-template-columns: auto auto auto auto auto auto auto;
-
-    .date-title {
-        grid-column: 1/8;
-        padding: 0.75rem;
-    }
-
-    .arrow-button {
-        grid-column: span 2;
-        border-top: 1px solid #dee2e6;
-        padding: 0.75rem;
-        font-weight: bold;
-    }
-
-    .date-title-small {
-        grid-column: span 3;
-        border-top: 1px solid #dee2e6;
-        padding: 0.75rem;
-        font-weight: bold;
-    }
-
-    .day {
-        font-weight: bold;
-    }
-
-    .date {
-        border-top: 1px solid #dee2e6;
-        color: #212529;
-        padding: 0.75rem;
-    }
-
-    .selected {
-        background-color: #ffc107;
-    }
-
-    .disabled {
-        color: #888888;
-        background-color: white;
-    }
-}
-
 .unavailable {
     background-color: #f2f2f2;
 }
@@ -97,31 +50,16 @@ body {
 
 //Time Picker
 .timedropdown {
-    position: absolute;
-    height: 10em;
-    width: 10em;
-    display: flex;
-    flex-flow: row nowrap;
-    background: #fff;
-    border: 1px solid #ced4da;
-}
-
-.timeselect {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden;
-    overflow-y: auto;
-    width: 5em;
-    text-align: center;
-    cursor: pointer;
-
-    .helper {
-        color: gray;
-        cursor: default;
-    }
-
     .selected {
         background-color: #ffc107;
+    }
+}
+
+.andyh-datepicker-container {
+    .selected {
+        background-color: #ffc107;
+    }
+    .selected:hover {
+        background-color: #ffc107
     }
 }
