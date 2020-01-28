@@ -50,4 +50,9 @@ class HomeController extends Controller
         $admins = User::Select('name')->where('admin', true)->get();
         return view('about')->with('admins', $admins);
     }
+
+    public function demo()
+    {
+        return view('auth.demomode');
+    }
 }

@@ -4,11 +4,13 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::get('about', 'HomeController@about')->name('about');
 Route::get('roles', 'RoleController@index');
 
+Route::get('/demo', 'HomeController@demo')->name('demomode');
+
 Route::get('lunchslots', 'LunchSlotController@getSlots');
 Route::get('lunchslots/users', 'LunchSlotController@userLunches');
 
 Route::middleware('auth')->group(function () {
-    Route::post('changepassword', 'UserController@changePassword')->name('changepassword');
+    Route::post('changepassword', 'UserController@changePassword')->name('changepassword')->middleware('demo_mode');
     Route::post('lunchslots/claim', 'LunchSlotController@claim');
     Route::post('lunchslots/unclaim', 'LunchSlotController@unclaim');
 });
@@ -21,8 +23,8 @@ Route::middleware('can:admin')->group(function () {
     Route::get('admin/upload', 'RoleController@userRolesUpload')->name('upload');
     Route::get('admin/upload/downloadcsv', 'RoleController@downloadCsv')->name('downloadcsv');
     Route::Post('admin/upload/uploadcsv', 'RoleController@uploadCsv')->name('uploadcsv');
-    Route::get('admin/users', 'UserController@adminUsers')->name('usersadmin');
-    Route::get('admin/users/get', 'UserController@adminUsersGet');
+    Route::get('admin/users', 'UserController@adminUsers')->name('usersadmin')->middleware('demo_mode');
+    Route::get('admin/users/get', 'UserController@adminUsersGet')->middleware('demo_mode');
     Route::get('admin/lunches', 'LunchSlotController@index')->name('lunchadmin');
     Route::get('admin/lunches/get', 'LunchSlotController@getAdminSlots');
     Route::post('admin/lunches', 'LunchSlotController@adminUpdateSlots');
