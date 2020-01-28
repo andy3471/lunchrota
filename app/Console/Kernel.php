@@ -24,7 +24,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('demo:refresh')->hourly();
+        $schedule->command('demo:refresh')->daily();
     }
 
     /**
