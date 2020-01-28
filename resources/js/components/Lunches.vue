@@ -54,7 +54,7 @@
                 <td>{{ user.time }}</td>
             </tr>
             <tr v-if="this.loading == true || this.rolesLoading == true">
-                <td colspan="3">
+                <td colspan="3" class="text-center">
                     <div class="spinner-border spinner-border-sm" role="status">
                         <span class="sr-only">Loading...</span>
                     </div>
