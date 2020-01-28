@@ -133,15 +133,25 @@ class RoleController extends Controller
             ->get();
 
         $roles = json_decode(json_encode($roles), true);
-        array_unshift($roles, array_keys($roles[0]));
 
-        $callback = function () use ($roles) {
-            $FH = fopen('php://output', 'w');
-            foreach ($roles as $row) {
-                fputcsv($FH, $row);
-            }
-            fclose($FH);
-        };
+        if (count($roles) > 0) {
+            array_unshift($roles, array_keys($roles[0]));
+
+            $callback = function () use ($roles) {
+                $FH = fopen('php://output', 'w');
+                foreach ($roles as $row) {
+                    fputcsv($FH, $row);
+                }
+                fclose($FH);
+            };
+        } else {
+            $callback = function () {
+                $FH = fopen('php://output', 'w');
+
+                fputcsv($FH, array('name', 'date', 'role'));
+                fclose($FH);
+            };
+        }
 
         return response()->streamDownload($callback, $filename, $headers);
     }
