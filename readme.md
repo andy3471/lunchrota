@@ -8,15 +8,14 @@ The site can be configured to either use a set number of available lunch slots, 
 
 LunchRota contains a full admin panel for editing Users, LunchSlots, Roles and User Roles. These use a Vue JS interface, to allow you to bulk edit.
 
+![ScreenShot](https://raw.github.com/andy3471/rota/master/docs/img/lunchrota-home.jpg)
+[Try Out the Demo](https://lunchrota.andyh.app)
+
 ## Technologies
 
 Built on the Laravel PHP Framework, with Vue JS.
 
 All development environments are running MySQL, Redis and Nginx. Laravel offers support for other DB and web servers, however these are untested.
-
-![ScreenShot](https://raw.github.com/andy3471/rota/master/docs/img/lunchrota-home.jpg)
-[Try Out the Demo](https://lunchrota.andyh.app)
-
 
 ## Install
 
