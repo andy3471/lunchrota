@@ -44,12 +44,16 @@
             </div>
           </td>
           <td>
-            <button type="button" class="btn btn-primary btn-sm" @click="createRole()">Add</button>
+            <div class="text-right">
+              <button type="button" class="btn btn-primary btn-sm" @click="createRole()">Add</button>
+            </div>
           </td>
         </tr>
         <tr v-if="!this.loading == true">
           <td colspan="3">
-            <button type="button" class="btn btn-primary btn-sm" @click="postRoles()">Save</button>
+            <div class="text-right">
+              <button type="button" class="btn btn-primary btn-sm" @click="postRoles()">Save</button>
+            </div>
           </td>
         </tr>
       </tbody>

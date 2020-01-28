@@ -41,12 +41,16 @@
             />
           </td>
           <td>
-            <button type="button" class="btn btn-primary btn-sm" @click="createSlot()">Add</button>
+            <div class="text-right">
+              <button type="button" class="btn btn-primary btn-sm" @click="createSlot()">Add</button>
+            </div>
           </td>
         </tr>
         <tr>
           <td colspan="3">
-            <button type="button" class="btn btn-primary btn-sm" @click="postSlots()">Save</button>
+            <div class="text-right">
+              <button type="button" class="btn btn-primary btn-sm" @click="postSlots()">Save</button>
+            </div>
           </td>
         </tr>
       </tbody>
