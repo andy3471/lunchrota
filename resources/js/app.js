@@ -1,12 +1,9 @@
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
-
 require("./bootstrap");
-
 window.Vue = require("vue");
+
+import BootstrapVue from 'bootstrap-vue'
+
+Vue.use(BootstrapVue)
 
 /**
  * The following block of code may be used to automatically register your
@@ -35,10 +32,12 @@ Vue.component(
 );
 
 //Components
-Vue.component("date-picker", require("./components/DatePicker.vue").default);
 Vue.component("lunches", require("./components/Lunches.vue").default);
 Vue.component("roles", require("./components/Roles.vue").default);
-Vue.component("time-picker", require("./components/TimePicker.vue").default);
+
+//External Components
+Vue.component("date-picker", require("andyh-datepicker").default);
+Vue.component("time-picker", require("andyh-timepicker").default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
