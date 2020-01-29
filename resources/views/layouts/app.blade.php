@@ -58,7 +58,13 @@
         <div class="container-fluid header">
             <div class="row">
                 <div class="col-lg-2">
-                <a href="{{ route('home') }}"><img src="{{ asset('img/logo.png')}}" style="width:10rem"></a>
+                    <a href="{{ route('home') }}">
+                        @if (file_exists(public_path('img/logo_override.png')))
+                            <img src="{{ asset('img/logo_override.png')}}" style="width:10rem">
+                        @else 
+                            <img src="{{ asset('img/logo_default.png')}}" style="width:10rem">
+                        @endif
+                    </a>
                 </div>
                 <div class="col-sm-10 title">
                     <h1 class="">{{ config('app.name', 'Rota') }}</h1>
@@ -169,7 +175,7 @@
                                 {{ Auth::user()->name }}
                             @endauth
                         </h4>
-                        <h5 class="text-right">Information for Care. Everywhere.</h5>
+                        <h5 class="text-right">{{ config('app.footer_text')}}</h5>
                     </div>
                 </div>
             </nav>
