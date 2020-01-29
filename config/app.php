@@ -141,6 +141,7 @@ return [
     'demo_mode' => env('APP_DEMO_MODE', false),
     'sd_rota' => env('APP_SD_ROTA', false),
     'default_role' => env('APP_DEFAULT_ROLE', 'none'),
+    'footer_text' => env('APP_FOOTER_TEXT', ''),
 
     /*
     |--------------------------------------------------------------------------
