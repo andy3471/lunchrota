@@ -21,6 +21,10 @@ class User extends Authenticatable
         'name', 'email', 'password', 'admin'
     ];
 
+    protected $appends = [
+        'deleted'
+    ];
+
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -38,6 +42,15 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function getDeletedAttribute()
+    {
+        if ($this->deleted_at == null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 
     public function roles()
     {
