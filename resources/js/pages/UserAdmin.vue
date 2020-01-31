@@ -126,7 +126,7 @@ export default {
               return [value];
             });
             this.errors.forEach(error =>
-              this.makeToast("warning", "", error[0])
+              this.makeToast("danger", "Error", error[0])
             );
             this.loading = false;
           });
