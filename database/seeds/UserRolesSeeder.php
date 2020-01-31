@@ -16,7 +16,7 @@ class UserRolesSeeder extends Seeder
     public function run()
     {
         $startDate = Carbon::now()->addMonth(-1);
-        $endDate = Carbon::now()->addMonth();
+        $endDate = Carbon::now()->addMonth(1);
         $dateRange = CarbonPeriod::create($startDate, $endDate);
 
         foreach ($dateRange as $date) {

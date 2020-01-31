@@ -13,7 +13,7 @@
         </div>
 
         <div class="col-lg-6 order-lg-2">
-            <form method="post" action="{{ route('storeuser') }}">
+            <form method="post" autocomplete="off" action="{{ route('storeuser') }}">
                 @csrf
                 <table class="table table-bordered">
                     <tbody>
