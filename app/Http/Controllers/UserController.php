@@ -49,7 +49,40 @@ class UserController extends Controller
 
     public function adminUsersGet()
     {
-        $users = User::orderBy('name')->get();
+        $users = User::withTrashed()->orderBy('name')->get();
         return $users;
+    }
+
+    public function adminUsersPost(Request $request)
+    {
+        $this->validate($request, [
+            'users.*.name'      => 'required|string',
+            'users.*.email'     => 'email',
+            'users.*.admin'     => 'required|boolean',
+            'users.*.deleted'   => 'required|boolean',
+            'users.*.new_password' => 'nullable|string|min:6',
+        ]);
+
+        $users = collect($request->users);
+
+        foreach ($users as $u) {
+            $user = User::withTrashed()->where('id', $u['id'])->first();
+
+            if ($u['deleted'] and !$user->deleted) {
+                $user->delete();
+            } elseif (!$u['deleted'] and $user->deleted) {
+                $user->restore();
+            }
+            if (!$u['new_password'] == '') {
+                $user->password =  bcrypt($u['new_password']);
+            }
+
+            $user->name = $u['name'];
+            $user->email = $u['email'];
+            $user->admin = $u['admin'];
+            $user->save();
+        }
+
+        return User::withTrashed()->get();
     }
 }
