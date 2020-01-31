@@ -134,7 +134,7 @@ export default {
         .post("/lunchslots/unclaim")
         .then(response => [
           (this.userLunches = response.data),
-          (this.loading = false),
+          (this.usersLoading = false),
           (this.selectedLunch = null),
           this.getSlots()
         ])
