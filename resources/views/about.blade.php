@@ -16,16 +16,7 @@
                             Created By:
                         </td>
                         <td>
-                            Curtis Reet, Andrew Hargrave
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            E-Mail:
-                        </td>
-                        <td>
-                            <a href="mailto:curtisreet95@gmail.com"> curtisreet95@gmail.com </a> <br>
-                            <a href="mailto:curtis.reet@oneadvanced.com"> curtis.reet@oneadvanced.com </a>
+                            Andrew Hargrave + Curtis Reet
                         </td>
                     </tr>
                     <tr>
@@ -54,6 +45,10 @@
                     <tr>
                         <td>GitHub:</td>
                         <td><a href="https://github.com/andy3471/rota">Github</a></td>
+                    </tr>
+                    <tr>
+                        <td>Report an issue:</td>
+                        <td><a href="https://github.com/andy3471/lunchrota/issues/new/choose">Report Issue</a></td>
                     </tr>
                 </tbody>
             </table>
