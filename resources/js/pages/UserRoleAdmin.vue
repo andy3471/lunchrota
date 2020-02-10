@@ -11,8 +11,8 @@
                 </th>
               </tr>
               <tr>
-                <th class="col-6">Name</th>
-                <th class="col-6">Role</th>
+                <th style="width: 50%">Name</th>
+                <th style="width: 50%">Role</th>
               </tr>
               <tr v-for="user in users" v-bind:key="user.id">
                 <td>{{ user.name }}</td>
