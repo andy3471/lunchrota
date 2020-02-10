@@ -92,7 +92,7 @@ export default {
     getUsers() {
       this.loading = true;
       axios
-        .get("/admin/users/get")
+        .get("./users/get")
         .then(response => [
           (this.users = response.data),
           (this.loading = false),
@@ -110,7 +110,7 @@ export default {
         this.errors = [];
 
         axios
-          .post("/admin/users", {
+          .post("./users", {
             users: this.users
           })
           .then(response => [

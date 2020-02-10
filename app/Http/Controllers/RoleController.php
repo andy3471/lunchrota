@@ -125,12 +125,21 @@ class RoleController extends Controller
             'Pragma'              => 'public'
         ];
 
-        $roles = DB::table('users')
-            ->select('users.name', 'role_user.date', 'roles.name as role')
-            ->join('role_user', 'users.id', '=', 'role_user.user_id')
-            ->join('roles', 'roles.id', '=', 'role_user.role_id')
-            ->orderBy('role_user.date')
-            ->get();
+        if (config('database.default') == 'mysql') {
+            $roles = DB::table('users')
+                ->select('users.name', DB::raw('DATE_FORMAT(role_user.date,"%d/%m/%Y") as date'), 'roles.name as role')
+                ->join('role_user', 'users.id', '=', 'role_user.user_id')
+                ->join('roles', 'roles.id', '=', 'role_user.role_id')
+                ->orderBy('role_user.date')
+                ->get();
+        } else {
+            $roles = DB::table('users')
+                ->select('users.name', DB::raw("FORMAT(role_user.date, 'd', 'en-gb') as date"), 'roles.name as role')
+                ->join('role_user', 'users.id', '=', 'role_user.user_id')
+                ->join('roles', 'roles.id', '=', 'role_user.role_id')
+                ->orderBy('role_user.date')
+                ->get();
+        }
 
         $roles = json_decode(json_encode($roles), true);
 
@@ -179,6 +188,7 @@ class RoleController extends Controller
 
         for ($i = 1; $i < $count - 1; $i++) {
             $user = User::where('name', $content[$i][0])->first();
+
             $date = Carbon::createFromFormat('d/m/Y', $content[$i][1])->toDateString();
             $role = Role::where('name', $content[$i][2])->first();
 
