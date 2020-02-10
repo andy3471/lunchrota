@@ -43,7 +43,7 @@ class UserController extends Controller
 
     public function adminUsers()
     {
-        $users = User::withTrashed()->get();
+        $users = User::withTrashed()->orderBy('name')->get();
         return view('admin.users.index')->withUsers($users);
     }
 
