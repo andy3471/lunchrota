@@ -61,7 +61,7 @@
                     <a href="{{ route('home') }}">
                         @if (file_exists(public_path('img/logo_override.png')))
                             <img src="{{ asset('img/logo_override.png')}}" style="width:10rem">
-                        @else 
+                        @else
                             <img src="{{ asset('img/logo_default.png')}}" style="width:10rem">
                         @endif
                     </a>
@@ -319,7 +319,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        @if (Route::has('password.request'))
+                        @if (config('app.reset_password_enabled') == true)
                             <a class="btn btn-link" href="{{ route('password.request') }}">
                                 {{ __('Forgot Your Password?') }}
                             </a>
