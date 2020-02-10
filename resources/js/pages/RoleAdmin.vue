@@ -3,9 +3,9 @@
     <table class="table table-bordered">
       <tbody>
         <tr>
-          <th style="width: 60%">Role</th>
+          <th style="width: 65%">Role</th>
           <th style="width: 30%">Available</th>
-          <th style="width: 10%"></th>
+          <th style="width: 5%"></th>
         </tr>
         <tr v-for="(role, index) in this.roles" v-bind:key="role.id">
           <td>{{ role.name }}</td>
@@ -15,11 +15,13 @@
             </div>
           </td>
           <td>
-            <button
-              type="button"
-              class="btn btn-danger btn-sm"
-              v-on:click="deleteRole(index)"
-            >Delete</button>
+              <div class="text-right">
+                <button
+                type="button"
+                class="btn btn-danger btn-sm"
+                v-on:click="deleteRole(index)"
+                >Delete</button>
+              </div>
           </td>
         </tr>
         <tr v-if="this.loading == true" class="text-center">
