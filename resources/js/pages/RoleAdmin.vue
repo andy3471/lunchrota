@@ -3,9 +3,9 @@
     <table class="table table-bordered">
       <tbody>
         <tr>
-          <th class="col-7">Role</th>
-          <th class="col-4">Available</th>
-          <th class="col-1"></th>
+          <th style="width: 60%">Role</th>
+          <th style="width: 30%">Available</th>
+          <th style="width: 10%"></th>
         </tr>
         <tr v-for="(role, index) in this.roles" v-bind:key="role.id">
           <td>{{ role.name }}</td>
