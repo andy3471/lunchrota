@@ -14,11 +14,11 @@
       <tr
         v-for="user in userRoles"
         v-bind:key="user.id"
-        v-bind:class="{ unavailable: (!user.available)}"
+        v-bind:class="{ unavailable: (user.available == 0)}"
       >
         <td>{{ user.name }}</td>
         <td>{{ user.role }}</td>
-        <td v-if="user.available">Available</td>
+        <td v-if="user.available == 1">Available</td>
         <td v-else>Unavailable</td>
       </tr>
       <tr v-if="this.loading == true">
