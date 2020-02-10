@@ -134,6 +134,7 @@ return [
 
     'version' => '4.0.0',
     'register_enabled' => env('APP_REGISTER_ENABLED', true),
+    'reset_password_enabled' => env('APP_RESET_PASSWORD_ENABLED', false),
     'support_code' => env('APP_SUPPORT_CODE', false),
     'roles_enabled' => env('APP_ROLES_ENABLED', true),
     'lunch_slot_calculated' => env('LUNCH_SLOT_CALCLULATED', false),
