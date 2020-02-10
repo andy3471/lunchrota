@@ -3,9 +3,9 @@
     <table class="table table-bordered">
       <tbody>
         <tr>
-          <th class="col-7">Time</th>
-          <th v-if="this.lunchcalculated == false" class="col-4">Available</th>
-          <th class="col-1"></th>
+          <th>Time</th>
+          <th v-if="this.lunchcalculated == false" style="width: 30%">Available</th>
+          <th style="width: 10%"></th>
         </tr>
         <tr v-for="(lunchSlot, index) in this.lunchSlots" v-bind:key="lunchSlot.id">
           <td>{{ lunchSlot.time }}</td>

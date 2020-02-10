@@ -2,11 +2,11 @@
   <table class="table table-bordered">
     <tbody>
       <tr>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Admin</th>
-        <th>Expired</th>
-        <th>New Password</th>
+        <th style="width: 20%">Name</th>
+        <th style="width: 30%">Email</th>
+        <th style="width: 10%">Admin</th>
+        <th style="width: 10%">Expired</th>
+        <th style="width: 20%">New Password</th>
       </tr>
       <tr v-if="this.loading == true">
         <td colspan="5" class="text-center">
