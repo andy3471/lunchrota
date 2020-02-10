@@ -5,7 +5,7 @@
         <tr>
           <th>Time</th>
           <th v-if="this.lunchcalculated == false" style="width: 30%">Available</th>
-          <th style="width: 10%"></th>
+          <th style="width: 5%"></th>
         </tr>
         <tr v-for="(lunchSlot, index) in this.lunchSlots" v-bind:key="lunchSlot.id">
           <td>{{ lunchSlot.time }}</td>
@@ -13,11 +13,13 @@
             <input type="number" min="0" class="form-control" v-model.number="lunchSlot.available" />
           </td>
           <td>
-            <button
-              type="button"
-              class="btn btn-danger btn-sm"
-              v-on:click="deleteSlot(index)"
-            >Delete</button>
+            <div class="text-right">
+                <button
+                type="button"
+                class="btn btn-danger btn-sm"
+                v-on:click="deleteSlot(index)"
+                >Delete</button>
+            </div>
           </td>
         </tr>
         <tr v-if="this.loading == true">
