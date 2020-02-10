@@ -83,7 +83,7 @@ export default {
     getRoles() {
       this.loading = true;
       axios
-        .get("/admin/roles/get")
+        .get("./roles/get")
         .then(response => [
           (this.roles = response.data),
           (this.loading = false)
@@ -106,16 +106,16 @@ export default {
         this.loading = true;
 
         axios
-          .post("/admin/roles", {
+          .post("./roles", {
             roles: this.roles
           })
           .then(response => [
             (this.roles = response.data),
             (this.loading = false),
-            (this.makeToast('success', 'Saved', 'Roles Saved'))
+            this.makeToast("success", "Saved", "Roles Saved")
           ])
           .catch(function(error) {
-            this.makeToast('warning', 'Error', error);
+            this.makeToast("warning", "Error", error);
           });
       }
     },
@@ -124,7 +124,7 @@ export default {
         title: title,
         variant: variant,
         solid: true
-      })
+      });
     }
   }
 };
