@@ -80,7 +80,7 @@ export default {
     getLunchSlots() {
       this.loading = true;
       axios
-        .get("/admin/lunches/get")
+        .get("./lunches/get")
         .then(response => [
           (this.lunchSlots = response.data),
           (this.loading = false)
@@ -103,16 +103,16 @@ export default {
         this.loading = true;
 
         axios
-          .post("/admin/lunches", {
+          .post("./lunches", {
             slots: this.lunchSlots
           })
           .then(response => [
             (this.lunchSlots = response.data),
             (this.loading = false),
-            (this.makeToast('success', 'Saved', 'Lunch Slots Saved'))
+            this.makeToast("success", "Saved", "Lunch Slots Saved")
           ])
           .catch(function(error) {
-            this.makeToast('warning', 'Error', error);
+            this.makeToast("warning", "Error", error);
           });
       }
     },
@@ -121,7 +121,7 @@ export default {
         title: title,
         variant: variant,
         solid: true
-      })
+      });
     }
   }
 };
