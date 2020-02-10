@@ -54,7 +54,7 @@ export default {
       this.selectedRole = null;
       this.loading = true;
       axios
-        .get("/roles/get", {
+        .get("./userroles/get", {
           params: {
             date: this.date,
             user_id: this.userid
@@ -72,7 +72,7 @@ export default {
       this.selectedRole = null;
       this.loading = true;
       axios
-        .post("/roles/post", {
+        .post("./userroles/post", {
           date: this.date,
           user_id: this.userid,
           role: role

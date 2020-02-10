@@ -30,8 +30,8 @@ Route::middleware('can:admin')->group(function () {
     Route::get('admin/lunches/get', 'LunchSlotController@getAdminSlots');
     Route::post('admin/lunches', 'LunchSlotController@adminUpdateSlots');
     Route::post('admin/users/store', 'UserController@store')->name('storeuser');
-    Route::get('roles/get', 'RoleController@get');
-    Route::post('roles/post', 'RoleController@post');
+    Route::get('admin/userroles/get', 'RoleController@get');
+    Route::post('admin/userroles/post', 'RoleController@post');
 });
 
 //Disable Register Route if Registration Disabled

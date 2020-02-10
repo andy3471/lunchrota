@@ -92,7 +92,7 @@ export default {
     getUserLunches() {
       this.loading = true;
       axios
-        .get("/lunchslots/users")
+        .get("./lunchslots/users")
         .then(response => [
           (this.userLunches = response.data),
           (this.loading = false)
@@ -109,7 +109,7 @@ export default {
 
         if (a !== 0) {
           axios
-            .post("/lunchslots/claim", {
+            .post("./lunchslots/claim", {
               id: id
             })
             .then(response => [
@@ -131,7 +131,7 @@ export default {
       this.userLunches = [];
 
       axios
-        .post("/lunchslots/unclaim")
+        .post("./lunchslots/unclaim")
         .then(response => [
           (this.userLunches = response.data),
           (this.usersLoading = false),
@@ -147,7 +147,7 @@ export default {
     getSlots() {
       this.slotsLoading = true;
       axios
-        .get("/lunchslots/")
+        .get("./lunchslots/")
         .then(response => [
           (this.slots = response.data),
           (this.slotsLoading = false)
