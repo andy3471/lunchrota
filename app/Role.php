@@ -11,4 +11,12 @@ class Role extends Model
     {
         return $this->belongsToMany('App\User')->withPivot('date');
     }
+
+    public function getAvailableAttribute($value) {
+        if ($value == 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 }
