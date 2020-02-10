@@ -20,13 +20,23 @@ class LunchSlotController extends Controller
     {
         $date = Carbon::today()->toDateString();
 
-        $userLunches = DB::table('users')
-            ->select('users.id', 'users.name', 'lunch_slots.time')
-            ->join('lunch_slot_user', 'users.id', '=', 'lunch_slot_user.user_id')
-            ->join('lunch_slots', 'lunch_slots.id', '=', 'lunch_slot_user.lunch_slot_id')
-            ->where('lunch_slot_user.date', $date)
-            ->orderBy('users.name')
-            ->get();
+        if (config('database.default') == 'sqlsrv') {
+            $userLunches = DB::table('users')
+                ->select('users.id', 'users.name', DB::RAW("FORMAT(CAST(lunch_slots.time as datetime2), N'hh:mm') as time"))
+                ->join('lunch_slot_user', 'users.id', '=', 'lunch_slot_user.user_id')
+                ->join('lunch_slots', 'lunch_slots.id', '=', 'lunch_slot_user.lunch_slot_id')
+                ->where('lunch_slot_user.date', $date)
+                ->orderBy('users.name')
+                ->get();
+        } else {
+            $userLunches = DB::table('users')
+                ->select('users.id', 'users.name', 'lunch_slots.time')
+                ->join('lunch_slot_user', 'users.id', '=', 'lunch_slot_user.user_id')
+                ->join('lunch_slots', 'lunch_slots.id', '=', 'lunch_slot_user.lunch_slot_id')
+                ->where('lunch_slot_user.date', $date)
+                ->orderBy('users.name')
+                ->get();
+        }
 
         return $userLunches;
     }
