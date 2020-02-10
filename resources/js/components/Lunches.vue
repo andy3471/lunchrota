@@ -40,8 +40,8 @@
         </td>
       </tr>
       <tr>
-        <th class="col-8">Name</th>
-        <th class="col-4">Lunch Slot</th>
+        <th style="width: 66%">Name</th>
+        <th style="width: 34%">Lunch Slot</th>
       </tr>
       <tr v-for="user in userLunches" v-bind:key="user.id">
         <td>{{ user.name }}</td>
