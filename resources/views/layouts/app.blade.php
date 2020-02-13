@@ -124,6 +124,11 @@
                         <li class="nav-item">
                             <span class="navbar-text" disabled="">{{$dsp[0]->password}}</span>
                         </li>
+                        @if($dsp[0]->password2)
+                        <li class="nav-item">
+                            <span class="navbar-text" disabled="">{{$dsp[0]->password2}}</span>
+                        </li>
+                        @endif
                     @endif
                     <li class="nav-item">
                         <a class="nav-link modal-link" data-toggle="modal" data-target="#changePasswordModal">
