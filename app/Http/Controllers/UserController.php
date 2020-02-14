@@ -58,6 +58,7 @@ class UserController extends Controller
         $this->validate($request, [
             'users.*.name'      => 'required|string',
             'users.*.email'     => 'email',
+            'users.*.scheduled' => 'required|boolean',
             'users.*.admin'     => 'required|boolean',
             'users.*.deleted'   => 'required|boolean',
             'users.*.new_password' => 'nullable|string|min:6',
@@ -80,9 +81,10 @@ class UserController extends Controller
             $user->name = $u['name'];
             $user->email = $u['email'];
             $user->admin = $u['admin'];
+            $user->scheduled = $u['scheduled'];
             $user->save();
         }
 
-        return User::withTrashed()->get();
+        return User::withTrashed()->orderBy('name')->get();
     }
 }
