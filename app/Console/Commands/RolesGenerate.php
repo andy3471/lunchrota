@@ -76,8 +76,12 @@ class RolesGenerate extends Command
                 $users = User::whereNotIn('id', $usersWithRoles)->get();
                 
                 foreach ($users as $user) {
-                    $user->roles()->attach($defaultRole, ['date' => $dateString]);
-                    $this->line($user->name .' Given Role Of '. $defaultRole->name . ' For ' . $dateString);
+                    if ($user->scheduled) {
+                        $user->roles()->attach($defaultRole, ['date' => $dateString]);
+                        $this->line($user->name .' Given Role Of '. $defaultRole->name . ' For ' . $dateString);
+                    } else {
+                        $this->line($user->name .' is not a scheduled user');
+                    }
                 };
             } else {
                 $this->line($date . ' Is Weekend');
