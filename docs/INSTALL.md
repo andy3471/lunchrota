@@ -3,6 +3,7 @@
 We recommend that you read the [Laravel Deployment Docs](https://laravel.com/docs/6.x/deployment) before proceeding
 
 # Ubuntu
+
 ## Requirements
 
 You require PHP7+, MySQL (Or an Alternative DB Server supported by laravel), A Web Server (We will be using Apache), and Composer.
@@ -38,7 +39,7 @@ Copy .env.example File:
 You will need to edit the .env file to set your connection string settings:  
 `nano .env`
 
-Enter the DB username, password and server that you have set up. IPlease see the [Configuration Guide](docs/CONFIG.md) to set up your settings.
+Enter the DB username, password and server that you have set up. IPlease see the [Configuration Guide](./CONFIG.md) to set up your settings.
 
 Build the database:  
 `php artisan migrate`
@@ -73,6 +74,7 @@ Restart Apache
 `sudo service apache2 restart`
 
 ### Updating
+
 We recommend you take a full back up of the site files and the database before running an update.
 
 This guide assumes you are using git for version management. If you have manually downloaded the files on the initial install, then you can download the new release from github manually again, and overwrite the files. In our case, we will pull the latest version:  
@@ -87,16 +89,10 @@ We should then clear the cache, and cache any new settings:
 
 The upgrade should now be complete
 
-
 # Windows
 
 Installation instructions to be added
 
 # Config
 
-The site should now work. Any issues then please feel free to raise an issue on [GitHub](https://github.com/andy3471/lunchrota/issues/new/choose). Please see the [Configuration Guide](docs/CONFIG.md) to set up your settings.
-
-
-
-
-
+The site should now work. Any issues then please feel free to raise an issue on [GitHub](https://github.com/andy3471/lunchrota/issues/new/choose). Please see the [Configuration Guide](./CONFIG.md) to set up your settings.
