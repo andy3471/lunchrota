@@ -4,9 +4,10 @@
       <tr>
         <th style="width: 20%">Name</th>
         <th style="width: 30%">Email</th>
-        <th style="width: 10%">Admin</th>
-        <th style="width: 10%">Expired</th>
-        <th style="width: 20%">New Password</th>
+        <th style="width: 8%">Scheduled</th>
+        <th style="width: 8%">Admin</th>
+        <th style="width: 8%">Expired</th>
+        <th style="width: 16%">New Password</th>
       </tr>
       <tr v-if="this.loading == true">
         <td colspan="5" class="text-center">
@@ -21,6 +22,11 @@
         </td>
         <td>
           <input type="email" class="form-control" data-lpignore="true" v-model="user.email" />
+        </td>
+        <td>
+          <div class="form-check">
+            <input v-model="user.scheduled" class="form-check-input position-static" type="checkbox" />
+          </div>
         </td>
         <td>
           <div class="form-check">
@@ -42,7 +48,7 @@
         </td>
       </tr>
       <tr>
-        <td colspan="5">
+        <td colspan="6">
           <div class="container">
             <div class="row">
               <div class="col">
