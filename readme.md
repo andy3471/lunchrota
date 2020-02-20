@@ -19,7 +19,7 @@ All development environments are running MySQL, Redis and Nginx. Laravel offers 
 
 ## Install
 
-[Install Guide (To Do)](docs/INSTALL.md)
+[Install Guide](docs/INSTALL.md)  
 [Configuration Guide](docs/CONFIG.md)
 
 ## Contributing
