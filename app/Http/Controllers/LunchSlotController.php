@@ -13,7 +13,7 @@ class LunchSlotController extends Controller
 {
     public function getSlots()
     {
-        return LunchSlot::all();
+        return LunchSlot::orderBy('time')->get();
     }
 
     public function userLunches()

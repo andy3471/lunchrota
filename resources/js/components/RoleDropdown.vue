@@ -79,11 +79,19 @@ export default {
         })
         .then(response => [
           (this.selectedRole = response.data),
-          (this.loading = false)
+          (this.loading = false),
+          this.makeToast("success", "Saved", "Role Saved")
         ])
         .catch(function(error) {
-          console.log(error);
+          this.makeToast("warning", "Error", error);
         });
+    },
+    makeToast(variant, title, content) {
+      this.$bvToast.toast(content, {
+        title: title,
+        variant: variant,
+        solid: true
+      });
     }
   },
   watch: {
