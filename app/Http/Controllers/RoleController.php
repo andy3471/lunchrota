@@ -187,20 +187,22 @@ class RoleController extends Controller
         $count =  count($content);
 
         for ($i = 1; $i < $count - 1; $i++) {
-            $user = User::where('name', $content[$i][0])->first();
+            if ($content[$i][0]){
+                $user = User::where('name', $content[$i][0])->first();
 
-            $date = Carbon::createFromFormat('d/m/Y', $content[$i][1])->toDateString();
-            $role = Role::where('name', $content[$i][2])->first();
+                $date = Carbon::createFromFormat('d/m/Y', $content[$i][1])->toDateString();
+                $role = Role::where('name', $content[$i][2])->first();
 
-            if (!$user) {
-                $messages->push(['message' => "User " . $content[$i][0] . " does not exist", 'type' => 'danger']);
-            } else if (!$role) {
-                $messages->push(['message' => "Role " . $content[$i][2] . " does not exist", 'type' => 'danger']);
-            } else if (!$date) {
-                $messages->push(['message' => "Date " . $content[$i][1] . " is not valid", 'type' => 'danger']);
-            } else {
-                $user->roles()->attach($role, ['date' => $date]);
-                $messages->push(['message' => "Added Role of " . $role->name . " for user " . $user->name . " on " . $date, 'type' => 'success']);
+                if (!$user) {
+                    $messages->push(['message' => "User " . $content[$i][0] . " does not exist", 'type' => 'danger']);
+                } else if (!$role) {
+                    $messages->push(['message' => "Role " . $content[$i][2] . " does not exist", 'type' => 'danger']);
+                } else if (!$date) {
+                    $messages->push(['message' => "Date " . $content[$i][1] . " is not valid", 'type' => 'danger']);
+                } else {
+                    $user->roles()->attach($role, ['date' => $date]);
+                    $messages->push(['message' => "Added Role of " . $role->name . " for user " . $user->name . " on " . $date, 'type' => 'success']);
+                }
             }
         };
 
