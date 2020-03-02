@@ -1,1 +1,2 @@
-php artisan schedule:run
+cd C:\rota\commrota4
+php artisan roles:generate
