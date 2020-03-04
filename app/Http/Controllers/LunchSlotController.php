@@ -26,7 +26,7 @@ class LunchSlotController extends Controller
                 ->join('lunch_slot_user', 'users.id', '=', 'lunch_slot_user.user_id')
                 ->join('lunch_slots', 'lunch_slots.id', '=', 'lunch_slot_user.lunch_slot_id')
                 ->where('lunch_slot_user.date', $date)
-                ->orderBy('users.name')
+                ->orderBy('time')
                 ->get();
         } else {
             $userLunches = DB::table('users')
