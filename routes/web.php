@@ -4,10 +4,6 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::get('about', 'HomeController@about')->name('about');
 Route::get('roles', 'RoleController@index');
 
-Route::get('info', function () {
-    return phpinfo();
-});
-
 Route::get('/demo', 'HomeController@demo')->name('demomode');
 
 Route::get('lunchslots', 'LunchSlotController@getSlots');
