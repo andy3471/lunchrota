@@ -1,19 +1,48 @@
 version: '3'
 services:
-
   lunchrota:
     build: .
     restart: unless-stopped
+    container_name: lunchrota-app
     tty: true
     ports:
-      - "8002:80"
+      - "3473:80"
     environment:
       APP_KEY: base64:+7JBw8tEr0aalfJbXOzc6CDxbNKVAKYFEDzXWuVGEVU=
       DB_HOST: db
       REDIS_HOST: redis
+      APP_DEBUG: "true"
+      DB_DATABASE: homestead
+      APP_DEMO_MODE: "true"
+      CACHE_DRIVER: redis
+      CONTAINER_ROLE: app
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+      - redis
+  scheduler:
+    build: .
+    restart: unless-stopped
+    container_name: lunchrota-scheduler
+    tty: true
+    environment:
+      APP_KEY: base64:+7JBw8tEr0aalfJbXOzc6CDxbNKVAKYFEDzXWuVGEVU=
+      DB_HOST: db
+      REDIS_HOST: redis
+      APP_DEBUG: "true"
+      DB_DATABASE: homestead
+      APP_DEMO_MODE: "true"
+      CONTAINER_ROLE: scheduler
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+      - redis
   db:
     image: mysql:5.7.30
     restart: unless-stopped
+    container_name: lunchrota-db
     tty: true
     environment:
       MYSQL_DATABASE: homestead
@@ -24,3 +53,5 @@ services:
       SERVICE_NAME: mysql
   redis:
     image: redis:6.0.4
+    container_name: lunchrota-redis
+    restart: unless-stopped

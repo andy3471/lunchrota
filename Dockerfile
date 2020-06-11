@@ -7,12 +7,16 @@ RUN composer install
 FROM php:7.3-apache
 EXPOSE 80
 COPY --from=build /app /app
-COPY vhost.conf /etc/apache2/sites-available/000-default.conf
-RUN docker-php-ext-install pdo pdo_mysql
-RUN apt update && apt install cron -y
-RUN echo '* * * * * cd /path-to-your-project && php artisan schedule:run >> /dev/null 2>&1' >> /etc/crontab   
-RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
-RUN chown -R www-data:www-data /app \
-    && a2enmod rewrite
+COPY docker/vhost.conf /etc/apache2/sites-available/000-default.conf
+COPY docker/start.sh /usr/local/bin/start.sh
 WORKDIR /app
 
+RUN chown -R www-data:www-data /app \
+    && docker-php-ext-install pdo pdo_mysql \
+    && mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini" \
+    && a2enmod rewrite \
+    && chmod u+x /usr/local/bin/start.sh
+
+RUN pecl install redis && docker-php-ext-enable redis
+
+CMD ["/usr/local/bin/start.sh"]
