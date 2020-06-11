@@ -9,6 +9,7 @@ services:
     environment:
       APP_KEY: base64:+7JBw8tEr0aalfJbXOzc6CDxbNKVAKYFEDzXWuVGEVU=
       DB_HOST: db
+      REDIS_HOST: redis
       DB_DATABASE: homestead
       DB_PASSWORD: secret
       DB_DATABASE: homestead
@@ -18,6 +19,8 @@ services:
       APP_RESET_PASSWORD_ENABLED: "false"
       APP_ROLES_ENABLED: "true"
       APP_DEFAULT_ROLE: "In Office"
+      APP_FOOTER_TEXT: "Footer Text"
+      CACHE_DRIVER: redis
     volumes:
       - ./logs:/app/storage/logs
     depends_on:
@@ -30,6 +33,7 @@ services:
     environment:
       APP_KEY: base64:+7JBw8tEr0aalfJbXOzc6CDxbNKVAKYFEDzXWuVGEVU=
       DB_HOST: db
+      REDIS_HOST: redis
       DB_DATABASE: homestead
       DB_PASSWORD: secret
       DB_DATABASE: homestead
@@ -58,3 +62,9 @@ services:
       SERVICE_NAME: mysql
     volumes:
       - ./database/mysql:/var/lib/mysql
+  redis:
+    image: redis:6.0.4
+    restart: unless-stopped
+    volumes:
+      - ./database/redis:/data
+    entrypoint: redis-server --appendonly yes
