@@ -47,7 +47,7 @@ class HomeController extends Controller
 
     public function about()
     {
-        $admins = User::Select('name', 'meme')->where('admin', true)->get();
+        $admins = User::Select('name', 'meme')->where('admin', true)->orderBy('name')->get();
         return view('about')->with('admins', $admins);
     }
 

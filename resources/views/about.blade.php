@@ -33,13 +33,12 @@
                         </td>
                         <td>
                             @foreach($admins as $admin)
-                                {{ $loop->first ? '' : ', ' }}
                                 @if($admin->meme)
-                                    <a href='{{$admin->meme}}' class="meme">{{$admin->name}}</a>
+                                    <a href='{{$admin->meme}}' class="meme">
                                 @else
-                                    {{$admin->name}}
+                                    <a>
                                 @endif
-                                    
+                                {{$admin->name}}{{$loop->last ? '' : ','}}</a>
                             @endforeach
                         </td>
                     </tr>
