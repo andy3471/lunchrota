@@ -147,7 +147,7 @@ export default {
     getSlots() {
       this.slotsLoading = true;
       axios
-        .get("./lunchslots/")
+        .get("./lunchslots")
         .then(response => [
           (this.slots = response.data),
           (this.slotsLoading = false)
