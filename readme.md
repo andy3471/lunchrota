@@ -3,7 +3,7 @@
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/andy3471/lunchrota/build%20our%20image)
 ![Docker Pulls](https://img.shields.io/docker/pulls/andy3471/lunchrota)
 
-LunchRota is a ground up rewrite of an Application that was created for our service desk by Curtis Reet. The application is to be used by teams, in order to keep track of daily work roles, as well as claim available lunch slots. The original application was built on PHP5, and required further development, so I decided to rewrite this in Laravel to allow me to continue development of the application
+LunchRota is a complete grounds up rewrite of  Commrota (by Curtis Reet), which has been completely rewritten for the Laravel framework by Andrew Hargrave. The application is to be used by teams, in order to keep track of daily work roles, as well as claim available lunch slots. The original application was built on PHP5, and required further development, so I decided to rewrite this in Laravel to allow me to continue development of the application
 
 The roles can be assigned to users either via a UI built with VueJS, or uploaded via CSV.
 
