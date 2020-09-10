@@ -1,4 +1,4 @@
-<?php
+p
 
 namespace App\Console\Commands;
 
@@ -75,16 +75,12 @@ class RolesGenerate extends Command
 
                 $users = User::whereNotIn('id', $usersWithRoles)->get();
                 
-                foreach ($users as $user) {      
-                    if ($user->deleted) {
-                        $this->line($user->name .' is deleted');
-                    }
-                    else (!$user->scheduled) {
-                        $this->line($user->name .' is not a scheduled user');
-                    }
-                    else {
+                foreach ($users as $user) {
+                    if ($user->scheduled) {
                         $user->roles()->attach($defaultRole, ['date' => $dateString]);
                         $this->line($user->name .' Given Role Of '. $defaultRole->name . ' For ' . $dateString);
+                    } else {
+                        $this->line($user->name .' is not a scheduled user');
                     }
                 };
             } else {
