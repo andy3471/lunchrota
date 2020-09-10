@@ -16,7 +16,7 @@
                             Created By:
                         </td>
                         <td>
-                            Andrew Hargrave + Curtis Reet
+                            Complete rewrite by <a href="https://andyh.app">Andrew Hargrave</a>, based on an original project by <a href="https://curtisreet.co.uk">Curtis Reet</a>.
                         </td>
                     </tr>
                     <tr>
