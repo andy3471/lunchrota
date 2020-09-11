@@ -48,7 +48,7 @@ class LunchSlot extends Model
             ->count();
 
         $remainingAvailable = $totalAvailable - $totalClaimed;
-
+        if ($remainingAvailable < 0) { return 0; };
         return $remainingAvailable;
     }
 }

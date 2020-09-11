@@ -44,17 +44,15 @@ class LunchSlotController extends Controller
     public function claim(Request $request)
     {
         $date = Carbon::today()->toDateString();
-
         $lunchslot = LunchSlot::find($request->id);
 
         if ($lunchslot->available_today <= 0) {
             return response()->json('This lunch slot has been claimed by another user', 403);
+        } else {
+            Auth::User()->lunches()->detach();
+            Auth::User()->lunches()->attach($request->id, ['date' => $date]);
+            return $this->userLunches();
         }
-
-        Auth::User()->lunches()->detach();
-        Auth::User()->lunches()->attach($request->id, ['date' => $date]);
-
-        return $this->userLunches();
     }
 
     public function unclaim()
