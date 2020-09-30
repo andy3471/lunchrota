@@ -78,4 +78,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\LunchSlot')->withPivot('date');
     }
+
+    public function appdelsupportdays()
+    {
+        return $this->hasMany('App\AppDelSupportDay');
+    }
 }

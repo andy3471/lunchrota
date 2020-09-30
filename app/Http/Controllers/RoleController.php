@@ -103,7 +103,7 @@ class RoleController extends Controller
 
     public function userRolesAdmin()
     {
-        $users = User::all();
+        $users = User::Where('app_del', '=', false)->get();
         $roles = Role::orderBy('name')->get();
         return view('admin.userroles.index')->withUsers($users)->withRoles($roles);
     }

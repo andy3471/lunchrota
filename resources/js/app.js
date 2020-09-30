@@ -19,11 +19,16 @@ Vue.use(BootstrapVue)
 //Pages
 Vue.component("rota", require("./pages/Rota.vue").default);
 Vue.component("role-admin", require("./pages/RoleAdmin.vue").default);
+Vue.component("app-del-admin", require("./pages/AppDelAdmin.vue").default);
 Vue.component("user-role-admin", require("./pages/UserRoleAdmin.vue").default);
 Vue.component("user-admin", require("./pages/UserAdmin.vue").default);
 Vue.component(
     "role-dropdown",
     require("./components/RoleDropdown.vue").default
+);
+Vue.component(
+    "app-del-support",
+    require("./components/AppDelSupport.vue").default
 );
 
 Vue.component(
