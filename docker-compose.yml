@@ -19,7 +19,7 @@ services:
       CACHE_DRIVER: redis
       CONTAINER_ROLE: app
       APP_ENV: local
-      APP_DEL_ENABLED: "false"
+      APP_DEL_ENABLED: "true"
     volumes:
       - .:/app
     depends_on:
