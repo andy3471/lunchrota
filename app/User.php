@@ -69,6 +69,14 @@ class User extends Authenticatable
         }
     }
 
+    public function getAppDelAttribute($value) {
+        if ($value == '0') {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     public function roles()
     {
         return $this->belongsToMany('App\Role')->withPivot('date');
