@@ -3,9 +3,11 @@
 namespace App\Providers;
 
 use App\DailyPassword;
+use App\AppDelSupportDay;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\DB;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -36,7 +38,16 @@ class AppServiceProvider extends ServiceProvider
                 return DailyPassword::where('date', $today)->get();
             });
 
-            $view->with('dsp', $dsp);
+            $appDelSupport = Cache::remember('appdelsupport', 600, function () {
+                $today = Carbon::now()->toDateString();
+                return DB::table('users')
+                ->select('users.name')
+                ->join('app_del_support_days', 'users.id', '=', 'app_del_support_days.user_id')
+                ->where('app_del_support_days.date', $today)
+                ->get();
+            });
+
+            $view->with('dsp', $dsp)->with('ads', $appDelSupport);
         });
     }
 }

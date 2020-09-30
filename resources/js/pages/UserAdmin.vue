@@ -3,8 +3,9 @@
     <tbody>
       <tr>
         <th style="width: 20%">Name</th>
-        <th style="width: 30%">Email</th>
+        <th style="width: 25%">Email</th>
         <th style="width: 8%">Scheduled</th>
+        <th v-if="appdelenabled" style="width: 8%">App Del</th>
         <th style="width: 8%">Admin</th>
         <th style="width: 8%">Expired</th>
         <th style="width: 16%">New Password</th>
@@ -28,6 +29,11 @@
             <input v-model="user.scheduled" class="form-check-input position-static" type="checkbox" />
           </div>
         </td>
+        <td v-if="appdelenabled">
+          <div class="form-check">
+            <input v-model="user.app_del" class="form-check-input position-static" type="checkbox" />
+          </div>
+        </td>
         <td>
           <div class="form-check">
             <input v-model="user.admin" class="form-check-input position-static" type="checkbox" />
@@ -48,7 +54,7 @@
         </td>
       </tr>
       <tr>
-        <td colspan="6">
+        <td colspan="7">
           <div class="container">
             <div class="row">
               <div class="col">
@@ -71,7 +77,12 @@
 
 <script>
 export default {
-  props: {},
+  props: {
+    appdelenabled: {
+      default: false,
+      type: Boolean
+    }
+  },
   data() {
     return {
       users: [],

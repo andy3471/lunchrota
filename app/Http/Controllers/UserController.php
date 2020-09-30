@@ -60,6 +60,7 @@ class UserController extends Controller
             'users.*.email'     => 'email',
             'users.*.scheduled' => 'required|boolean',
             'users.*.admin'     => 'required|boolean',
+            'users.*.app_del'     => 'required|boolean',
             'users.*.deleted'   => 'required|boolean',
             'users.*.new_password' => 'nullable|string|min:6',
         ]);
@@ -81,6 +82,7 @@ class UserController extends Controller
             $user->name = $u['name'];
             $user->email = $u['email'];
             $user->admin = $u['admin'];
+            $user->app_del = $u['app_del'];
             $user->scheduled = $u['scheduled'];
             $user->save();
         }

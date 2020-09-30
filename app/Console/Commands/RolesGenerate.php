@@ -1,5 +1,4 @@
-p
-
+<?php
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
@@ -76,7 +75,7 @@ class RolesGenerate extends Command
                 $users = User::whereNotIn('id', $usersWithRoles)->get();
                 
                 foreach ($users as $user) {
-                    if ($user->scheduled) {
+                    if (($user->scheduled) & (!$user->app_del)) {
                         $user->roles()->attach($defaultRole, ['date' => $dateString]);
                         $this->line($user->name .' Given Role Of '. $defaultRole->name . ' For ' . $dateString);
                     } else {

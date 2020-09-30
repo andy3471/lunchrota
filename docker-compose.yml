@@ -13,9 +13,13 @@ services:
       REDIS_HOST: redis
       APP_DEBUG: "true"
       DB_DATABASE: homestead
-      APP_DEMO_MODE: "true"
+      DB_USERNAME: homestead
+      DB_PASSWORD: secret
+      APP_DEMO_MODE: "false"
       CACHE_DRIVER: redis
       CONTAINER_ROLE: app
+      APP_ENV: local
+      APP_DEL_ENABLED: "false"
     volumes:
       - .:/app
     depends_on:
@@ -32,8 +36,11 @@ services:
       REDIS_HOST: redis
       APP_DEBUG: "true"
       DB_DATABASE: homestead
+      DB_USERNAME: homestead
+      DB_PASSWORD: secret
       APP_DEMO_MODE: "true"
       CONTAINER_ROLE: scheduler
+      APP_ENV: local
     volumes:
       - .:/app
     depends_on:
