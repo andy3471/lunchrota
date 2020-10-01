@@ -110,6 +110,16 @@
                     @endcan
                 </ul>
                 <ul class="nav navbar-nav">
+                    @if( config('app.app_del_enabled') and (!$ads->isEmpty()))
+                            <li class="nav-item">
+                                <span class="navbar-text" disabled="">
+                                    App Del Support:
+                                    @foreach( $ads as $ad )
+                                        {{$ad->name}}{{$loop->last ? '' : ','}}
+                                    @endforeach
+                                </span>
+                            </li>
+                    @endif
                     @guest
                     <li class="nav-item">
                         <a class="nav-link modal-link" data-toggle="modal" data-target="#loginModal">Login</a>
@@ -121,16 +131,6 @@
                         @endif
                     @else
 
-                        @if( config('app.app_del_enabled') and (!$ads->isEmpty()))
-                            <li class="nav-item">
-                                <span class="navbar-text" disabled="">
-                                    App Del Support:
-                                    @foreach( $ads as $ad )
-                                        {{$ad->name}}{{$loop->last ? '' : ','}}
-                                    @endforeach
-                                </span>
-                            </li>
-                        @endif
                         @if( config('app.support_code') and (!$dsp->isEmpty()) )
                             <li class="nav-item">
                                 <span class="navbar-text" disabled="">{{$dsp[0]->code}}</span>
