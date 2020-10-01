@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Rules\CurrentPassword;
 use App\User;
 use Auth;
+use Illuminate\Support\Facades\Cache;
 
 class UserController extends Controller
 {
@@ -66,6 +67,7 @@ class UserController extends Controller
         ]);
 
         $users = collect($request->users);
+        Cache::forget('appdelsupport');
 
         foreach ($users as $u) {
             $user = User::withTrashed()->where('id', $u['id'])->first();
