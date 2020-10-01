@@ -6,6 +6,10 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+
+
 
 class User extends Authenticatable
 {
@@ -22,7 +26,8 @@ class User extends Authenticatable
     ];
 
     protected $appends = [
-        'deleted'
+        'deleted',
+        'available'
     ];
 
     /**
@@ -59,7 +64,6 @@ class User extends Authenticatable
             return true;
         }
     }
-
     
     public function getScheduledAttribute($value) {
         if ($value == '0') {
@@ -74,6 +78,24 @@ class User extends Authenticatable
             return false;
         } else {
             return true;
+        }
+    }
+
+    public function getAvailableAttribute()
+    {
+        $date = Carbon::today()->toDateString();
+    
+        $available = DB::table('role_user')
+                    ->select('roles.available')
+                    ->join('roles', 'role_user.role_id', 'roles.id')
+                    ->where('role_user.user_id', $this->id)
+                    ->where('role_user.date', $date)
+                    ->first();
+
+        if (isset($available->available) && $available->available) {
+            return true;
+        } else {
+            return false;
         }
     }
 
