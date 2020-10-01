@@ -43,6 +43,7 @@ class RolesClear extends Command
     {
         $date = Carbon::now()->addWeek(-3);
         DB::table('role_user')->where('date', '<', $date)->delete();
+        DB::table('app_del_support_days')->where('date', '<', $date)->delete();
         $this->line('Deleted roles older than ' . $date);
     }
 }
