@@ -20,6 +20,8 @@ services:
       CONTAINER_ROLE: app
       APP_ENV: local
       APP_DEL_ENABLED: "true"
+      APP_ROLES_ENABLED: "false"
+      LUNCH_SLOT_CALCLULATED: "false"
     volumes:
       - .:/app
     depends_on:
