@@ -45,6 +45,8 @@ class LunchSlot extends Model
         }
 
         $totalClaimed = DB::Table('lunch_slot_user')
+            ->join('users', 'lunch_slot_user.user_id', 'users.id')
+            ->where('users.app_del', false)
             ->where('date', $date)
             ->where('lunch_slot_id', $this->id)
             ->count();

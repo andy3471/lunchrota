@@ -19,9 +19,9 @@
               v-on:click="setLunch(lunchslot.id, 1)"
               v-bind:disabled="
                                 loggedin == false ||
-                                    lunchslot.available_today == 0 ||
-                                    lunchslot.id == selectedLunch ||
-                                    slotsLoading == true
+                                lunchslot.id == selectedLunch ||
+                                slotsLoading == true ||
+                                !(appdel || !available) && (lunchslot.available_today == 0)
                             "
             >
               {{ lunchslot.time }} ({{
@@ -72,6 +72,14 @@ export default {
     initiallunch: {
       default: null,
       type: Number
+    },
+    appdel: {
+      default: true,
+      type: Boolean
+    },
+    available: {
+      default: false,
+      type: Boolean
     }
   },
   data() {

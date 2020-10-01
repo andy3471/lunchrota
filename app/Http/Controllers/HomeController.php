@@ -42,7 +42,13 @@ class HomeController extends Controller
             $initialSlot = '-1';
         }
 
-        return view('home')->withLunchSlots($lunchslots)->withInitialSlot($initialSlot);
+        if (Auth::user()) {
+            $available = Auth::user()->available;
+        } else {
+            $available = true;
+        }
+
+        return view('home')->withLunchSlots($lunchslots)->withInitialSlot($initialSlot)->withAvailable($available);
     }
 
     public function about()
