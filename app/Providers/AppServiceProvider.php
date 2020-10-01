@@ -44,6 +44,7 @@ class AppServiceProvider extends ServiceProvider
                 ->select('users.name')
                 ->join('app_del_support_days', 'users.id', '=', 'app_del_support_days.user_id')
                 ->where('app_del_support_days.date', $today)
+                ->where('users.app_del', true)
                 ->get();
             });
 

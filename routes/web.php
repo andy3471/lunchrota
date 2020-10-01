@@ -34,7 +34,6 @@ Route::middleware('can:admin')->group(function () {
     Route::post('admin/userroles/post', 'RoleController@post');
     Route::get('admin/appdel', 'AppDelSupportDayController@appDelAdmin')->name('appdeladmin');
     Route::get('admin/appdel/get', 'AppDelSupportDayController@get');
-    Route::get('admin/appdel/supporttoday', 'AppDelSupportDayController@supportToday');
     Route::post('admin/appdel/post', 'AppDelSupportDayController@post');
 });
 
