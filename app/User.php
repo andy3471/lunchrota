@@ -83,6 +83,10 @@ class User extends Authenticatable
 
     public function getAvailableAttribute()
     {
+        if (!config('app.roles_enabled')) {
+            return true;
+        };
+
         $date = Carbon::today()->toDateString();
     
         $available = DB::table('role_user')
