@@ -33,8 +33,10 @@ class LunchSlot extends Model
 
             $rolesToday = DB::Table('role_user')
                 ->join('roles', 'role_user.role_id', 'roles.id')
+                ->join('users', 'role_user.user_id', 'users.id')
                 ->where('role_user.date', $date)
                 ->where('roles.available', true)
+                ->where('users.app_del', false)
                 ->count();
 
             $totalAvailable = floor(1 + (($rolesToday - 1) * ($ratio)));

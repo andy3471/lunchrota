@@ -26,6 +26,7 @@ class RoleController extends Controller
             ->join('role_user', 'users.id', '=', 'role_user.user_id')
             ->join('roles', 'roles.id', '=', 'role_user.role_id')
             ->where('role_user.date', $date)
+            ->where('users.app_del', '=', false)
             ->orderBy('users.name')
             ->get();
 
