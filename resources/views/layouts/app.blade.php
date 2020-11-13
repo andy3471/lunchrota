@@ -54,6 +54,12 @@
 
 </head>
 <body>
+    @if ($versionalert)
+        <div class="alert alert-danger alert-dismissible">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Warning!</strong> {{ $versionalert }}
+        </div>
+    @endif
     <div id="app">
         <div class="container-fluid header">
             <div class="row">

@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -48,7 +49,19 @@ class AppServiceProvider extends ServiceProvider
                 ->get();
             });
 
-            $view->with('dsp', $dsp)->with('ads', $appDelSupport);
+            $versionAlert = Cache::remember('versionalert', 600, function () {
+                $version = config('app.version');
+                $url = 'https://andyh.app/lunchrota/alert/' . $version;
+                $response = Http::get($url);
+                
+                if ($response->ok()) {
+                    return $response->body();
+                } else{ 
+                    return null;
+                }
+            });
+
+            $view->with('dsp', $dsp)->with('ads', $appDelSupport)->with('versionalert', $versionAlert);
         });
     }
 }

@@ -1,7 +1,7 @@
 version: '3'
 services:
   lunchrota:
-    build: .
+    image: andy3471/lunchrota
     restart: unless-stopped
     container_name: lunchrota-app
     tty: true
@@ -15,20 +15,20 @@ services:
       DB_DATABASE: homestead
       DB_USERNAME: homestead
       DB_PASSWORD: secret
-      APP_DEMO_MODE: "false"
+      APP_DEMO_MODE: "true"
       CACHE_DRIVER: redis
       CONTAINER_ROLE: app
       APP_ENV: local
       APP_DEL_ENABLED: "true"
-      APP_ROLES_ENABLED: "false"
-      LUNCH_SLOT_CALCLULATED: "false"
+      APP_ROLES_ENABLED: "true"
+      LUNCH_SLOT_CALCLULATED: "true"
     volumes:
       - .:/app
     depends_on:
       - db
       - redis
   scheduler:
-    build: .
+    image: andy3471/lunchrota
     restart: unless-stopped
     container_name: lunchrota-scheduler
     tty: true
