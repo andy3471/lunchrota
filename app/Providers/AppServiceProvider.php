@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -32,7 +34,7 @@ class AppServiceProvider extends ServiceProvider
         if(env('REDIRECT_HTTPS')) {
             \Illuminate\Support\Facades\URL::forceScheme('https');
         }
-        
+
         view()->composer('*', function ($view) {
             $dsp = Cache::remember('dsp', 600, function () {
                 $today = Carbon::now()->toDateString();
@@ -52,11 +54,12 @@ class AppServiceProvider extends ServiceProvider
             $versionAlert = Cache::remember('versionalert', 600, function () {
                 $version = config('app.version');
                 $url = 'https://andyh.app/lunchrota/alert/' . $version;
-                $response = Http::get($url);
-                
-                if ($response->ok()) {
-                    return $response->body();
-                } else{ 
+
+                $client = new Client;
+                try {
+                    return (string) $client->get($url, ['verify' => false])->getBody();
+                }
+                catch (ClientException $e){
                     return null;
                 }
             });
