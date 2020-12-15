@@ -16,6 +16,8 @@
                     :lunchslots="lunchslots"
                     :loggedin="loggedin"
                     :initiallunch="initiallunch"
+                    :available="available"
+                    :appdel="appdel"
                 ></lunches>
             </div>
         </div>
@@ -39,6 +41,14 @@ export default {
         },
         initiallunch: {
             type: Number
+        },
+        appdel: {
+            type: Boolean,
+            default: false
+        },
+        available: {
+            type: Boolean,
+            default: false
         }
     },
     data() {

@@ -26,7 +26,7 @@ class LunchSlotController extends Controller
                 ->join('lunch_slot_user', 'users.id', '=', 'lunch_slot_user.user_id')
                 ->join('lunch_slots', 'lunch_slots.id', '=', 'lunch_slot_user.lunch_slot_id')
                 ->where('lunch_slot_user.date', $date)
-                ->orderBy('users.name')
+                ->orderBy('time')
                 ->get();
         } else {
             $userLunches = DB::table('users')
@@ -44,17 +44,15 @@ class LunchSlotController extends Controller
     public function claim(Request $request)
     {
         $date = Carbon::today()->toDateString();
-
-        Auth::User()->lunches()->detach();
-        Auth::User()->lunches()->attach($request->id, ['date' => $date]);
-
         $lunchslot = LunchSlot::find($request->id);
 
-        if ($lunchslot->available_today < 0) {
+        if ((Auth::User()->app_del || !Auth::User()->available) || $lunchslot->available_today >= 1) {
+            Auth::User()->lunches()->detach();
+            Auth::User()->lunches()->attach($request->id, ['date' => $date]);
+            return $this->userLunches();
+        } else {
             return response()->json('This lunch slot has been claimed by another user', 403);
         }
-
-        return $this->userLunches();
     }
 
     public function unclaim()

@@ -54,6 +54,12 @@
 
 </head>
 <body>
+    @if ($versionalert)
+        <div class="alert alert-danger alert-dismissible">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Warning!</strong> {{ $versionalert }}
+        </div>
+    @endif
     <div id="app">
         <div class="container-fluid header">
             <div class="row">
@@ -102,11 +108,24 @@
                                 <a class="dropdown-item" href="{{ route('userrolesadmin') }}">User Roles</a>
                                 <a class="dropdown-item" href="{{ route('upload') }}">Bulk Upload</a>
                             @endif
+                            @if( config('app.app_del_enabled') )
+                                <a class="dropdown-item" href="{{ route('appdeladmin') }}">App Del</a>
+                            @endif
                         </div>
                     </li>
                     @endcan
                 </ul>
                 <ul class="nav navbar-nav">
+                    @if( config('app.app_del_enabled') and (!$ads->isEmpty()))
+                            <li class="nav-item">
+                                <span class="navbar-text" disabled="">
+                                    App Del Support:
+                                    @foreach( $ads as $ad )
+                                        {{$ad->name}}{{$loop->last ? '' : ','}}
+                                    @endforeach
+                                </span>
+                            </li>
+                    @endif
                     @guest
                     <li class="nav-item">
                         <a class="nav-link modal-link" data-toggle="modal" data-target="#loginModal">Login</a>
@@ -117,17 +136,18 @@
                             </li>
                         @endif
                     @else
-                    @if( config('app.support_code') and (!$dsp->isEmpty()) )
-                        <li class="nav-item">
-                            <span class="navbar-text" disabled="">{{$dsp[0]->code}}</span>
-                        </li>
-                        <li class="nav-item">
-                            <span class="navbar-text" disabled="">{{$dsp[0]->password}}</span>
-                        </li>
-                        @if($dsp[0]->password2)
-                        <li class="nav-item">
-                            <span class="navbar-text" disabled="">{{$dsp[0]->password2}}</span>
-                        </li>
+
+                        @if( config('app.support_code') and (!$dsp->isEmpty()) )
+                            <li class="nav-item">
+                                <span class="navbar-text" disabled="">{{$dsp[0]->code}}</span>
+                            </li>
+                            <li class="nav-item">
+                                <span class="navbar-text" disabled="">{{$dsp[0]->password}}</span>
+                            </li>
+                            @if($dsp[0]->password2)
+                            <li class="nav-item">
+                                <span class="navbar-text" disabled="">{{$dsp[0]->password2}}</span>
+                            </li>
                         @endif
                     @endif
                     <li class="nav-item">

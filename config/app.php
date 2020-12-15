@@ -143,6 +143,7 @@ return [
     'sd_rota' => env('APP_SD_ROTA', false),
     'default_role' => env('APP_DEFAULT_ROLE', 'none'),
     'footer_text' => env('APP_FOOTER_TEXT', ''),
+    'app_del_enabled' => env('APP_DEL_ENABLED', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -246,7 +247,6 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-
     ],
 
 ];

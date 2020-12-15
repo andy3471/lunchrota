@@ -1,0 +1,70 @@
+version: '3'
+services:
+  web:
+    image: andy3471/lunchrota
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "8002:80"
+    environment:
+      APP_KEY: base64:+7JBw8tEr0aalfJbXOzc6CDxbNKVAKYFEDzXWuVGEVU=
+      DB_HOST: db
+      REDIS_HOST: redis
+      DB_DATABASE: homestead
+      DB_PASSWORD: secret
+      DB_DATABASE: homestead
+      APP_URL: http://localhost:8002
+      ASSET_URL: http://localhost:8002
+      APP_REGISTER_ENABLED: "true"
+      APP_RESET_PASSWORD_ENABLED: "false"
+      APP_ROLES_ENABLED: "true"
+      APP_DEFAULT_ROLE: "In Office"
+      APP_FOOTER_TEXT: "Footer Text"
+      CACHE_DRIVER: redis
+    volumes:
+      - ./logs:/app/storage/logs
+    depends_on:
+      - db
+      - redis
+  scheduler:
+    image: andy3471/lunchrota
+    restart: unless-stopped
+    tty: true
+    environment:
+      APP_KEY: base64:+7JBw8tEr0aalfJbXOzc6CDxbNKVAKYFEDzXWuVGEVU=
+      DB_HOST: db
+      REDIS_HOST: redis
+      DB_DATABASE: homestead
+      DB_PASSWORD: secret
+      DB_DATABASE: homestead
+      APP_URL: http://localhost:8002
+      APP_REGISTER_ENABLED: "true"
+      APP_RESET_PASSWORD_ENABLED: "false"
+      APP_ROLES_ENABLED: "true"
+      APP_DEFAULT_ROLE: "In Office"
+      APP_FOOTER_TEXT: "Footer Text"
+      CONTAINER_ROLE: scheduler
+    volumes:
+      - ./logs:/app/storage/logs
+    depends_on:
+      - db
+      - redis
+  db:
+    image: mysql:5.7.30
+    restart: unless-stopped
+    tty: true
+    environment:
+      MYSQL_DATABASE: homestead
+      MYSQL_USER: homestead
+      MYSQL_PASSWORD: secret
+      MYSQL_ROOT_PASSWORD: secret
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      - ./database/mysql:/var/lib/mysql
+  redis:
+    image: redis:6.0.4
+    restart: unless-stopped
+    volumes:
+      - ./database/redis:/data
+    entrypoint: redis-server --appendonly yes

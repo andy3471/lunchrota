@@ -26,6 +26,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('demo:refresh')->daily();
         $schedule->command('roles:generate')->daily();
+        $schedule->command('roles:clear')->daily();
     }
 
     /**

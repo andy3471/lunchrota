@@ -33,8 +33,10 @@ class LunchSlot extends Model
 
             $rolesToday = DB::Table('role_user')
                 ->join('roles', 'role_user.role_id', 'roles.id')
+                ->join('users', 'role_user.user_id', 'users.id')
                 ->where('role_user.date', $date)
                 ->where('roles.available', true)
+                ->where('users.app_del', false)
                 ->count();
 
             $totalAvailable = floor(1 + (($rolesToday - 1) * ($ratio)));
@@ -43,12 +45,14 @@ class LunchSlot extends Model
         }
 
         $totalClaimed = DB::Table('lunch_slot_user')
+            ->join('users', 'lunch_slot_user.user_id', 'users.id')
+            ->where('users.app_del', false)
             ->where('date', $date)
             ->where('lunch_slot_id', $this->id)
             ->count();
 
         $remainingAvailable = $totalAvailable - $totalClaimed;
-
+        if ($remainingAvailable < 0) { return 0; };
         return $remainingAvailable;
     }
 }

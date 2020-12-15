@@ -9,6 +9,12 @@
         @endif
         @auth
             :loggedin="true"
+            @if( Auth::user()->app_del )
+                :appdel=true
+            @endif
+            @if ($available)
+                :available=true
+            @endif
         @endauth
     >
     </rota>

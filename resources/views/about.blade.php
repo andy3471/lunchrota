@@ -16,7 +16,7 @@
                             Created By:
                         </td>
                         <td>
-                            Andrew Hargrave + Curtis Reet
+                            Complete rewrite by <a href="https://andyh.app">Andrew Hargrave</a>, based on an original project by <a href="https://curtisreet.co.uk">Curtis Reet</a>.
                         </td>
                     </tr>
                     <tr>
@@ -33,13 +33,12 @@
                         </td>
                         <td>
                             @foreach($admins as $admin)
-                                {{ $loop->first ? '' : ', ' }}
                                 @if($admin->meme)
-                                    <a href='{{$admin->meme}}' class="meme">{{$admin->name}}</a>
+                                    <a href='{{$admin->meme}}' class="meme">
                                 @else
-                                    {{$admin->name}}
+                                    <a>
                                 @endif
-                                    
+                                {{$admin->name}}{{$loop->last ? '' : ','}}</a>
                             @endforeach
                         </td>
                     </tr>

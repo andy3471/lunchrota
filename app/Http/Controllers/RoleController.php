@@ -26,6 +26,7 @@ class RoleController extends Controller
             ->join('role_user', 'users.id', '=', 'role_user.user_id')
             ->join('roles', 'roles.id', '=', 'role_user.role_id')
             ->where('role_user.date', $date)
+            ->where('users.app_del', '=', false)
             ->orderBy('users.name')
             ->get();
 
@@ -103,7 +104,7 @@ class RoleController extends Controller
 
     public function userRolesAdmin()
     {
-        $users = User::all();
+        $users = User::Where('app_del', '=', false)->get();
         $roles = Role::orderBy('name')->get();
         return view('admin.userroles.index')->withUsers($users)->withRoles($roles);
     }
@@ -125,11 +126,14 @@ class RoleController extends Controller
             'Pragma'              => 'public'
         ];
 
+        $date = Carbon::yesterday();
+
         if (config('database.default') == 'mysql') {
             $roles = DB::table('users')
                 ->select('users.name', DB::raw('DATE_FORMAT(role_user.date,"%d/%m/%Y") as date'), 'roles.name as role')
                 ->join('role_user', 'users.id', '=', 'role_user.user_id')
                 ->join('roles', 'roles.id', '=', 'role_user.role_id')
+                ->where('date', '>', $date )
                 ->orderBy('role_user.date')
                 ->get();
         } else {
@@ -137,6 +141,7 @@ class RoleController extends Controller
                 ->select('users.name', DB::raw("FORMAT(role_user.date, 'd', 'en-gb') as date"), 'roles.name as role')
                 ->join('role_user', 'users.id', '=', 'role_user.user_id')
                 ->join('roles', 'roles.id', '=', 'role_user.role_id')
+                ->where('date', '>', $date )
                 ->orderBy('role_user.date')
                 ->get();
         }
@@ -182,8 +187,6 @@ class RoleController extends Controller
 
         $messages = collect();
 
-        DB::table('role_user')->truncate();
-
         $count =  count($content);
 
         for ($i = 1; $i < $count - 1; $i++) {
@@ -192,6 +195,8 @@ class RoleController extends Controller
 
                 $date = Carbon::createFromFormat('d/m/Y', $content[$i][1])->toDateString();
                 $role = Role::where('name', $content[$i][2])->first();
+
+                $user->roles()->wherePivot('date', $date)->detach();
 
                 if (!$user) {
                     $messages->push(['message' => "User " . $content[$i][0] . " does not exist", 'type' => 'danger']);

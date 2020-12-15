@@ -1,0 +1,68 @@
+version: '3'
+services:
+  lunchrota:
+    image: andy3471/lunchrota
+    restart: unless-stopped
+    container_name: lunchrota-app
+    tty: true
+    ports:
+      - "3473:80"
+    environment:
+      APP_KEY: base64:+7JBw8tEr0aalfJbXOzc6CDxbNKVAKYFEDzXWuVGEVU=
+      DB_HOST: db
+      REDIS_HOST: redis
+      APP_DEBUG: "true"
+      DB_DATABASE: homestead
+      DB_USERNAME: homestead
+      DB_PASSWORD: secret
+      APP_DEMO_MODE: "true"
+      CACHE_DRIVER: redis
+      CONTAINER_ROLE: app
+      APP_ENV: local
+      APP_DEL_ENABLED: "true"
+      APP_ROLES_ENABLED: "true"
+      LUNCH_SLOT_CALCLULATED: "true"
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+      - redis
+  scheduler:
+    image: andy3471/lunchrota
+    restart: unless-stopped
+    container_name: lunchrota-scheduler
+    tty: true
+    environment:
+      APP_KEY: base64:+7JBw8tEr0aalfJbXOzc6CDxbNKVAKYFEDzXWuVGEVU=
+      DB_HOST: db
+      REDIS_HOST: redis
+      APP_DEBUG: "true"
+      DB_DATABASE: homestead
+      DB_USERNAME: homestead
+      DB_PASSWORD: secret
+      APP_DEMO_MODE: "true"
+      CONTAINER_ROLE: scheduler
+      APP_ENV: local
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+      - redis
+  db:
+    image: mysql:5.7.30
+    restart: unless-stopped
+    container_name: lunchrota-db
+    tty: true
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: homestead
+      MYSQL_USER: homestead
+      MYSQL_PASSWORD: secret
+      MYSQL_ROOT_PASSWORD: secret
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+  redis:
+    image: redis:6.0.4
+    container_name: lunchrota-redis
+    restart: unless-stopped

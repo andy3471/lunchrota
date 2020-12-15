@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Rules\CurrentPassword;
 use App\User;
 use Auth;
+use Illuminate\Support\Facades\Cache;
 
 class UserController extends Controller
 {
@@ -60,11 +61,13 @@ class UserController extends Controller
             'users.*.email'     => 'email',
             'users.*.scheduled' => 'required|boolean',
             'users.*.admin'     => 'required|boolean',
+            'users.*.app_del'     => 'required|boolean',
             'users.*.deleted'   => 'required|boolean',
             'users.*.new_password' => 'nullable|string|min:6',
         ]);
 
         $users = collect($request->users);
+        Cache::forget('appdelsupport');
 
         foreach ($users as $u) {
             $user = User::withTrashed()->where('id', $u['id'])->first();
@@ -81,6 +84,7 @@ class UserController extends Controller
             $user->name = $u['name'];
             $user->email = $u['email'];
             $user->admin = $u['admin'];
+            $user->app_del = $u['app_del'];
             $user->scheduled = $u['scheduled'];
             $user->save();
         }
