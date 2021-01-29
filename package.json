@@ -10,7 +10,7 @@
         "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
     },
     "devDependencies": {
-        "andyh-datepicker": "^1.0.5",
+        "andyh-datepicker": "^1.0.11",
         "andyh-timepicker": "^1.0.4",
         "axios": "^0.19.2",
         "bootstrap": "^4.5.2",
@@ -25,6 +25,5 @@
         "sass-loader": "7.*",
         "vue": "^2.6.12",
         "vue-template-compiler": "^2.6.12"
-    },
-    "dependencies": {}
+    }
 }
