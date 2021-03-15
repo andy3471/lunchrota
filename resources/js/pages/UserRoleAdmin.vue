@@ -26,7 +26,7 @@
       </div>
 
       <div class="col-lg-6 order-lg-2" id="DatePicker">
-        <date-picker v-model="date"></date-picker>
+        <date-picker v-model="date" color="#fec107"></date-picker>
       </div>
     </div>
   </div>
