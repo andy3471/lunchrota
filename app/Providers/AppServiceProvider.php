@@ -55,11 +55,14 @@ class AppServiceProvider extends ServiceProvider
                 $version = config('app.version');
                 $url = 'https://andyh.app/lunchrota/alert/' . $version;
 
-                $client = new Client;
-                try {
-                    return (string) $client->get($url, ['verify' => false])->getBody();
-                }
-                catch (ClientException $e){
+                $client = new Client(['http_errors' => false]);
+
+                $response = $client->get($url, ['verify' => false]);
+                $statuscode = $response->getStatusCode();
+
+                if ($statuscode === 200) {
+                    return $response->getBody();
+                } else {
                     return null;
                 }
             });

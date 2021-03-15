@@ -8,6 +8,7 @@
             <div class="col-lg-4 order-lg-2" v-if="rolesenabled">
                 <date-picker
                     v-model="date"
+                    color="#fec107"
                 ></date-picker>
             </div>
 
