@@ -47,6 +47,21 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+
+    /**
+     * Scope a query to only include active users.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeAdmins($query)
+    {
+        return $query->where('admin', true)->orderBy('name');
+    }
+
+    /**
+     * @return bool
+     */
     public function getDeletedAttribute()
     {
         if ($this->deleted_at == null) {
@@ -56,6 +71,10 @@ class User extends Authenticatable
         }
     }
 
+    /**
+     * @param $value
+     * @return bool
+     */
     public function getAdminAttribute($value) {
         if ($value == '0') {
             return false;
@@ -64,6 +83,10 @@ class User extends Authenticatable
         }
     }
 
+    /**
+     * @param $value
+     * @return bool
+     */
     public function getScheduledAttribute($value) {
         if ($value == '0') {
             return false;
@@ -72,6 +95,10 @@ class User extends Authenticatable
         }
     }
 
+    /**
+     * @param $value
+     * @return bool
+     */
     public function getAppDelAttribute($value) {
         if ($value == '0') {
             return false;
@@ -80,6 +107,9 @@ class User extends Authenticatable
         }
     }
 
+    /**
+     * @return bool
+     */
     public function getAvailableAttribute()
     {
         if (!config('app.roles_enabled')) {
@@ -102,16 +132,25 @@ class User extends Authenticatable
         }
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function roles()
     {
         return $this->belongsToMany('App\Models\Role')->withPivot('date');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function lunches()
     {
         return $this->belongsToMany('App\Models\LunchSlot')->withPivot('date');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function appdelsupportdays()
     {
         return $this->hasMany('App\Models\AppDelSupportDay');
