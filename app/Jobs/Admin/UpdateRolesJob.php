@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Jobs;
+namespace App\Jobs\Admin;
 
-use App\Http\Requests\AdminUpdateRolesRequest;
+use App\Http\Requests\Admin\UpdateRolesRequest;
 use App\Role;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -10,12 +10,12 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class AdminUpdateRolesJob implements ShouldQueue
+class UpdateRolesJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
-     * @var AdminUpdateRolesRequest
+     * @var UpdateRolesRequest
      */
     private $request;
 
@@ -24,7 +24,7 @@ class AdminUpdateRolesJob implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(AdminUpdateRolesRequest $request)
+    public function __construct(UpdateRolesRequest $request)
     {
         $this->request = $request;
     }

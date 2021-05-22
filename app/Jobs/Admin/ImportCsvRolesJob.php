@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Jobs;
+namespace App\Jobs\Admin;
 
-use App\Http\Requests\ImportCsvRolesRequest;
+use App\Http\Requests\Admin\ImportCsvRolesRequest;
 use App\Role;
 use App\User;
 use Carbon\Carbon;

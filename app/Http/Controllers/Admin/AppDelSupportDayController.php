@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\AppDelSupportDay;
 use Illuminate\Http\Request;
@@ -8,15 +8,22 @@ use App\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 
 class AppDelSupportDayController extends Controller
 {
+    /**
+     * @return mixed
+     */
     public function appDelAdmin()
     {
         $appdels = User::where('app_del', '=', true)->get();
         return view('admin.appdel.index')->withAppdels($appdels);
     }
 
+    /**
+     * @return mixed
+     */
     public function supportToday()
     {
         Cache::forget('appdelsupport');
@@ -33,6 +40,10 @@ class AppDelSupportDayController extends Controller
         return $appDelSupport;
     }
 
+    /**
+     * @param Request $request
+     * @return bool
+     */
     public function get(Request $request)
     {
         $date = Carbon::parse($request->date)->toDateString();
@@ -47,6 +58,10 @@ class AppDelSupportDayController extends Controller
         }
     }
 
+    /**
+     * @param Request $request
+     * @return bool
+     */
     public function post(Request $request)
     {
         $date = Carbon::parse($request->date)->toDateString();

@@ -2,16 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\AdminUpdateLunchSlotsRequest;
-use App\Jobs\AdminUpdateLunchSlotsJob;
 use App\LunchSlot;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 use Carbon\Carbon;
 use Auth;
 use Illuminate\Support\Facades\DB;
 
-class LunchSlotController extends Controller
+class tLunchSlotController extends Controller
 {
     /**
      * @return mixed
@@ -67,35 +64,13 @@ class LunchSlotController extends Controller
         }
     }
 
-    public function unclaim(): \Illuminate\Support\Collection
+    /**
+     * @return \Illuminate\Support\Collection
+     */
+    public function unclaim()
     {
         Auth::User()->lunches()->detach();
         return $this->userLunches();
     }
 
-    /**
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function index()
-    {
-        return view('admin.lunches.index');
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getAdminSlots()
-    {
-        return LunchSlot::orderBy('Time')->get();
-    }
-
-    /**
-     * @param AdminUpdateLunchSlotsRequest $request
-     * @return mixed
-     */
-    public function adminUpdateLunchSlots(AdminUpdateLunchSlotsRequest $request)
-    {
-        AdminUpdateLunchSlotsJob::dispatchNow($request);
-        return LunchSlot::orderBy('time')->get();
-    }
 }

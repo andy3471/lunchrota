@@ -12,14 +12,8 @@ use Illuminate\Support\Facades\DB;
 class HomeController extends Controller
 {
     /**
-     * Create a new controller instance.
-     *
-     * @return void
+     * @return mixed
      */
-    public function __construct()
-    {
-    }
-
     public function index()
     {
         $lunchslots = LunchSlot::orderBy('time')->get();
@@ -51,12 +45,18 @@ class HomeController extends Controller
         return view('home')->withLunchSlots($lunchslots)->withInitialSlot($initialSlot)->withAvailable($available);
     }
 
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function about()
     {
         $admins = User::Select('name', 'meme')->where('admin', true)->orderBy('name')->get();
         return view('about')->with('admins', $admins);
     }
 
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function demo()
     {
         return view('auth.demomode');
