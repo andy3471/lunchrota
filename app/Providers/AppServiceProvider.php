@@ -2,15 +2,13 @@
 
 namespace App\Providers;
 
-use App\DailyPassword;
+use App\Models\DailyPassword;
 use App\AppDelSupportDay;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Http;
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\ClientException;
 
 class AppServiceProvider extends ServiceProvider
 {

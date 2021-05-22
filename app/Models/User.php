@@ -1,20 +1,19 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
-
-
 class User extends Authenticatable
 {
     use Notifiable;
     use SoftDeletes;
+    use HasFactory;
 
     /**
      * The attributes that are mass assignable.
@@ -64,7 +63,7 @@ class User extends Authenticatable
             return true;
         }
     }
-    
+
     public function getScheduledAttribute($value) {
         if ($value == '0') {
             return false;
@@ -88,7 +87,7 @@ class User extends Authenticatable
         };
 
         $date = Carbon::today()->toDateString();
-    
+
         $available = DB::table('role_user')
                     ->select('roles.available')
                     ->join('roles', 'role_user.role_id', 'roles.id')
@@ -105,16 +104,16 @@ class User extends Authenticatable
 
     public function roles()
     {
-        return $this->belongsToMany('App\Role')->withPivot('date');
+        return $this->belongsToMany('App\Models\Role')->withPivot('date');
     }
 
     public function lunches()
     {
-        return $this->belongsToMany('App\LunchSlot')->withPivot('date');
+        return $this->belongsToMany('App\Models\LunchSlot')->withPivot('date');
     }
 
     public function appdelsupportdays()
     {
-        return $this->hasMany('App\AppDelSupportDay');
+        return $this->hasMany('App\Models\AppDelSupportDay');
     }
 }

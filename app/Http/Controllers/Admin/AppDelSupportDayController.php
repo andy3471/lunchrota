@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\AppDelSupportDay;
 use Illuminate\Http\Request;
-use App\User;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;

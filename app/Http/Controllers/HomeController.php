@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
-use App\LunchSlot;
+use App\Models\User;
+use App\Models\LunchSlot;
 use Carbon\Carbon;
 use Auth;
 use Illuminate\Support\Facades\DB;

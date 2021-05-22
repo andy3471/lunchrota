@@ -3,7 +3,7 @@
 namespace App\Jobs\Admin;
 
 use App\Http\Requests\Admin\UpdateRolesRequest;
-use App\Role;
+use App\Models\Role;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;

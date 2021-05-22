@@ -4,8 +4,8 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
-use App\User;
-use App\Role;
+use App\Models\User;
+use App\Models\Role;
 use Illuminate\Support\Facades\DB;
 
 class RolesGenerate extends Command
@@ -73,7 +73,7 @@ class RolesGenerate extends Command
                 $usersWithRoles = json_decode(json_encode($usersWithRoles), true);
 
                 $users = User::whereNotIn('id', $usersWithRoles)->get();
-                
+
                 foreach ($users as $user) {
                     if (($user->scheduled) & (!$user->app_del)) {
                         $user->roles()->attach($defaultRole, ['date' => $dateString]);
@@ -87,6 +87,6 @@ class RolesGenerate extends Command
             }
         };
 
-        
+
     }
 }

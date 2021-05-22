@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\Admin\UpdateLunchSlotsRequest;
 use App\Jobs\Admin\UpdateLunchSlotsJob;
-use App\LunchSlot;
+use App\Models\LunchSlot;
 use Auth;
 use App\Http\Controllers\Controller;
 

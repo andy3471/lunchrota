@@ -4,8 +4,8 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Carbon\Carbon;
-use App\User;
-use App\LunchSlot;
+use App\Models\User;
+use App\Models\LunchSlot;
 
 class DemoSeedLunch extends Command
 {
@@ -52,7 +52,7 @@ class DemoSeedLunch extends Command
                 $lunchSlots = $allLunchSlots->filter(function ($item){
                     return $item->availableToday > 0;
                 });
-                
+
                 if($lunchSlots->isEmpty()) {
                     $this->line('No Lunch Slots Remaining');
                 } else {

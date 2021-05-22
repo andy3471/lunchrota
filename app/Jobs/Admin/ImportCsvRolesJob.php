@@ -3,8 +3,8 @@
 namespace App\Jobs\Admin;
 
 use App\Http\Requests\Admin\ImportCsvRolesRequest;
-use App\Role;
-use App\User;
+use App\Models\Role;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;

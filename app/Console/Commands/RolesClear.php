@@ -3,8 +3,8 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\User;
-use App\Role;
+use App\Models\User;
+use App\Models\Role;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 

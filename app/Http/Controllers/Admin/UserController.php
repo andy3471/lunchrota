@@ -7,7 +7,7 @@ use App\Http\Requests\Admin\UpdateUsersRequest;
 use App\Jobs\Admin\StoreUserJob;
 use App\Jobs\Admin\UpdateUsersJob;
 use Illuminate\Http\Request;
-use App\User;
+use App\Models\User;
 use Auth;
 use App\Http\Controllers\Controller;
 

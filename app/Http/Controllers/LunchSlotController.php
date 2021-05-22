@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\LunchSlot;
+use App\Models\LunchSlot;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Auth;
