@@ -7,6 +7,7 @@ use App\Models\LunchSlot;
 use Carbon\Carbon;
 use Auth;
 use Illuminate\Support\Facades\DB;
+use Inertia\Inertia;
 
 class HomeController extends Controller
 {
@@ -41,7 +42,11 @@ class HomeController extends Controller
             $available = true;
         }
 
-        return view('home')->withLunchSlots($lunchslots)->withInitialSlot($initialSlot)->withAvailable($available);
+        return Inertia::render('Home', [
+            'lunchslots'    => $lunchslots,
+            'initiallunch'  => $initialSlot,
+            'available'     => $available,
+        ]);
     }
 
     /**
@@ -50,7 +55,9 @@ class HomeController extends Controller
     public function about()
     {
         $admins = User::admins()->get();
-        return view('about')->with('admins', $admins);
+        return Inertia::render('About', [
+            'admins' => $admins
+        ]);
     }
 
     /**

@@ -12,6 +12,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Inertia\Inertia;
 
 class RoleController extends Controller
 {
@@ -59,7 +60,7 @@ class RoleController extends Controller
      */
     public function roleAdmin()
     {
-        return view('admin.roles.index');
+        return Inertia::render('Admin/Role');
     }
 
     /**
@@ -87,7 +88,11 @@ class RoleController extends Controller
     {
         $users = User::Where('app_del', '=', false)->get();
         $roles = Role::orderBy('name')->get();
-        return view('admin.userroles.index')->withUsers($users)->withRoles($roles);
+
+        return Inertia::render('Admin/UserRole', [
+            'users' => $users,
+            'roles' => $roles,
+        ]);
     }
 
     /**

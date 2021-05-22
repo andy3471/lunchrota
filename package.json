@@ -25,5 +25,10 @@
         "sass-loader": "7.*",
         "vue": "^2.6.12",
         "vue-template-compiler": "^2.6.12"
+    },
+    "dependencies": {
+        "@inertiajs/inertia": "^0.8.7",
+        "@inertiajs/inertia-vue": "^0.5.12",
+        "@inertiajs/progress": "^0.2.4"
     }
 }

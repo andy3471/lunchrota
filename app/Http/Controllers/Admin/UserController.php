@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Auth;
 use App\Http\Controllers\Controller;
+use Inertia\Inertia;
 
 class UserController extends Controller
 {
@@ -29,7 +30,10 @@ class UserController extends Controller
     public function adminUsers()
     {
         $users = User::withTrashed()->orderBy('name')->get();
-        return view('admin.users.index')->withUsers($users);
+
+        return Inertia::render('Admin/Users', [
+            'users' => $users
+        ]);
     }
 
     /**

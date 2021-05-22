@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Inertia\Inertia;
 
 class AppDelSupportDayController extends Controller
 {
@@ -17,8 +18,11 @@ class AppDelSupportDayController extends Controller
      */
     public function appDelAdmin()
     {
+        // TODO Split this controller up to App Del + App Del Support Days
         $appdels = User::where('app_del', '=', true)->get();
-        return view('admin.appdel.index')->withAppdels($appdels);
+        return Inertia::render('Admin/AppDel', [
+            'appdels' => $appdels
+        ]);
     }
 
     /**
@@ -64,6 +68,7 @@ class AppDelSupportDayController extends Controller
      */
     public function post(Request $request)
     {
+        // TODO This should be a request + Job
         $date = Carbon::parse($request->date)->toDateString();
         $user_id = $request->user_id;
         $on_support = $request->on_support;

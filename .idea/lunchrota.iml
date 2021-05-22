@@ -123,6 +123,8 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/sebastian/complexity" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/deprecations" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/laravel/legacy-factories" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/inertiajs/inertia-laravel" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/tightenco/ziggy" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
