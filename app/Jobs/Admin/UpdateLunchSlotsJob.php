@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Jobs;
+namespace App\Jobs\Admin;
 
-use App\Http\Requests\AdminUpdateLunchSlotsRequest;
+use App\Http\Requests\Admin\UpdateLunchSlotsRequest;
 use App\LunchSlot;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -10,12 +10,12 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class AdminUpdateLunchSlotsJob implements ShouldQueue
+class UpdateLunchSlotsJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
-     * @var AdminUpdateLunchSlotsRequest
+     * @var UpdateLunchSlotsRequest
      */
     private $request;
 
@@ -24,7 +24,7 @@ class AdminUpdateLunchSlotsJob implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(AdminUpdateLunchSlotsRequest $request)
+    public function __construct(UpdateLunchSlotsRequest $request)
     {
         $this->request = $request;
     }

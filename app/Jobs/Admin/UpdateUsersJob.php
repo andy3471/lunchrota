@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Jobs;
+namespace App\Jobs\Admin;
 
-use App\Http\Requests\AdminUsersUpdateRequest;
+use App\Http\Requests\Admin\UpdateUsersRequest;
 use App\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -11,12 +11,12 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Cache;
 
-class AdminUsersUpdateJob implements ShouldQueue
+class UpdateUsersJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
-     * @var AdminUsersUpdateRequest
+     * @var UpdateUsersRequest
      */
     private $request;
 
@@ -25,7 +25,7 @@ class AdminUsersUpdateJob implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(AdminUsersUpdateRequest $request)
+    public function __construct(UpdateUsersRequest $request)
     {
         $this->request = $request;
     }

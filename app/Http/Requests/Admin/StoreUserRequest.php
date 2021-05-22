@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AdminUpdateLunchSlotsRequest extends FormRequest
+class StoreUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,9 @@ class AdminUpdateLunchSlotsRequest extends FormRequest
     public function rules()
     {
         return [
-            'slots.*.time'      => 'required|date_format:H:i',
-            'roles.*.available' => 'required|integer',
+            'email' => 'required|email|unique:users',
+            'name' => 'required',
+            'password' => 'required|string|min:6|confirmed',
         ];
     }
 }
