@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AdminUpdateLunchSlotsRequest;
+use App\Jobs\AdminUpdateLunchSlotsJob;
 use App\LunchSlot;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -11,11 +13,17 @@ use Illuminate\Support\Facades\DB;
 
 class LunchSlotController extends Controller
 {
+    /**
+     * @return mixed
+     */
     public function getSlots()
     {
         return LunchSlot::orderBy('time')->get();
     }
 
+    /**
+     * @return \Illuminate\Support\Collection
+     */
     public function userLunches()
     {
         $date = Carbon::today()->toDateString();
@@ -41,6 +49,10 @@ class LunchSlotController extends Controller
         return $userLunches;
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Support\Collection
+     */
     public function claim(Request $request)
     {
         $date = Carbon::today()->toDateString();
@@ -55,85 +67,35 @@ class LunchSlotController extends Controller
         }
     }
 
-    public function unclaim()
+    public function unclaim(): \Illuminate\Support\Collection
     {
         Auth::User()->lunches()->detach();
         return $this->userLunches();
     }
 
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index()
     {
         return view('admin.lunches.index');
     }
 
+    /**
+     * @return mixed
+     */
     public function getAdminSlots()
     {
         return LunchSlot::orderBy('Time')->get();
     }
 
-    public function adminUpdateSlots(Request $request)
+    /**
+     * @param AdminUpdateLunchSlotsRequest $request
+     * @return mixed
+     */
+    public function adminUpdateLunchSlots(AdminUpdateLunchSlotsRequest $request)
     {
-        $this->validate($request, [
-            'slots.*.time' => 'required|date_format:H:i',
-            'roles.*.available'    => 'required|integer',
-        ]);
-
-        $slots = collect($request->slots);
-        $deletedSlots = LunchSlot::whereNotIn('id', $slots->where('id', '!=', null)->pluck('id')->toArray())->get();
-
-        foreach ($deletedSlots as $slot) {
-            $slot->users()->detach();
-            $slot->delete();
-        };
-
-        foreach ($slots as $s) {
-            if ($s['id'] == 0) {
-                $slot = new LunchSlot;
-                $slot->time = $s['time'];
-            } else {
-                $slot = LunchSlot::find($s['id']);
-            }
-
-            if (config('app.lunch_slot_calculated')) {
-            } else {
-                $slot->available = $s['available'];
-            }
-
-            $slot->save();
-        }
-
+        AdminUpdateLunchSlotsJob::dispatchNow($request);
         return LunchSlot::orderBy('time')->get();
-    }
-
-    public function create()
-    {
-    }
-
-    public function store(Request $request)
-    {
-        $lunchSlot = new LunchSlot;
-        $lunchSlot->time = $request->time;
-        $lunchSlot->available = $request->available;
-        $lunchSlot->save;
-    }
-
-    public function show(LunchSlot $lunchSlot)
-    {
-    }
-
-    public function edit(LunchSlot $lunchSlot)
-    {
-    }
-
-    public function update(Request $request, LunchSlot $lunchSlot)
-    {
-    }
-
-    public function destroy(LunchSlot $lunchSlot)
-    {
-        return $lunchSlot;
-
-        $lunchSlot->users()->detatch();
-        $lunchSlot->delete();
     }
 }

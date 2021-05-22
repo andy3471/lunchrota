@@ -2,14 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AdminUsersUpdateRequest;
+use App\Jobs\AdminUsersUpdateJob;
 use Illuminate\Http\Request;
 use App\Rules\CurrentPassword;
 use App\User;
 use Auth;
-use Illuminate\Support\Facades\Cache;
 
 class UserController extends Controller
 {
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function changePassword(Request $request)
     {
 
@@ -25,6 +31,11 @@ class UserController extends Controller
         return redirect()->back()->with("message", 'Password Changed');
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -42,53 +53,32 @@ class UserController extends Controller
         return redirect()->back()->with("message", 'User Created');
     }
 
+    /**
+     * @return mixed
+     */
     public function adminUsers()
     {
         $users = User::withTrashed()->orderBy('name')->get();
         return view('admin.users.index')->withUsers($users);
     }
 
+    /**
+     * @return User[]|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Query\Builder[]|\Illuminate\Support\Collection
+     */
     public function adminUsersGet()
     {
         $users = User::withTrashed()->orderBy('name')->get();
         return $users;
     }
 
-    public function adminUsersPost(Request $request)
+    /**
+     * @param Request $request
+     * @return User[]|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Query\Builder[]|\Illuminate\Support\Collection
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function adminUsersPost(AdminUsersUpdateRequest $request)
     {
-        $this->validate($request, [
-            'users.*.name'      => 'required|string',
-            'users.*.email'     => 'email',
-            'users.*.scheduled' => 'required|boolean',
-            'users.*.admin'     => 'required|boolean',
-            'users.*.app_del'     => 'required|boolean',
-            'users.*.deleted'   => 'required|boolean',
-            'users.*.new_password' => 'nullable|string|min:6',
-        ]);
-
-        $users = collect($request->users);
-        Cache::forget('appdelsupport');
-
-        foreach ($users as $u) {
-            $user = User::withTrashed()->where('id', $u['id'])->first();
-
-            if ($u['deleted'] and !$user->deleted) {
-                $user->delete();
-            } elseif (!$u['deleted'] and $user->deleted) {
-                $user->restore();
-            }
-            if (!$u['new_password'] == '') {
-                $user->password =  bcrypt($u['new_password']);
-            }
-
-            $user->name = $u['name'];
-            $user->email = $u['email'];
-            $user->admin = $u['admin'];
-            $user->app_del = $u['app_del'];
-            $user->scheduled = $u['scheduled'];
-            $user->save();
-        }
-
+        AdminUsersUpdateJob::dispatchNow($request);
         return User::withTrashed()->orderBy('name')->get();
     }
 }
