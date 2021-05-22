@@ -15,31 +15,31 @@ Route::middleware('auth')->group(function () {
     Route::post('lunchslots/unclaim', 'LunchSlotController@unclaim');
 });
 
-Route::middleware('can:admin')->group(function () {
-    Route::get('admin/roles', 'Admin\RoleController@roleAdmin')->name('roleadmin');
-    Route::post('admin/roles', 'Admin\RoleController@adminUpdateRoleRequest');
-    Route::get('admin/roles/get', 'Admin\RoleController@roleAdminGetRoles');
+Route::prefix('admin')->middleware('can:admin')->group(function () {
+    Route::get('roles', 'Admin\RoleController@roleAdmin')->name('roleadmin');
+    Route::post('roles', 'Admin\RoleController@adminUpdateRoleRequest');
+    Route::get('roles/get', 'Admin\RoleController@roleAdminGetRoles');
 
-    Route::get('admin/upload', 'Admin\RoleController@userRolesUpload')->name('upload');
-    Route::get('admin/upload/downloadcsv', 'Admin\RoleController@downloadCsv')->name('downloadcsv');
-    Route::Post('admin/upload/uploadcsv', 'Admin\RoleController@importCsvRoles')->name('uploadcsv');
+    Route::get('upload', 'Admin\RoleController@userRolesUpload')->name('upload');
+    Route::get('upload/downloadcsv', 'Admin\RoleController@downloadCsv')->name('downloadcsv');
+    Route::Post('upload/uploadcsv', 'Admin\RoleController@importCsvRoles')->name('uploadcsv');
 
-    Route::get('admin/userroles', 'Admin\RoleController@userRolesAdmin')->name('userrolesadmin');
-    Route::get('admin/userroles/get', 'Admin\RoleController@get');
-    Route::post('admin/userroles/post', 'Admin\RoleController@post');
+    Route::get('userroles', 'Admin\RoleController@userRolesAdmin')->name('userrolesadmin');
+    Route::get('userroles/get', 'Admin\RoleController@get');
+    Route::post('userroles/post', 'Admin\RoleController@post');
 
-    Route::get('admin/users', 'Admin\UserController@adminUsers')->name('usersadmin')->middleware('demo_mode');
-    Route::post('admin/users', 'Admin\UserController@adminUsersPost')->middleware('demo_mode');
-    Route::get('admin/users/get', 'Admin\UserController@adminUsersGet')->middleware('demo_mode');
-    Route::post('admin/users/store', 'Admin\UserController@store')->name('storeuser');
+    Route::get('users', 'Admin\UserController@adminUsers')->name('usersadmin')->middleware('demo_mode');
+    Route::post('users', 'Admin\UserController@adminUsersPost')->middleware('demo_mode');
+    Route::get('users/get', 'Admin\UserController@adminUsersGet')->middleware('demo_mode');
+    Route::post('users/store', 'Admin\UserController@store')->name('storeuser');
 
-    Route::get('admin/lunches', 'Admin\LunchSlotController@index')->name('lunchadmin');
-    Route::get('admin/lunches/get', 'Admin\LunchSlotController@getAdminSlots');
-    Route::post('admin/lunches', 'Admin\LunchSlotController@adminUpdateLunchSlots');
+    Route::get('lunches', 'Admin\LunchSlotController@index')->name('lunchadmin');
+    Route::get('lunches/get', 'Admin\LunchSlotController@getAdminSlots');
+    Route::post('lunches', 'Admin\LunchSlotController@adminUpdateLunchSlots');
 
-    Route::get('admin/appdel', 'Admin\AppDelSupportDayController@appDelAdmin')->name('appdeladmin');
-    Route::get('admin/appdel/get', 'Admin\AppDelSupportDayController@get');
-    Route::post('admin/appdel/post', 'Admin\AppDelSupportDayController@post');
+    Route::get('appdel', 'Admin\AppDelSupportDayController@appDelAdmin')->name('appdeladmin');
+    Route::get('appdel/get', 'Admin\AppDelSupportDayController@get');
+    Route::post('appdel/post', 'Admin\AppDelSupportDayController@post');
 });
 
 //Disable Register Route if Registration Disabled

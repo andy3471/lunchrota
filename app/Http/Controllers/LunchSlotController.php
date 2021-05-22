@@ -8,7 +8,7 @@ use Carbon\Carbon;
 use Auth;
 use Illuminate\Support\Facades\DB;
 
-class tLunchSlotController extends Controller
+class LunchSlotController extends Controller
 {
     /**
      * @return mixed

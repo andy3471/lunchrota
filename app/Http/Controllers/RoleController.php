@@ -2,12 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Admin\UpdateRolesRequest;
-use App\Http\Requests\Admin\ImportCsvRolesRequest;
-use App\Jobs\Admin\UpdateRolesJob;
-use App\Jobs\Admin\ImportCsvRolesJob;
-use App\Role;
-use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
