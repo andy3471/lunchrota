@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AdminUpdateRolesRequest;
+use App\Http\Requests\ImportCsvRolesRequest;
+use App\Jobs\AdminUpdateRolesJob;
+use App\Jobs\ImportCsvRolesJob;
 use App\Role;
 use App\User;
 use Carbon\Carbon;
@@ -62,43 +66,25 @@ class RoleController extends Controller
         }
     }
 
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function roleAdmin()
     {
         return view('admin.roles.index');
     }
 
+    /**
+     * @return mixed
+     */
     public function roleAdminGetRoles()
     {
         return Role::orderBy('name')->get();
     }
 
-    public function roleAdminUpdateRoles(Request $request)
+    public function adminUpdateRoleRequest(AdminUpdateRolesRequest $request)
     {
-        $this->validate($request, [
-            'roles.*.name' => 'required|string',
-            'roles.*.available'    => 'required|boolean',
-        ]);
-
-        $roles = collect($request->roles);
-        $deletedRoles = Role::whereNotIn('id', $roles->where('id', '!=', null)->pluck('id')->toArray())->get();
-
-        foreach ($deletedRoles as $role) {
-            $role->users()->detach();
-            $role->delete();
-        };
-
-        foreach ($roles as $r) {
-            if ($r['id'] == 0) {
-                $role = new Role;
-                $role->name = $r['name'];
-            } else {
-                $role = Role::find($r['id']);
-            }
-
-            $role->available = $r['available'];
-            $role->save();
-        }
-
+        AdminUpdateRolesJob::dispatchNow($request);
         return Role::orderBy('name')->get();
     }
 
@@ -170,48 +156,9 @@ class RoleController extends Controller
         return response()->streamDownload($callback, $filename, $headers);
     }
 
-    public function uploadCsv(Request $request)
+    public function importCsvRoles(ImportCsvRolesRequest $request)
     {
-        $this->validate($request, [
-            'csv' => 'required|file',
-        ]);
-
-        $path = $request->file('csv')->storeAs('/csv', 'commrotaupload.csv');
-        $file = Storage::url($path);
-
-        $file = fopen(base_path() . '/storage/app/csv/commrotaupload.csv', 'r');
-        while (!feof($file)) {
-            $content[] = fgetcsv($file);
-        }
-        fclose($file);
-
-        $messages = collect();
-
-        $count =  count($content);
-
-        for ($i = 1; $i < $count - 1; $i++) {
-            if ($content[$i][0]){
-                $user = User::where('name', $content[$i][0])->first();
-
-                $date = Carbon::createFromFormat('d/m/Y', $content[$i][1])->toDateString();
-                $role = Role::where('name', $content[$i][2])->first();
-
-                $user->roles()->wherePivot('date', $date)->detach();
-
-                if (!$user) {
-                    $messages->push(['message' => "User " . $content[$i][0] . " does not exist", 'type' => 'danger']);
-                } else if (!$role) {
-                    $messages->push(['message' => "Role " . $content[$i][2] . " does not exist", 'type' => 'danger']);
-                } else if (!$date) {
-                    $messages->push(['message' => "Date " . $content[$i][1] . " is not valid", 'type' => 'danger']);
-                } else {
-                    $user->roles()->attach($role, ['date' => $date]);
-                    $messages->push(['message' => "Added Role of " . $role->name . " for user " . $user->name . " on " . $date, 'type' => 'success']);
-                }
-            }
-        };
-
-        //return $messages->all();
+        $messages = ImportCsvRolesJob::dispatchNow($request);
         return view('admin.userroles.confirmupload')->withMessages($messages->all());
     }
 }

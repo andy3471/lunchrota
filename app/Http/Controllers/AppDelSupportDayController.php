@@ -21,7 +21,6 @@ class AppDelSupportDayController extends Controller
     {
         Cache::forget('appdelsupport');
 
-        $today = Carbon::now()->toDateString();
         $appDelSupport = Cache::remember('appdelsupport', 600, function () {
             $today = Carbon::now()->toDateString();
             return DB::table('users')
