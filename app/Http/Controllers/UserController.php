@@ -6,6 +6,7 @@ use App\Http\Requests\ChangePasswordRequest;
 use App\Jobs\ChangePasswordJob;
 use Auth;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Redirect;
 
 class UserController extends Controller
 {
@@ -25,6 +26,6 @@ class UserController extends Controller
     public function updatePassword(ChangePasswordRequest $request)
     {
         ChangePasswordJob::dispatchNow($request);
-        return redirect()->back()->with("message", 'Password Changed');
+        return Redirect::route('home')->with("message", "Password Changed");
     }
 }

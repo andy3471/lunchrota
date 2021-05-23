@@ -3,10 +3,18 @@
         <b-container>
             <b-card title="Login">
                 <b-form @submit.prevent="submit">
-                    <b-form-group label="Email">
+                    <b-form-group
+                        label="Email"
+                        :state="!errors.hasOwnProperty('email')"
+                        :invalid-feedback="errors.newpassword"
+                    >
                         <b-form-input v-model="form.email" placeholder="Email"></b-form-input>
                     </b-form-group>
-                    <b-form-group label="Password">
+                    <b-form-group
+                        label="Password"
+                        :state="!errors.hasOwnProperty('password')"
+                        :invalid-feedback="errors.password"
+                    >
                         <b-form-input v-model="form.password" type="password"  placeholder="Password"></b-form-input>
                     </b-form-group>
                     <b-button type="submit" variant="primary">Sign In</b-button>
@@ -20,6 +28,9 @@ import MainLayout from '../../Layouts/MainLayout'
 
 export default {
     components: { MainLayout },
+    props: {
+        errors: Object,
+    },
     data() {
         return {
             form: {

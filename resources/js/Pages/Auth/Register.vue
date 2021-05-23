@@ -3,13 +3,25 @@
         <b-container>
             <b-card title="Register">
                 <b-form @submit.prevent="submit">
-                    <b-form-group label="Name">
+                    <b-form-group
+                        label="Name"
+                        :state="!errors.hasOwnProperty('name')"
+                        :invalid-feedback="errors.name"
+                    >
                         <b-form-input v-model="form.name" placeholder="Name"></b-form-input>
                     </b-form-group>
-                    <b-form-group label="Email">
+                    <b-form-group
+                        label="Email"
+                        :state="!errors.hasOwnProperty('email')"
+                        :invalid-feedback="errors.email"
+                    >
                         <b-form-input v-model="form.email" placeholder="Email"></b-form-input>
                     </b-form-group>
-                    <b-form-group label="Password">
+                    <b-form-group
+                        label="Password"
+                        :state="!errors.hasOwnProperty('password')"
+                        :invalid-feedback="errors.password"
+                    >
                         <b-form-input v-model="form.password" type="password" placeholder="Password"></b-form-input>
                     </b-form-group>
                     <b-form-group label="Confirm Password">
@@ -26,6 +38,9 @@ import MainLayout from '../../Layouts/MainLayout'
 
 export default {
     components: { MainLayout },
+    props: {
+        errors: Object,
+    },
     data() {
         return {
             form: {

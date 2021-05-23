@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Auth;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class UserController extends Controller
@@ -21,7 +22,7 @@ class UserController extends Controller
     public function store(StoreUserRequest $request)
     {
         StoreUserJob::dispatchNow($request);
-        return redirect()->back()->with("message", 'User Created');
+        return Redirect::back()->with("message", "User Create");;
     }
 
     /**

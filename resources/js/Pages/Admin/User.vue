@@ -6,7 +6,7 @@
                     <user-table :appdelenabled="appdelenabled" />
                 </b-col>
                 <b-col>
-                    <create-user></create-user>
+                    <create-user :errors="errors"></create-user>
                 </b-col>
             </b-row>
         </b-container>
@@ -20,6 +20,9 @@ import CreateUser from '../../Components/Admin/CreateUser'
 import UserTable from '../../Components/Admin/UserTable'
 
 export default {
-  components: { MainLayout, CreateUser, UserTable }
+  components: { MainLayout, CreateUser, UserTable },
+  props: {
+    errors: Object,
+  }
 };
 </script>

@@ -1,13 +1,25 @@
 <template>
     <b-card title="New User">
         <b-form @submit.prevent="submit">
-            <b-form-group label="Name">
+            <b-form-group
+                label="Name"
+                :state="!errors.hasOwnProperty('name')"
+                :invalid-feedback="errors.name"
+            >
                 <b-form-input v-model="form.name" placeholder="Name"></b-form-input>
             </b-form-group>
-            <b-form-group label=Email>
+            <b-form-group
+                label=Email
+                :state="!errors.hasOwnProperty('name')"
+                :invalid-feedback="errors.email"
+            >
                 <b-form-input v-model="form.email" type="email"  placeholder="Email"></b-form-input>
             </b-form-group>
-            <b-form-group label="Password">
+            <b-form-group
+                label="Password"
+                :state="!errors.hasOwnProperty('password')"
+                :invalid-feedback="errors.password"
+            >
                 <b-form-input v-model="form.password" type="password"  placeholder="Password"></b-form-input>
             </b-form-group>
             <b-form-group label="Confirm Password">
@@ -19,6 +31,9 @@
 </template>
 <script>
 export default {
+    props: {
+        errors: Object,
+    },
     data() {
         return {
             form: {

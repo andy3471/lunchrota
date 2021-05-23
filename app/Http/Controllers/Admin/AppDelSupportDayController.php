@@ -18,6 +18,7 @@ class AppDelSupportDayController extends Controller
     public function appDelAdmin()
     {
         $appdels = User::where('app_del', '=', true)->get();
+
         return Inertia::render('Admin/AppDel', [
             'appdels' => $appdels
         ]);

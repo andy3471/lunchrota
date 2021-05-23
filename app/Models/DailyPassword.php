@@ -19,4 +19,13 @@ class DailyPassword extends Model
         $dsp = strrev($dsp);
         return $dsp;
     }
+
+    public function dspToday() {
+        Return Cache::remember('dsp', 600, function () {
+            $today = Carbon::now()->toDateString();
+            return DailyPassword::where('date', $today)->get();
+        });
+    }
+
+
 }

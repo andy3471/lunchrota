@@ -1,6 +1,6 @@
 <template>
   <main-layout>
-      <b-contaier>
+      <b-container>
           <table class="table table-bordered">
               <tbody>
               <tr>
@@ -48,7 +48,7 @@
                   </td>
                   <td>
                       <div class="text-right">
-                          <button type="button" class="btn btn-primary btn-sm" @click="createRole()">Add</button>
+                          <button type="button" class="btn btn-secondary btn-sm" @click="createRole()">Add</button>
                       </div>
                   </td>
               </tr>
@@ -61,7 +61,7 @@
               </tr>
               </tbody>
           </table>
-      </b-contaier>
+      </b-container>
   </main-layout>
 </template>
 

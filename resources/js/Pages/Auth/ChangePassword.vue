@@ -3,10 +3,18 @@
         <b-container>
             <b-card title="Change Password">
                 <b-form @submit.prevent="submit">
-                    <b-form-group label="Current Password">
-                        <b-form-input v-model="form.currentpassword" placeholder="Current Password"></b-form-input>
+                    <b-form-group
+                        label="Current Password"
+                        :state="!errors.hasOwnProperty('currentpassword')"
+                        :invalid-feedback="errors.currentpassword"
+                    >
+                        <b-form-input v-model="form.currentpassword" type="password" placeholder="Current Password"></b-form-input>
                     </b-form-group>
-                    <b-form-group label="New Password">
+                    <b-form-group
+                        label="New Password"
+                        :state="!errors.hasOwnProperty('newpassword')"
+                        :invalid-feedback="errors.newpassword"
+                    >
                         <b-form-input v-model="form.newpassword" type="password"  placeholder="New Password"></b-form-input>
                     </b-form-group>
                     <b-form-group label="Confirm New Password">
@@ -23,6 +31,9 @@ import MainLayout from '../../Layouts/MainLayout'
 
 export default {
     components: { MainLayout },
+    props: {
+        errors: Object,
+    },
     data() {
         return {
             form: {
