@@ -38,11 +38,23 @@ class HandleInertiaRequests extends Middleware
     public function share(Request $request)
     {
         return array_merge(parent::share($request), [
-            'config.name' => config('app.name'),
-            'config.roles_enabled' => config('app.roles_enabled'),
-            'config.register_enabled' => config('app.register_enabled'),
-            'config.app_del_enabled' => config('a pp.app_del_enabled'),
-            'config.version' => config('app.version')
+            'auth' => function () use ($request) {
+                return [
+                    'user' => $request->user() ? [
+                        'id' => $request->user()->id,
+                        'email' => $request->user()->email,
+                        'name' => $request->user()->name,
+                        'admin' => $request->user()->admin,
+                    ] : null,
+                ];
+            },
+            'auth.logged_in'                => Auth::check(),
+            'config.name'                   => config('app.name'),
+            'config.roles_enabled'          => config('app.roles_enabled'),
+            'config.register_enabled'       => config('app.register_enabled'),
+            'config.app_del_enabled'        => config('app.app_del_enabled'),
+            'config.lunch_slot_calculated'  => config('app.lunch_slot_calculated'),
+            'config.version'                => config('app.version'),
         ]);
     }
 }

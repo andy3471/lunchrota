@@ -100,7 +100,7 @@ class RoleController extends Controller
      */
     public function userRolesUpload()
     {
-        return view('admin.userroles.upload');
+        return Inertia::render('Admin/UploadUserRole');
     }
 
     /**
@@ -108,7 +108,7 @@ class RoleController extends Controller
      */
     public function downloadCsv()
     {
-        $filename = "commrotaexport.csv";
+        $filename = "export.csv";
 
         $headers = [
             'Cache-Control'       => 'must-revalidate, post-check=0, pre-check=0',

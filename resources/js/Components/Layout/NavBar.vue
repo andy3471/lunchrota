@@ -15,8 +15,8 @@
                 </b-navbar-nav>
 
                 <!-- Right aligned nav items -->
-                <b-navbar-nav class="ml-auto">
-                    <b-nav-item-dropdown text="Admin" right>
+                <b-navbar-nav class="ml-auto" v-if="$page.props.auth.logged_in">
+                    <b-nav-item-dropdown text="Admin" right v-if="$page.props.auth.user.admin">
                         <b-dropdown-item :href="$route('admin.users')">Users</b-dropdown-item>
                         <b-dropdown-item :href="$route('admin.lunch_slots')">Lunch Slots</b-dropdown-item>
                         <b-dropdown-item :href="$route('admin.roles')" v-if="$page.props.config.roles_enabled">Roles</b-dropdown-item>
@@ -27,9 +27,9 @@
 
                     <b-nav-item-dropdown right>
                         <template #button-content>
-                            <em>User</em>
+                            <em>{{ $page.props.auth.user.name }}</em>
                         </template>
-                        <b-dropdown-item href="#">Change Password</b-dropdown-item>
+                        <b-dropdown-item :href="$route('changepassword')">Change Password</b-dropdown-item>
                         <b-dropdown-item
                             type="submit"
                             @click="logout"
@@ -39,7 +39,7 @@
                     </b-nav-item-dropdown>
                 </b-navbar-nav>
 
-                <b-navbar-nav class="ml-auto">
+                <b-navbar-nav class="ml-auto" v-if="!$page.props.auth.logged_in">
                     <li class="nav-item">
                         <inertia-link :href="$route('login')" class="nav-link">Login</inertia-link>
                     </li>

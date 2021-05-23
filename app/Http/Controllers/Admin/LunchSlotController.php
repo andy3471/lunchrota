@@ -7,6 +7,7 @@ use App\Jobs\Admin\UpdateLunchSlotsJob;
 use App\Models\LunchSlot;
 use Auth;
 use App\Http\Controllers\Controller;
+use Inertia\Inertia;
 
 class LunchSlotController extends Controller
 {
@@ -15,7 +16,7 @@ class LunchSlotController extends Controller
      */
     public function index()
     {
-        return view('admin.lunches.index');
+        return Inertia::render('Admin/LunchSlot');
     }
 
     /**

@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\AppDelSupportDay;
+use App\Models\AppDelSupportDay;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Inertia\Inertia;
 
@@ -18,30 +17,10 @@ class AppDelSupportDayController extends Controller
      */
     public function appDelAdmin()
     {
-        // TODO Split this controller up to App Del + App Del Support Days
         $appdels = User::where('app_del', '=', true)->get();
         return Inertia::render('Admin/AppDel', [
             'appdels' => $appdels
         ]);
-    }
-
-    /**
-     * @return mixed
-     */
-    public function supportToday()
-    {
-        Cache::forget('appdelsupport');
-
-        $appDelSupport = Cache::remember('appdelsupport', 600, function () {
-            $today = Carbon::now()->toDateString();
-            return DB::table('users')
-            ->select('users.name')
-            ->join('app_del_support_days', 'users.id', '=', 'app_del_support_days.user_id')
-            ->where('app_del_support_days.date', $today)
-            ->get();
-        });
-
-        return $appDelSupport;
     }
 
     /**

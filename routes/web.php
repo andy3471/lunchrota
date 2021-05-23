@@ -10,7 +10,8 @@ Route::get('lunchslots', 'LunchSlotController@getSlots');
 Route::get('lunchslots/users', 'LunchSlotController@userLunches');
 
 Route::middleware('auth')->group(function () {
-    Route::post('changepassword', 'UserController@changePassword')->name('changepassword')->middleware('demo_mode');
+    Route::get('changepassword', 'UserController@changePassword')->name('changepassword')->middleware('demo_mode');
+    Route::post('changepassword', 'UserController@updatePassword')->name('update.change_password')->middleware('demo_mode');
     Route::post('lunchslots/claim', 'LunchSlotController@claim');
     Route::post('lunchslots/unclaim', 'LunchSlotController@unclaim');
 });
@@ -21,7 +22,7 @@ Route::prefix('admin')->middleware('can:admin')->group(function () {
     Route::get('roles/get', 'Admin\RoleController@roleAdminGetRoles');
 
     Route::get('upload', 'Admin\RoleController@userRolesUpload')->name('admin.upload');
-    Route::get('upload/downloadcsv', 'Admin\RoleController@downloadCsv')->name('downloadcsv');
+    Route::get('upload/downloadcsv', 'Admin\RoleController@downloadCsv')->name('admin.download_csv');
     Route::Post('upload/uploadcsv', 'Admin\RoleController@importCsvRoles')->name('uploadcsv');
 
     Route::get('userroles', 'Admin\RoleController@userRolesAdmin')->name('admin.user_roles');

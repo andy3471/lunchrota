@@ -15,7 +15,7 @@ services:
       DB_DATABASE: homestead
       DB_USERNAME: homestead
       DB_PASSWORD: secret
-      APP_DEMO_MODE: "true"
+      APP_DEMO_MODE: "false"
       CACHE_DRIVER: redis
       CONTAINER_ROLE: app
       APP_ENV: local

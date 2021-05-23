@@ -65,6 +65,6 @@ class HomeController extends Controller
      */
     public function demo()
     {
-        return view('auth.demomode');
+        return Inertia::render('Demo');
     }
 }

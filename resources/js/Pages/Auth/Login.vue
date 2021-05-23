@@ -1,5 +1,5 @@
 <template>
-    <main-layout>
+<main-layout>
         <b-container>
             <b-card title="Login">
                 <b-form @submit.prevent="submit">

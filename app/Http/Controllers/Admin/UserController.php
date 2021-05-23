@@ -31,7 +31,7 @@ class UserController extends Controller
     {
         $users = User::withTrashed()->orderBy('name')->get();
 
-        return Inertia::render('Admin/Users', [
+        return Inertia::render('Admin/User', [
             'users' => $users
         ]);
     }
