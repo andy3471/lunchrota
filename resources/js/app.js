@@ -2,11 +2,16 @@ import { App, plugin } from '@inertiajs/inertia-vue'
 import Vue from 'vue'
 import { InertiaProgress } from '@inertiajs/progress'
 import BootstrapVue from 'bootstrap-vue'
+import Axios from 'axios'
 
-
+window.axios = require('axios');
 Vue.use(plugin)
 Vue.use(BootstrapVue)
-InertiaProgress.init()
+InertiaProgress.init({
+    color: '#E0412A',
+    showSpinner: true,
+})
+
 
 Vue.prototype.$route = route
 

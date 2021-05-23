@@ -7,14 +7,19 @@
 @import "~bootstrap/scss/bootstrap";
 @import 'node_modules/bootstrap-vue/src/index.scss';
 body {
-    background-color: #fff;
+    background-color: #f2f2f2;
     color: #212529;
     font-family: "Roboto", sans-serif;
     padding-bottom: 2rem;
 }
 
-.header {
-    padding: 15px;
+.jumbotron {
+    padding: 2em;
+    margin-bottom: 0px;
+}
+
+.table {
+    background-color: white;
 }
 
 .center {
@@ -59,16 +64,16 @@ body {
 //Time Picker
 .timedropdown {
     .selected {
-        background-color: #ffc107;
+        background-color: #E0412A;
     }
 }
 
 .andyh-datepicker-container {
     margin-bottom: 1rem;
     .selected {
-        background-color: #ffc107;
+        background-color: #E0412A;
     }
     .selected:hover {
-        background-color: #ffc107
+        background-color: #FF624A
     }
 }

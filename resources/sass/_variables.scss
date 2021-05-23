@@ -1,5 +1,5 @@
 // Body
-$body-bg: #f8fafc;
+$body-bg: #f2f2f2;
 
 // Typography
 $font-family-sans-serif: "Nunito",
@@ -8,7 +8,8 @@ $font-size-base: 0.9rem;
 $line-height-base: 1.6;
 
 // Colors
-$primary: #ffc107;
+$primary: #E0412A;
+$secondary: #2BE08D;
 $blue: #3490dc;
 $indigo: #6574cd;
 $purple: #9561e2;
@@ -20,5 +21,8 @@ $green: #38c172;
 $teal: #4dc0b5;
 $cyan: #6cb2eb;
 
+// Borders
+$enable-rounded: false;
+
 //BootStrap overrids
-$theme-colors: ("primary": #ffc107);
+$theme-colors: ("primary": #E0412A, "secondary": #2BE08D);

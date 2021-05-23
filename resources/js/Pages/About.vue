@@ -1,12 +1,13 @@
 <template>
     <main-layout>
+        <b-container>
             <table class="table table-bordered">
                 <tbody>
-                <tr>
-                    <th colspan="2">
-                        <h4 id="date" class="text-center">About</h4>
-                    </th>
-                </tr>
+                <th colspan="2">
+                    <div class="text-center">
+                        About
+                    </div>
+                </th>
                 <tr>
                     <td style="width:25%">
                         Created By:
@@ -35,8 +36,7 @@
                 </tr>
                 <tr>
                     <td>Version:</td>
-<!--                    TODO add app version -->
-<!--                    <td>{{ config('app.version') }}</td>-->
+                    <td>{{ $page.props.config.version }}</td>
                 </tr>
                 <tr>
                     <td>GitHub:</td>
@@ -48,6 +48,7 @@
                 </tr>
                 </tbody>
             </table>
+        </b-container>
     </main-layout>
 </template>
 <script>

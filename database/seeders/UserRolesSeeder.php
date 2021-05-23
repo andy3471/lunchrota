@@ -5,8 +5,8 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
-use App\User;
-use App\Role;
+use App\Models\User;
+use App\Models\Role;
 
 class UserRolesSeeder extends Seeder
 {

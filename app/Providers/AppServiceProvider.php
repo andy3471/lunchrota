@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\DB;
 use GuzzleHttp\Client;
+use Inertia\Inertia;
+use Illuminate\Support\Facades\Auth;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,7 +21,22 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->registerInertia();
+    }
+
+
+    public function registerInertia()
+    {
+        Inertia::share([
+            'auth' => function () {
+                return [
+                    'user' => Auth::user() ? [
+                        'firstName' => Auth::user()->first_name,
+                        'lastName' => Auth::user()->last_name,
+                    ] : null,
+                ];
+            },
+        ]);
     }
 
     /**
