@@ -27,22 +27,22 @@
 import MainLayout from '../../Layouts/MainLayout'
 
 export default {
-    components: { MainLayout },
-    props: {
-        errors: Object,
-    },
-    data() {
-        return {
-            form: {
-                email: '',
-                password: ''
-            }
-        };
-    },
-    methods: {
-        submit() {
-            this.$inertia.post('/login', this.form)
-        },
+  components: { MainLayout },
+  props: {
+    errors: Object
+  },
+  data () {
+    return {
+      form: {
+        email: '',
+        password: ''
+      }
     }
+  },
+  methods: {
+    submit () {
+      this.$inertia.post('/login', this.form)
+    }
+  }
 }
 </script>

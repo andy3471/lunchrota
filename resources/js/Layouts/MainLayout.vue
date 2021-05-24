@@ -17,18 +17,18 @@
 import NavBar from '../Components/Layout/NavBar'
 
 export default {
-    components: { NavBar },
-    methods: {
-        makeToast(variant, title, content) {
-            this.$bvToast.toast(content, {
-                title: title,
-                variant: variant,
-                solid: true
-            });
-        }
-    },
-    mounted () {
-        this.makeToast("success", "Success", this.$page.props.flash.messages);
+  components: { NavBar },
+  methods: {
+    makeToast (variant, title, content) {
+      this.$bvToast.toast(content, {
+        title: title,
+        variant: variant,
+        solid: true
+      })
     }
+  },
+  mounted () {
+    this.makeToast('success', 'Success', this.$page.props.flash.messages)
+  }
 }
 </script>

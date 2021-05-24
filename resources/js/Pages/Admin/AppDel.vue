@@ -38,7 +38,7 @@
     </main-layout>
 </template>
 <script>
-import MainLayout from "../../Layouts/MainLayout";
+import MainLayout from '../../Layouts/MainLayout'
 
 export default {
   components: { MainLayout },
@@ -48,14 +48,14 @@ export default {
       type: Array
     }
   },
-  data() {
+  data () {
     return {
       date: new Date(),
       newAppDel: ''
-    };
+    }
   },
-  mounted() {},
+  mounted () {},
   methods: {
   }
-};
+}
 </script>

@@ -44,21 +44,21 @@ export default {
       type: String
     }
   },
-  data() {
+  data () {
     return {
       userRoles: [],
       loading: true
-    };
+    }
   },
-  mounted() {
-    this.getRoles();
+  mounted () {
+    this.getRoles()
   },
   methods: {
-    getRoles() {
-      this.userRoles = [];
-      this.loading = true;
+    getRoles () {
+      this.userRoles = []
+      this.loading = true
       axios
-        .get("./roles", {
+        .get('./roles', {
           params: {
             date: this.date
           }
@@ -67,15 +67,15 @@ export default {
           (this.userRoles = response.data),
           (this.loading = false)
         ])
-        .catch(function(error) {
-          console.log(error);
-        });
+        .catch(function (error) {
+          console.log(error)
+        })
     }
   },
   watch: {
-    date: function() {
-      this.getRoles();
+    date: function () {
+      this.getRoles()
     }
   }
-};
+}
 </script>

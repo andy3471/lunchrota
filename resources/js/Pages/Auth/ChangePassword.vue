@@ -30,23 +30,23 @@
 import MainLayout from '../../Layouts/MainLayout'
 
 export default {
-    components: { MainLayout },
-    props: {
-        errors: Object,
-    },
-    data() {
-        return {
-            form: {
-                currentpassword: '',
-                newpassword: '',
-                newpassword_confirmation: ''
-            }
-        };
-    },
-    methods: {
-        submit() {
-            this.$inertia.post('/changepassword', this.form)
-        },
+  components: { MainLayout },
+  props: {
+    errors: Object
+  },
+  data () {
+    return {
+      form: {
+        currentpassword: '',
+        newpassword: '',
+        newpassword_confirmation: ''
+      }
     }
+  },
+  methods: {
+    submit () {
+      this.$inertia.post('/changepassword', this.form)
+    }
+  }
 }
 </script>

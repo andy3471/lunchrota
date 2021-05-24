@@ -20,20 +20,20 @@ export default {
       required: true
     }
   },
-  data() {
+  data () {
     return {
       loading: true,
       onSupport: false
-    };
+    }
   },
-  mounted() {
-    this.getSupport();
+  mounted () {
+    this.getSupport()
   },
   methods: {
-    getSupport: function() {
-      this.loading = true;
+    getSupport: function () {
+      this.loading = true
       axios
-        .get("./appdel/get", {
+        .get('./appdel/get', {
           params: {
             date: this.date,
             user_id: this.userid
@@ -43,14 +43,14 @@ export default {
           (this.onSupport = response.data),
           (this.loading = false)
         ])
-        .catch(function(error) {
-          console.log(error);
-        });
+        .catch(function (error) {
+          console.log(error)
+        })
     },
-    setSupport: function(role) {
-      this.loading = true;
+    setSupport: function (role) {
+      this.loading = true
       axios
-        .post("./appdel/post", {
+        .post('./appdel/post', {
           date: this.date,
           user_id: this.userid,
           on_support: !this.onSupport
@@ -58,24 +58,24 @@ export default {
         .then(response => [
           (this.onSupport = response.data),
           (this.loading = false),
-          this.makeToast("success", "Saved", "Support Day Saved")
+          this.makeToast('success', 'Saved', 'Support Day Saved')
         ])
-        .catch(function(error) {
-          this.makeToast("warning", "Error", error);
-        });
+        .catch(function (error) {
+          this.makeToast('warning', 'Error', error)
+        })
     },
-    makeToast(variant, title, content) {
+    makeToast (variant, title, content) {
       this.$bvToast.toast(content, {
         title: title,
         variant: variant,
         solid: true
-      });
+      })
     }
   },
   watch: {
-    date: function() {
-      this.getSupport();
+    date: function () {
+      this.getSupport()
     }
   }
-};
+}
 </script>

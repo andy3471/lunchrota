@@ -22,7 +22,7 @@ import UserTable from '../../Components/Admin/UserTable'
 export default {
   components: { MainLayout, CreateUser, UserTable },
   props: {
-    errors: Object,
+    errors: Object
   }
-};
+}
 </script>

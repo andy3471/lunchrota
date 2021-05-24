@@ -37,24 +37,24 @@
 import MainLayout from '../../Layouts/MainLayout'
 
 export default {
-    components: { MainLayout },
-    props: {
-        errors: Object,
-    },
-    data() {
-        return {
-            form: {
-                name: '',
-                email: '',
-                password: '',
-                password_confirmation: ''
-            }
-        };
-    },
-    methods: {
-        submit() {
-            this.$inertia.post('/register', this.form)
-        },
+  components: { MainLayout },
+  props: {
+    errors: Object
+  },
+  data () {
+    return {
+      form: {
+        name: '',
+        email: '',
+        password: '',
+        password_confirmation: ''
+      }
     }
+  },
+  methods: {
+    submit () {
+      this.$inertia.post('/register', this.form)
+    }
+  }
 }
 </script>

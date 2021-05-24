@@ -76,63 +76,63 @@ export default {
       type: Boolean
     }
   },
-  data() {
+  data () {
     return {
       roles: [],
       loading: true,
       newRole: { id: 0, name: null, available: 0 }
-    };
+    }
   },
-  mounted() {
-    this.getRoles();
+  mounted () {
+    this.getRoles()
   },
   methods: {
-    getRoles() {
-      this.loading = true;
+    getRoles () {
+      this.loading = true
       axios
-        .get("./roles/get")
+        .get('./roles/get')
         .then(response => [
           (this.roles = response.data),
           (this.loading = false)
         ])
         .catch(error => {
-          (this.error = error.response.data)((this.loading = false));
-        });
+          (this.error = error.response.data)((this.loading = false))
+        })
     },
-    createRole() {
+    createRole () {
       if (this.newRole.name !== null) {
-        this.roles.push(this.newRole);
-        this.newRole = { id: 0, name: null, available: 0 };
+        this.roles.push(this.newRole)
+        this.newRole = { id: 0, name: null, available: 0 }
       }
     },
-    deleteRole(i) {
-      this.roles.splice(i, 1);
+    deleteRole (i) {
+      this.roles.splice(i, 1)
     },
-    postRoles() {
-      if (this.loading == false) {
-        this.loading = true;
+    postRoles () {
+      if (this.loading === false) {
+        this.loading = true
 
         axios
-          .post("./roles", {
+          .post('./roles', {
             roles: this.roles
           })
           .then(response => [
             (this.roles = response.data),
             (this.loading = false),
-            this.makeToast("success", "Saved", "Roles Saved")
+            this.makeToast('success', 'Saved', 'Roles Saved')
           ])
-          .catch(function(error) {
-            this.makeToast("warning", "Error", error);
-          });
+          .catch(function (error) {
+            this.makeToast('warning', 'Error', error)
+          })
       }
     },
-    makeToast(variant, title, content) {
+    makeToast (variant, title, content) {
       this.$bvToast.toast(content, {
         title: title,
         variant: variant,
         solid: true
-      });
+      })
     }
   }
-};
+}
 </script>

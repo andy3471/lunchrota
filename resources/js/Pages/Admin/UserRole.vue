@@ -49,13 +49,13 @@ export default {
       type: Array
     }
   },
-  data() {
+  data () {
     return {
       date: new Date()
-    };
+    }
   },
-  mounted() {},
+  mounted () {},
   methods: {
   }
-};
+}
 </script>

@@ -29,7 +29,7 @@
                         Local Admins:
                     </td>
                     <td>
-                        <a v-for="(admin, index) in admins" :href="admin.meme" class="meme">
+                        <a v-for="(admin, index) in admins" :href="admin.meme" :key="index" class="meme">
                             {{ nameWithComma(index) }}
                         </a>
                     </td>
@@ -55,21 +55,21 @@
 import MainLayout from '../Layouts/MainLayout'
 
 export default {
-    components: { MainLayout },
-    props: {
-        admins: {
-            required: true,
-            type: Array
-        }
-    },
-    methods:{
-        nameWithComma(index){
-            if(index!==this.admins.length-1){
-                return `${this.admins[index].name},`;
-            }else{
-                return this.admins[index].name;
-            }
-        }
+  components: { MainLayout },
+  props: {
+    admins: {
+      required: true,
+      type: Array
     }
+  },
+  methods: {
+    nameWithComma (index) {
+      if (index !== this.admins.length - 1) {
+        return `${this.admins[index].name},`
+      } else {
+        return this.admins[index].name
+      }
+    }
+  }
 }
 </script>

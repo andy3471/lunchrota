@@ -82,7 +82,7 @@ export default {
       type: Boolean
     }
   },
-  data() {
+  data () {
     return {
       slots: this.lunchslots,
       userLunches: [],
@@ -91,33 +91,33 @@ export default {
       slotsLoading: false,
       usersLoading: false,
       error: null
-    };
+    }
   },
-  mounted() {
-    this.getUserLunches();
+  mounted () {
+    this.getUserLunches()
   },
   methods: {
-    getUserLunches() {
-      this.loading = true;
+    getUserLunches () {
+      this.loading = true
       axios
-        .get("./lunchslots/users")
+        .get('./lunchslots/users')
         .then(response => [
           (this.userLunches = response.data),
           (this.loading = false)
         ])
         .catch(error => {
-          (this.error = error.response.data)((this.loading = false));
-        });
+          (this.error = error.response.data)((this.loading = false))
+        })
     },
-    setLunch(id, a) {
-      if (this.usersLoading == false) {
-        this.usersLoading = true;
-        this.userLunches = [];
-        this.slotsLoading = true;
+    setLunch (id, a) {
+      if (this.usersLoading === false) {
+        this.usersLoading = true
+        this.userLunches = []
+        this.slotsLoading = true
 
         if (a !== 0) {
           axios
-            .post("./lunchslots/claim", {
+            .post('./lunchslots/claim', {
               id: id
             })
             .then(response => [
@@ -127,19 +127,19 @@ export default {
               this.getSlots()
             ])
             .catch(error => {
-              this.makeToast("danger", "Error", error.response.data);
-              this.usersLoading = false;
-              this.getSlots();
-            });
+              this.makeToast('danger', 'Error', error.response.data)
+              this.usersLoading = false
+              this.getSlots()
+            })
         }
       }
     },
-    removeLunch() {
-      this.usersLoading = true;
-      this.userLunches = [];
+    removeLunch () {
+      this.usersLoading = true
+      this.userLunches = []
 
       axios
-        .post("./lunchslots/unclaim")
+        .post('./lunchslots/unclaim')
         .then(response => [
           (this.userLunches = response.data),
           (this.usersLoading = false),
@@ -147,30 +147,30 @@ export default {
           this.getSlots()
         ])
         .catch(error => {
-          this.makeToast("danger", "Error", error.response.data);
-          this.usersLoading = false;
-          this.getSlots();
-        });
+          this.makeToast('danger', 'Error', error.response.data)
+          this.usersLoading = false
+          this.getSlots()
+        })
     },
-    getSlots() {
-      this.slotsLoading = true;
+    getSlots () {
+      this.slotsLoading = true
       axios
-        .get("./lunchslots")
+        .get('./lunchslots')
         .then(response => [
           (this.slots = response.data),
           (this.slotsLoading = false)
         ])
         .catch(error => {
-          (this.error = error.response.data)((this.slotsLoading = false));
-        });
+          (this.error = error.response.data)((this.slotsLoading = false))
+        })
     },
-    makeToast(variant, title, content) {
+    makeToast (variant, title, content) {
       this.$bvToast.toast(content, {
         title: title,
         variant: variant,
         solid: true
-      });
+      })
     }
   }
-};
+}
 </script>

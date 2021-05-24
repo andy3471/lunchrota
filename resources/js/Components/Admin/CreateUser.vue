@@ -31,23 +31,23 @@
 </template>
 <script>
 export default {
-    props: {
-        errors: Object,
-    },
-    data() {
-        return {
-            form: {
-                name: '',
-                email: '',
-                password: '',
-                password_confirmation: ''
-            }
-        };
-    },
-    methods: {
-        submit() {
-            this.$inertia.post('/admin/users/store', this.form)
-        },
+  props: {
+    errors: Object
+  },
+  data () {
+    return {
+      form: {
+        name: '',
+        email: '',
+        password: '',
+        password_confirmation: ''
+      }
     }
+  },
+  methods: {
+    submit () {
+      this.$inertia.post('/admin/users/store', this.form)
+    }
+  }
 }
 </script>

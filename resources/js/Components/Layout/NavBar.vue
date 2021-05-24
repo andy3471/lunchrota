@@ -53,10 +53,10 @@
 </template>
 <script>
 export default {
-    methods: {
-        logout () {
-            this.$inertia.post(route('logout'))
-        }
+  methods: {
+    logout () {
+      this.$inertia.post(route('logout'))
     }
+  }
 }
 </script>

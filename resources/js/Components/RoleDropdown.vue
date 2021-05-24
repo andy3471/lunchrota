@@ -40,21 +40,21 @@ export default {
       required: true
     }
   },
-  data() {
+  data () {
     return {
       selectedRole: null,
       loading: true
-    };
+    }
   },
-  mounted() {
-    this.getRole();
+  mounted () {
+    this.getRole()
   },
   methods: {
-    getRole: function() {
-      this.selectedRole = null;
-      this.loading = true;
+    getRole: function () {
+      this.selectedRole = null
+      this.loading = true
       axios
-        .get("./userroles/get", {
+        .get('./userroles/get', {
           params: {
             date: this.date,
             user_id: this.userid
@@ -64,15 +64,15 @@ export default {
           (this.selectedRole = response.data),
           (this.loading = false)
         ])
-        .catch(function(error) {
-          console.log(error);
-        });
+        .catch(function (error) {
+          console.log(error)
+        })
     },
-    selectRole: function(role) {
-      this.selectedRole = null;
-      this.loading = true;
+    selectRole: function (role) {
+      this.selectedRole = null
+      this.loading = true
       axios
-        .post("./userroles/post", {
+        .post('./userroles/post', {
           date: this.date,
           user_id: this.userid,
           role: role
@@ -80,24 +80,24 @@ export default {
         .then(response => [
           (this.selectedRole = response.data),
           (this.loading = false),
-          this.makeToast("success", "Saved", "Role Saved")
+          this.makeToast('success', 'Saved', 'Role Saved')
         ])
-        .catch(function(error) {
-          this.makeToast("warning", "Error", error);
-        });
+        .catch(function (error) {
+          this.makeToast('warning', 'Error', error)
+        })
     },
-    makeToast(variant, title, content) {
+    makeToast (variant, title, content) {
       this.$bvToast.toast(content, {
         title: title,
         variant: variant,
         solid: true
-      });
+      })
     }
   },
   watch: {
-    date: function() {
-      this.getRole();
+    date: function () {
+      this.getRole()
     }
   }
-};
+}
 </script>

@@ -77,79 +77,80 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       users: [],
       loading: false,
       showExpired: false,
       errors: []
-    };
+    }
   },
   computed: {
-    filteredUsers() {
+    filteredUsers () {
       if (this.showExpired) {
-        return this.users;
+        return this.users
       } else {
-        return this.users.filter(function(e) {
-          return e.deleted == false;
-        });
+        return this.users.filter(function (e) {
+          return e.deleted === false
+        })
       }
     }
   },
-  mounted() {
-    this.getUsers();
+  mounted () {
+    this.getUsers()
   },
   methods: {
-    getUsers() {
-      this.loading = true;
+    getUsers () {
+      this.loading = true
       axios
-        .get("./users/get")
+        .get('./users/get')
         .then(response => [
           (this.users = response.data),
           (this.loading = false),
-          this.users.forEach(function(e) {
-            e.new_password = "";
+          this.users.forEach(function (e) {
+            e.new_password = ''
           })
         ])
         .catch(error => {
-          console.log(error.response.data), (this.loading = false);
-        });
+          this.loading = false
+          console.log(error)
+        })
     },
-    postUsers() {
-      if (this.loading == false) {
-        this.loading = true;
-        this.errors = [];
+    postUsers () {
+      if (this.loading === false) {
+        this.loading = true
+        this.errors = []
 
         axios
-          .post("./users", {
+          .post('./users', {
             users: this.users
           })
           .then(response => [
             (this.users = response.data),
             (this.loading = false),
-            this.makeToast("success", "Saved", "Users have been updated")
+            this.makeToast('success', 'Saved', 'Users have been updated')
           ])
           .catch(error => {
-            this.errors = $.map(error.response.data.errors, function(
+            this.errors = $.map(error.response.data.errors, function (
               value,
               index
             ) {
-              return [value];
-            });
+              return [value]
+            })
             this.errors.forEach(error =>
-              this.makeToast("danger", "Error", error[0])
-            );
-            this.loading = false;
-          });
+              this.makeToast('danger', 'Error', error[0])
+            )
+            this.loading = false
+          })
       }
     },
-    makeToast(variant, title, content) {
+    makeToast (variant, title, content) {
       this.$bvToast.toast(content, {
         title: title,
         variant: variant,
         solid: true
-      });
+      })
     }
   }
-};
+}
 </script>

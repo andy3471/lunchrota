@@ -63,67 +63,67 @@
 </template>
 
 <script>
-import MainLayout from "../../Layouts/MainLayout";
+import MainLayout from '../../Layouts/MainLayout'
 
 export default {
   components: { MainLayout },
-  data() {
+  data () {
     return {
       lunchSlots: [],
       loading: true,
-      newSlot: { id: 0, time: "00:00", available: 0 }
-    };
+      newSlot: { id: 0, time: '00:00', available: 0 }
+    }
   },
-  mounted() {
-    this.getLunchSlots();
+  mounted () {
+    this.getLunchSlots()
   },
   methods: {
-    getLunchSlots() {
-      this.loading = true;
+    getLunchSlots () {
+      this.loading = true
       axios
-        .get("./lunches/get")
+        .get('./lunches/get')
         .then(response => [
           (this.lunchSlots = response.data),
           (this.loading = false)
         ])
         .catch(error => {
-          (this.error = error.response.data)((this.loading = false));
-        });
+          (this.error = error.response.data)((this.loading = false))
+        })
     },
-    createSlot() {
+    createSlot () {
       if (this.newSlot.available !== null && this.newSlot.time !== null) {
-        this.lunchSlots.push(this.newSlot);
-        this.newSlot = { id: 0, time: "00:00", available: 0 };
+        this.lunchSlots.push(this.newSlot)
+        this.newSlot = { id: 0, time: '00:00', available: 0 }
       }
     },
-    deleteSlot(i) {
-      this.lunchSlots.splice(i, 1);
+    deleteSlot (i) {
+      this.lunchSlots.splice(i, 1)
     },
-    postSlots() {
-      if (this.loading == false) {
-        this.loading = true;
+    postSlots () {
+      if (this.loading === false) {
+        this.loading = true
 
         axios
-          .post("./lunches", {
+          .post('./lunches', {
             slots: this.lunchSlots
           })
           .then(response => [
             (this.lunchSlots = response.data),
             (this.loading = false),
-            this.makeToast("success", "Saved", "Lunch Slots Saved")
+            this.makeToast('success', 'Saved', 'Lunch Slots Saved')
           ])
-          .catch(function(error) {
-            this.makeToast("warning", "Error", error);
-          });
+          .catch(function (error) {
+            this.makeToast('warning', 'Error', error)
+          })
       }
     },
-    makeToast(variant, title, content) {
+    makeToast (variant, title, content) {
       this.$bvToast.toast(content, {
         title: title,
         variant: variant,
         solid: true
-      });
+      })
     }
   }
-};
+}
 </script>

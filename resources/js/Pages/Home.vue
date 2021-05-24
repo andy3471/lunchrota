@@ -31,35 +31,34 @@
 import MainLayout from '../Layouts/MainLayout'
 
 export default {
-    components: { MainLayout },
-    props: {
-        lunchslots: {
-            default: false,
-            type: Array
-        },
-        loggedin: {
-            default: false,
-            type: Boolean
-        },
-        initiallunch: {
-            type: Number
-        },
-        appdel: {
-            type: Boolean,
-            default: false
-        },
-        available: {
-            type: Boolean,
-            default: false
-        }
+  components: { MainLayout },
+  props: {
+    lunchslots: {
+      type: Array
     },
-    data() {
-        return {
-            date: new Date()
-        };
+    loggedin: {
+      default: false,
+      type: Boolean
     },
-    mounted() {},
-    methods: {
+    initiallunch: {
+      type: Number
+    },
+    appdel: {
+      type: Boolean,
+      default: false
+    },
+    available: {
+      type: Boolean,
+      default: false
     }
-};
+  },
+  data () {
+    return {
+      date: new Date()
+    }
+  },
+  mounted () {},
+  methods: {
+  }
+}
 </script>
