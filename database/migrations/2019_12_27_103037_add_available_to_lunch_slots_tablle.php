@@ -6,11 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 class AddAvailableToLunchSlotsTablle extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::table('lunch_slots', function (Blueprint $table) {
@@ -18,11 +13,6 @@ class AddAvailableToLunchSlotsTablle extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::table('lunch_slots', function (Blueprint $table) {

@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\AppDelSupportDay;
-use Illuminate\Http\Request;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
-use App\Http\Controllers\Controller;
 use Inertia\Inertia;
 
 class AppDelSupportDayController extends Controller
@@ -20,7 +20,7 @@ class AppDelSupportDayController extends Controller
         $appdels = User::where('app_del', '=', true)->get();
 
         return Inertia::render('Admin/AppDel', [
-            'appdels' => $appdels
+            'appdels' => $appdels,
         ]);
     }
 

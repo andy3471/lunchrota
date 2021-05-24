@@ -1,11 +1,11 @@
 <?php
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
+use App\Models\Role;
+use App\Models\User;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
-use App\Models\User;
-use App\Models\Role;
+use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
 class RolesGenerate extends Command
@@ -75,11 +75,11 @@ class RolesGenerate extends Command
                 $users = User::whereNotIn('id', $usersWithRoles)->get();
 
                 foreach ($users as $user) {
-                    if (($user->scheduled) & (!$user->app_del)) {
+                    if (($user->scheduled) & (! $user->app_del)) {
                         $user->roles()->attach($defaultRole, ['date' => $dateString]);
-                        $this->line($user->name .' Given Role Of '. $defaultRole->name . ' For ' . $dateString);
+                        $this->line($user->name . ' Given Role Of ' . $defaultRole->name . ' For ' . $dateString);
                     } else {
-                        $this->line($user->name .' is not a scheduled user');
+                        $this->line($user->name . ' is not a scheduled user');
                     }
                 };
             } else {

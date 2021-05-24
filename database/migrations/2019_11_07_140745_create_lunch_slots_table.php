@@ -6,11 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateLunchSlotsTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::create('lunch_slots', function (Blueprint $table) {
@@ -20,11 +15,6 @@ class CreateLunchSlotsTable extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('lunch_slots');

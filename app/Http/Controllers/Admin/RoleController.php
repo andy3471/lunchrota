@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\Admin\UpdateRolesRequest;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\ImportCsvRolesRequest;
-use App\Jobs\Admin\UpdateRolesJob;
+use App\Http\Requests\Admin\UpdateRolesRequest;
 use App\Jobs\Admin\ImportCsvRolesJob;
+use App\Jobs\Admin\UpdateRolesJob;
 use App\Models\Role;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Controller;
 use Inertia\Inertia;
 
 class RoleController extends Controller
@@ -115,7 +115,7 @@ class RoleController extends Controller
             'Content-type'        => 'text/csv',
             'Content-Disposition' => 'attachment; filename=galleries.csv',
             'Expires'             => '0',
-            'Pragma'              => 'public'
+            'Pragma'              => 'public',
         ];
 
         $date = Carbon::yesterday();

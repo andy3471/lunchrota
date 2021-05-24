@@ -43,12 +43,12 @@ class UpdateUsersJob implements ShouldQueue
         foreach ($users as $u) {
             $user = User::withTrashed()->where('id', $u['id'])->first();
 
-            if ($u['deleted'] and !$user->deleted) {
+            if ($u['deleted'] and ! $user->deleted) {
                 $user->delete();
-            } elseif (!$u['deleted'] and $user->deleted) {
+            } elseif (! $u['deleted'] and $user->deleted) {
                 $user->restore();
             }
-            if (!$u['new_password'] == '') {
+            if (! $u['new_password'] == '') {
                 $user->password =  bcrypt($u['new_password']);
             }
 

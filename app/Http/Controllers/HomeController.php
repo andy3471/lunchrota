@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use App\Models\LunchSlot;
-use Carbon\Carbon;
+use App\Models\User;
 use Auth;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
@@ -56,7 +56,7 @@ class HomeController extends Controller
     {
         $admins = User::admins()->get();
         return Inertia::render('About', [
-            'admins' => $admins
+            'admins' => $admins,
         ]);
     }
 

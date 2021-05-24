@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreUserRequest;
 use App\Http\Requests\Admin\UpdateUsersRequest;
 use App\Jobs\Admin\StoreUserJob;
 use App\Jobs\Admin\UpdateUsersJob;
-use Illuminate\Http\Request;
 use App\Models\User;
-use Auth;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
@@ -33,7 +31,7 @@ class UserController extends Controller
         $users = User::withTrashed()->orderBy('name')->get();
 
         return Inertia::render('Admin/User', [
-            'users' => $users
+            'users' => $users,
         ]);
     }
 

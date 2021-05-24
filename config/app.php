@@ -142,6 +142,7 @@ return [
     'demo_mode' => env('APP_DEMO_MODE', false),
     'default_role' => env('APP_DEFAULT_ROLE', 'none'),
     'app_del_enabled' => env('APP_DEL_ENABLED', false),
+    'redirect_https' => env('REDIRECT_HTTPS', false),
 
     /*
     |--------------------------------------------------------------------------

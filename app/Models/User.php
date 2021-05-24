@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable
@@ -26,7 +26,7 @@ class User extends Authenticatable
 
     protected $appends = [
         'deleted',
-        'available'
+        'available',
     ];
 
     /**
@@ -112,7 +112,7 @@ class User extends Authenticatable
      */
     public function getAvailableAttribute()
     {
-        if (!config('app.roles_enabled')) {
+        if (! config('app.roles_enabled')) {
             return true;
         };
 

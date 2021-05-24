@@ -3,9 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Carbon\Carbon;
-use App\User;
-use App\LunchSlot;
+use Illuminate\Support\Facades\Artisan;
 
 class UserLunchSeeder extends Seeder
 {
@@ -16,6 +14,6 @@ class UserLunchSeeder extends Seeder
      */
     public function run()
     {
-        \Artisan::call('demo:seedlunch');
+        Artisan::call('demo:seedlunch');
     }
 }

@@ -6,11 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 class MakeLunchSlotUsersPivotTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::create('lunch_slot_user', function (Blueprint $table) {
@@ -24,11 +19,6 @@ class MakeLunchSlotUsersPivotTable extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('lunch_slot_user');

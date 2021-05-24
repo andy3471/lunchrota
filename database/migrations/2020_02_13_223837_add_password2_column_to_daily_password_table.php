@@ -6,11 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 class AddPassword2ColumnToDailyPasswordTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::table('daily_passwords', function (Blueprint $table) {
@@ -18,11 +13,6 @@ class AddPassword2ColumnToDailyPasswordTable extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::table('daily_passwords', function (Blueprint $table) {

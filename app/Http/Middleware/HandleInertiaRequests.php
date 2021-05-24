@@ -2,7 +2,6 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\AppDelSupportDay;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Middleware;
@@ -58,9 +57,9 @@ class HandleInertiaRequests extends Middleware
             'config.version'                => config('app.version'),
             'flash' => function () use ($request) {
                 return [
-                    'messages'  =>  $request->session()->get('message')
+                    'messages'  =>  $request->session()->get('message'),
                 ];
-            }
+            },
 //            'appdels.today'                 => AppDelSupportDay::appDelToday()
 //            'dsp.today'                     => DailyPassword::dspToday()
         ]);

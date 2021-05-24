@@ -2,10 +2,10 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
-use Carbon\Carbon;
-use App\Models\User;
 use App\Models\LunchSlot;
+use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Console\Command;
 
 class DemoSeedLunch extends Command
 {

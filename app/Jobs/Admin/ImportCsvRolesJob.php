@@ -43,7 +43,7 @@ class ImportCsvRolesJob implements ShouldQueue
         $file = Storage::url($path);
 
         $file = fopen(base_path() . '/storage/app/csv/commrotaupload.csv', 'r');
-        while (!feof($file)) {
+        while (! feof($file)) {
             $content[] = fgetcsv($file);
         }
         fclose($file);
@@ -61,11 +61,11 @@ class ImportCsvRolesJob implements ShouldQueue
 
                 $user->roles()->wherePivot('date', $date)->detach();
 
-                if (!$user) {
+                if (! $user) {
                     $messages->push(['message' => "User " . $content[$i][0] . " does not exist", 'type' => 'danger']);
-                } else if (!$role) {
+                } else if (! $role) {
                     $messages->push(['message' => "Role " . $content[$i][2] . " does not exist", 'type' => 'danger']);
-                } else if (!$date) {
+                } else if (! $date) {
                     $messages->push(['message' => "Date " . $content[$i][1] . " is not valid", 'type' => 'danger']);
                 } else {
                     $user->roles()->attach($role, ['date' => $date]);

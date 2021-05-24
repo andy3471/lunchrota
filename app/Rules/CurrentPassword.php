@@ -2,8 +2,8 @@
 
 namespace App\Rules;
 use Auth;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Contracts\Validation\Rule;
+use Illuminate\Support\Facades\Hash;
 
 class CurrentPassword implements Rule
 {

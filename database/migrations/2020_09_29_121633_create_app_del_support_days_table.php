@@ -6,11 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateAppDelSupportDaysTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::create('app_del_support_days', function (Blueprint $table) {
@@ -22,11 +17,6 @@ class CreateAppDelSupportDaysTable extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('app_del_support_days');

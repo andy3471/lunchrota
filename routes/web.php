@@ -4,7 +4,7 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::get('about', 'HomeController@about')->name('about');
 Route::get('roles', 'RoleController@index');
 
-Route::get('/demo', 'HomeController@demo')->name('demomode');
+Route::get('demo', 'HomeController@demo')->name('demomode');
 
 Route::get('lunchslots', 'LunchSlotController@getSlots');
 Route::get('lunchslots/users', 'LunchSlotController@userLunches');

@@ -4,9 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ChangePasswordRequest;
 use App\Jobs\ChangePasswordJob;
-use Auth;
-use Inertia\Inertia;
 use Illuminate\Support\Facades\Redirect;
+use Inertia\Inertia;
 
 class UserController extends Controller
 {
