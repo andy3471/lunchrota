@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\StoreAppDelSupportDayRequest;
+use App\Jobs\Admin\StoreAppDelSupportDayJob;
 use App\Models\AppDelSupportDay;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 use Inertia\Inertia;
 
 class AppDelSupportDayController extends Controller
@@ -46,25 +47,8 @@ class AppDelSupportDayController extends Controller
      * @param Request $request
      * @return bool
      */
-    public function post(Request $request)
+    public function post(StoreAppDelSupportDayRequest $request)
     {
-        // TODO This should be a request + Job
-        $date = Carbon::parse($request->date)->toDateString();
-        $user_id = $request->user_id;
-        $on_support = $request->on_support;
-
-        if ($on_support) {
-            $supportDay = new AppDelSupportDay;
-            $supportDay->user_id = $user_id;
-            $supportDay->date = $date;
-            $supportDay->Save();
-            Cache::forget('appdelsupport');
-            return true;
-        } else {;
-            $supportDay = AppDelSupportDay::where('user_id', '=', $user_id)->where('date', '=', $date);
-            $supportDay->delete();
-            Cache::forget('appdelsupport');
-            return false;
-        }
+        Return  StoreAppDelSupportDayJob::dispatchNow($request);
     }
 }

@@ -9,7 +9,7 @@
                 <div class="col-lg-4 order-lg-2" v-if="$page.props.config.roles_enabled">
                         <date-picker
                             v-model="date"
-                            color="#E0412A"
+                            :color="$page.props.config.accent_color"
                         ></date-picker>
                 </div>
 

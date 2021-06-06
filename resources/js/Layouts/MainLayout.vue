@@ -1,7 +1,7 @@
 <template>
-    <div>
+    <div :style="cssVars">
         <nav-bar />
-        <b-jumbotron bg-variant="primary" text-variant="white" border-variant="dark">
+        <b-jumbotron bg-variant="primary" text-variant="white" border-variant="dark" :style="style">
             <template #lead>
                 <h1>
                     {{ $page.props.config.name }}
@@ -18,6 +18,11 @@ import NavBar from '../Components/Layout/NavBar'
 
 export default {
   components: { NavBar },
+  computed: {
+    style () {
+      return 'background-color: ' + this.$page.props.config.accent_color + ' !important'
+    }
+  },
   methods: {
     makeToast (variant, title, content) {
       this.$bvToast.toast(content, {
@@ -25,6 +30,11 @@ export default {
         variant: variant,
         solid: true
       })
+    },
+    cssVars () {
+      return {
+        '--color': this.$page.props.config.accent_color
+      }
     }
   },
   mounted () {
@@ -32,3 +42,14 @@ export default {
   }
 }
 </script>
+<style scoped lang="scss">
+$color: var(--color);
+
+.jumbotron {
+    //background-color: $color !important;
+    border: none !important;
+    border-bottom: 1px solid #dee2e6 !important;
+    padding: 2em;
+    margin-bottom: 0px;
+}
+</style>

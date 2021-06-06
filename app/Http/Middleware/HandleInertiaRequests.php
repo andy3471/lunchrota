@@ -53,6 +53,7 @@ class HandleInertiaRequests extends Middleware
             'config.roles_enabled'          => config('app.roles_enabled'),
             'config.register_enabled'       => config('app.register_enabled'),
             'config.app_del_enabled'        => config('app.app_del_enabled'),
+            'config.accent_color'           => config('app.accent_color'),
             'config.lunch_slot_calculated'  => config('app.lunch_slot_calculated'),
             'config.version'                => config('app.version'),
             'flash' => function () use ($request) {

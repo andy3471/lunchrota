@@ -43,6 +43,7 @@ services:
       APP_DEMO_MODE: "true"
       CONTAINER_ROLE: scheduler
       APP_ENV: local
+      ACCENT_COLOR: "#00FFFF"
     volumes:
       - .:/app
     depends_on:
