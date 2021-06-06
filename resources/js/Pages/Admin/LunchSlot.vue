@@ -1,67 +1,66 @@
 <template>
   <main-layout>
-      <b-container>
-          <table class="table table-bordered">
-              <tbody>
-              <tr>
-                  <th>Time</th>
-                  <th v-if="this.lunchcalculated == false" style="width: 30%">Available</th>
-                  <th style="width: 5%"></th>
-              </tr>
-              <tr v-for="(lunchSlot, index) in this.lunchSlots" v-bind:key="lunchSlot.id">
-                  <td>{{ lunchSlot.time }}</td>
-                  <td v-if="lunchcalculated == false">
-                      <input type="number" min="0" class="form-control" v-model.number="lunchSlot.available" />
-                  </td>
-                  <td>
-                      <div class="text-right">
-                          <button
-                              type="button"
-                              class="btn btn-danger btn-sm"
-                              v-on:click="deleteSlot(index)"
-                          >Delete</button>
-                      </div>
-                  </td>
-              </tr>
-              <tr v-if="this.loading == true">
-                  <td colspan="3" class="text-center">
-                      <div class="spinner-border spinner-border-sm" role="status">
-                          <span class="sr-only">Loading...</span>
-                      </div>
-                  </td>
-              </tr>
-              <tr v-if="!this.loading == true">
-                  <td>
-                      <time-picker color="#E0412A" v-model="newSlot.time" :minInterval="5"></time-picker>
-                  </td>
-                  <td v-if="!$page.props.config.lunch_slot_calculated">
-                      <input
-                          type="number"
-                          min="0"
-                          class="form-control"
-                          v-model.number="newSlot.available"
-                          @keyup.enter="createSlot()"
-                      />
-                  </td>
-                  <td>
-                      <div class="text-right">
-                          <button type="button" class="btn btn-secondary btn-sm" @click="createSlot()">Add</button>
-                      </div>
-                  </td>
-              </tr>
-              <tr>
-                  <td colspan="3">
-                      <div class="text-right">
-                          <button type="button" class="btn btn-primary btn-sm" @click="postSlots()">Save</button>
-                      </div>
-                  </td>
-              </tr>
-              </tbody>
-          </table>
-      </b-container>
+    <b-container>
+      <table class="table table-bordered">
+         <tbody>
+           <tr>
+             <th>Time</th>
+               <th v-if="!$page.props.config.lunch_slot_calculated" style="width: 30%">Available</th>
+               <th style="width: 5%"></th>
+           </tr>
+           <tr v-for="(lunchSlot, index) in this.lunchSlots" v-bind:key="lunchSlot.id">
+             <td>{{ lunchSlot.time }}</td>
+             <td v-if="!$page.props.config.lunch_slot_calculated">
+               <input type="number" min="0" class="form-control" v-model.number="lunchSlot.available" />
+             </td>
+             <td>
+               <div class="text-right">
+                 <button
+                   type="button"
+                   class="btn btn-danger btn-sm"
+                   v-on:click="deleteSlot(index)"
+                 >Delete</button>
+               </div>
+             </td>
+           </tr>
+           <tr v-if="this.loading == true">
+             <td colspan="3" class="text-center">
+               <div class="spinner-border spinner-border-sm" role="status">
+                 <span class="sr-only">Loading...</span>
+               </div>
+             </td>
+           </tr>
+           <tr v-if="!this.loading == true">
+             <td>
+               <time-picker color="#E0412A" v-model="newSlot.time" :minInterval="5"></time-picker>
+             </td>
+             <td v-if="!$page.props.config.lunch_slot_calculated">
+               <input
+                 type="number"
+                 min="0"
+                 class="form-control"
+                 v-model.number="newSlot.available"
+                 @keyup.enter="createSlot()"
+               />
+             </td>
+             <td>
+               <div class="text-right">
+                 <button type="button" class="btn btn-secondary btn-sm" @click="createSlot()">Add</button>
+               </div>
+             </td>
+           </tr>
+           <tr>
+             <td colspan="3">
+               <div class="text-right">
+                 <button type="button" class="btn btn-primary btn-sm" @click="postSlots()">Save</button>
+               </div>
+             </td>
+           </tr>
+         </tbody>
+      </table>
+    </b-container>
   </main-layout>
 </template>
-
 <script>
 import MainLayout from '../../Layouts/MainLayout'
 

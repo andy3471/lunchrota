@@ -16,8 +16,8 @@
                 <div class="col-lg-4 order-lg-3">
                         <lunches
                             :lunchslots="lunchslots"
-                            :loggedin="loggedin"
-                            :initiallunch="initiallunch"
+                            :loggedin="$page.props.auth.logged_in"
+                            :initiallunch="$page.props.config.initiallunch"
                             :available="available"
                             :appdel="appdel"
                         ></lunches>
@@ -39,9 +39,6 @@ export default {
     loggedin: {
       default: false,
       type: Boolean
-    },
-    initiallunch: {
-      type: Number
     },
     appdel: {
       type: Boolean,

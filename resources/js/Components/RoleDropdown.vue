@@ -1,28 +1,47 @@
 <template>
-  <div class="dropdown">
-    <button
-      type="button"
-      class="btn btn-primary dropdown-toggle"
-      data-toggle="dropdown"
-      id="dropdown9"
-      changed="0"
+  <div>
+    <b-button text="Loading" v-if="loading" variant="primary">
+        <b-spinner small type="grow"></b-spinner>
+    </b-button>
+    <b-dropdown
+      v-else
+      :text="selectedRole"
+      variant="primary"
     >
-      {{this.selectedRole}}
-      <div v-if="this.loading" class="spinner-border spinner-border-sm text-light" role="status">
-        <span class="sr-only">Loading...</span>
-      </div>
-    </button>
-    <div class="dropdown-menu scrollable-menu">
-      <a
-        class="dropdown-item"
+      <b-dropdown-item-button
         v-for="role in roles"
-        v-bind:key="role.id"
-        v-bind:value="role.id"
-        v-on:click="selectRole(role.id)"
-      >{{ role.name }}</a>
-      <a class="dropdown-item" v-on:click="selectRole('0')">None</a>
-    </div>
+        :key="role.id"
+        @click="selectRole(role.id)"
+      >
+        {{ role.name }}
+      </b-dropdown-item-button>
+        <b-dropdown-item @click="selectRole('0')">None</b-dropdown-item>
+      </b-dropdown>
   </div>
+<!--  <div class="dropdown">-->
+<!--    <button-->
+<!--      type="button"-->
+<!--      class="btn btn-primary dropdown-toggle"-->
+<!--      data-toggle="dropdown"-->
+<!--      id="dropdown9"-->
+<!--      changed="0"-->
+<!--    >-->
+<!--      {{this.selectedRole}}-->
+<!--      <div v-if="this.loading" class="spinner-border spinner-border-sm text-light" role="status">-->
+<!--        <span class="sr-only">Loading...</span>-->
+<!--      </div>-->
+<!--    </button>-->
+<!--    <div class="dropdown-menu scrollable-menu">-->
+<!--      <a-->
+<!--        class="dropdown-item"-->
+<!--        v-for="role in roles"-->
+<!--        v-bind:key="role.id"-->
+<!--        v-bind:value="role.id"-->
+<!--        v-on:click="selectRole(role.id)"-->
+<!--      >{{ role.name }}</a>-->
+<!--      <a class="dropdown-item" v-on:click="selectRole('0')">None</a>-->
+<!--    </div>-->
+<!--  </div>-->
 </template>
 
 <script>

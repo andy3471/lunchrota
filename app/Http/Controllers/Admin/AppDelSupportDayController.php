@@ -32,15 +32,9 @@ class AppDelSupportDayController extends Controller
     public function get(Request $request)
     {
         $date = Carbon::parse($request->date)->toDateString();
-        $user_id = $request->user_id;
+        $AppDelSupportDay = AppDelSupportDay::where('date', '=', $date)->where('user_id', '=', $request->user_id)->get();
 
-        $AppDelSupportDay = AppDelSupportDay::where('date', '=', $date)->where('user_id', '=', $user_id)->get();
-
-        if ($AppDelSupportDay->isEmpty()) {
-            return false;
-        } else {
-            return true;
-        }
+        return ($AppDelSupportDay->isEmpty()) ? false : true;
     }
 
     /**
@@ -49,6 +43,6 @@ class AppDelSupportDayController extends Controller
      */
     public function post(StoreAppDelSupportDayRequest $request)
     {
-        Return  StoreAppDelSupportDayJob::dispatchNow($request);
+        return StoreAppDelSupportDayJob::dispatchNow($request);
     }
 }

@@ -2,6 +2,8 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\AppDelSupportDay;
+use App\Models\DailyPassword;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Middleware;
@@ -56,13 +58,14 @@ class HandleInertiaRequests extends Middleware
             'config.accent_color'           => config('app.accent_color'),
             'config.lunch_slot_calculated'  => config('app.lunch_slot_calculated'),
             'config.version'                => config('app.version'),
+            'config.support_code'           => config('app.support_code'),
             'flash' => function () use ($request) {
                 return [
                     'messages'  =>  $request->session()->get('message'),
                 ];
             },
-//            'appdels.today'                 => AppDelSupportDay::appDelToday()
-//            'dsp.today'                     => DailyPassword::dspToday()
+            'appdels_today'                 => AppDelSupportDay::appDelToday(),
+            'dsp_today'                     => DailyPassword::dspToday(),
         ]);
     }
 }

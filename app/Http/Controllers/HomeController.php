@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\LunchSlot;
 use App\Models\User;
 use Auth;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
 class HomeController extends Controller
@@ -17,30 +15,8 @@ class HomeController extends Controller
     public function index()
     {
         $lunchslots = LunchSlot::orderBy('time')->get();
-        $date = Carbon::today()->toDateString();
-
-        if (Auth::check()) {
-            $initialSlot = DB::table('users')
-                ->select('lunch_slots.id')
-                ->join('lunch_slot_user', 'users.id', '=', 'lunch_slot_user.user_id')
-                ->join('lunch_slots', 'lunch_slots.id', '=', 'lunch_slot_user.lunch_slot_id')
-                ->where('lunch_slot_user.date', $date)
-                ->where('users.id', Auth::user()->id)
-                ->orderBy('users.name')
-                ->first();
-        }
-
-        if (isset($initialSlot->id)) {
-            $initialSlot = $initialSlot->id;
-        } else {
-            $initialSlot = '-1';
-        }
-
-        if (Auth::user()) {
-            $available = Auth::user()->available;
-        } else {
-            $available = true;
-        }
+        $initialSlot = LunchSlot::getMyLunchSlotToday();
+        (Auth::user()) ? $available = Auth::user()->available : $available = true;
 
         return Inertia::render('Home', [
             'lunchslots'    => $lunchslots,
@@ -55,6 +31,7 @@ class HomeController extends Controller
     public function about()
     {
         $admins = User::admins()->get();
+
         return Inertia::render('About', [
             'admins' => $admins,
         ]);

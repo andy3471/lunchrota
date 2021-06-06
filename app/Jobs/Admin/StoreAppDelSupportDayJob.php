@@ -16,7 +16,9 @@ class StoreAppDelSupportDayJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    // TODO docblock
+    /**
+     * @var StoreAppDelSupportDayRequest
+     */
     private $request;
 
     /**

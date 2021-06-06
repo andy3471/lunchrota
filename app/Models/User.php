@@ -64,11 +64,7 @@ class User extends Authenticatable
      */
     public function getDeletedAttribute()
     {
-        if ($this->deleted_at == null) {
-            return false;
-        } else {
-            return true;
-        }
+        return ($this->deleted_at == null) ? false : true;
     }
 
     /**
@@ -76,11 +72,7 @@ class User extends Authenticatable
      * @return bool
      */
     public function getAdminAttribute($value) {
-        if ($value == '0') {
-            return false;
-        } else {
-            return true;
-        }
+        return ($value == '0') ? false : true;
     }
 
     /**
@@ -88,11 +80,7 @@ class User extends Authenticatable
      * @return bool
      */
     public function getScheduledAttribute($value) {
-        if ($value == '0') {
-            return false;
-        } else {
-            return true;
-        }
+        return ($value == '0') ? false : true;
     }
 
     /**
@@ -100,11 +88,7 @@ class User extends Authenticatable
      * @return bool
      */
     public function getAppDelAttribute($value) {
-        if ($value == '0') {
-            return false;
-        } else {
-            return true;
-        }
+        return ($value == '0') ? false : true;
     }
 
     /**
@@ -117,19 +101,19 @@ class User extends Authenticatable
         };
 
         $date = Carbon::today()->toDateString();
+        $available = $this->getAvailableByDate($date);
 
-        $available = DB::table('role_user')
-                    ->select('roles.available')
-                    ->join('roles', 'role_user.role_id', 'roles.id')
-                    ->where('role_user.user_id', $this->id)
-                    ->where('role_user.date', $date)
-                    ->first();
+        return (isset($available->available) && $available->available) ? true : false;
+    }
 
-        if (isset($available->available) && $available->available) {
-            return true;
-        } else {
-            return false;
-        }
+    public function getAvailableByDate($date)
+    {
+        return DB::table('role_user')
+            ->select('roles.available')
+            ->join('roles', 'role_user.role_id', 'roles.id')
+            ->where('role_user.user_id', $this->id)
+            ->where('role_user.date', $date)
+            ->first();
     }
 
     /**

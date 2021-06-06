@@ -24,14 +24,11 @@ class RoleController extends Controller
      */
     public function get(Request $request)
     {
+        // TODO Rename this
         $date = Carbon::parse($request->date)->toDateString();
         $roles = User::find($request->user_id)->roles()->wherePivot('date', $date)->get();
 
-        if ($roles->isEmpty()) {
-            return 'None';
-        } else {
-            return $roles[0]->name;
-        }
+        return ($roles->isEmpty()) ? 'None' : $roles[0]->name;
     }
 
     /**
@@ -40,8 +37,8 @@ class RoleController extends Controller
      */
     public function post(Request $request)
     {
+        //TODO Tidy this - Make it a request + Job
         $date = Carbon::parse($request->date)->toDateString();
-
         $user = User::find($request->user_id);
 
         $user->roles()->wherePivot('date', $date)->detach();
@@ -108,6 +105,7 @@ class RoleController extends Controller
      */
     public function downloadCsv()
     {
+        // TODO Tidy this
         $filename = "export.csv";
 
         $headers = [
@@ -168,6 +166,7 @@ class RoleController extends Controller
      */
     public function importCsvRoles(ImportCsvRolesRequest $request)
     {
+        // TODO Fix this functionality
         $messages = ImportCsvRolesJob::dispatchNow($request);
         return view('admin.userroles.confirmupload')->withMessages($messages->all());
     }

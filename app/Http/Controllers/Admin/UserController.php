@@ -20,7 +20,7 @@ class UserController extends Controller
     public function store(StoreUserRequest $request)
     {
         StoreUserJob::dispatchNow($request);
-        return Redirect::back()->with("message", "User Create");;
+        return Redirect::back()->with("message", "User Created");;
     }
 
     /**
@@ -29,7 +29,6 @@ class UserController extends Controller
     public function adminUsers()
     {
         $users = User::withTrashed()->orderBy('name')->get();
-
         return Inertia::render('Admin/User', [
             'users' => $users,
         ]);
