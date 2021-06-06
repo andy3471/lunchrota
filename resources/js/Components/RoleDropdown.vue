@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-button text="Loading" v-if="loading" variant="primary">
-        <b-spinner small type="grow"></b-spinner>
+      <b-spinner small type="grow"></b-spinner>
     </b-button>
     <b-dropdown
       v-else

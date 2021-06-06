@@ -10,7 +10,8 @@
       <tr>
         <td colspan="3">
           <div class="btn-group btn-block" style="height: 46px">
-            <button
+<!--              TODO make this computed-->
+              <button
               v-for="lunchslot in this.slots"
               v-bind:key="lunchslot.id"
               class="btn btn-primary lunchbtn"
@@ -18,11 +19,11 @@
               value="12:30"
               v-on:click="setLunch(lunchslot.id, 1)"
               v-bind:disabled="
-                                loggedin == false ||
-                                lunchslot.id == selectedLunch ||
-                                slotsLoading == true ||
-                                !(appdel || !available) && (lunchslot.available_today == 0)
-                            "
+                loggedin == false ||
+                lunchslot.id == selectedLunch ||
+                slotsLoading == true ||
+                !(appdel || !available) &&
+                (lunchslot.available_today == 0)"
             >
               {{ lunchslot.time }} ({{
               lunchslot.available_today
