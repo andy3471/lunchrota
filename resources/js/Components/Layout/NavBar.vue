@@ -12,6 +12,7 @@
           </li>
         </b-navbar-nav>
         <!-- Right aligned nav items -->
+<!--          TODO alphabetise this -->
         <b-navbar-nav class="ml-auto" v-if="$page.props.auth.logged_in">
           <b-nav-item-dropdown text="Admin" right v-if="$page.props.auth.user.admin">
             <dropdown-link :href="$route('admin.users')">Users</dropdown-link>

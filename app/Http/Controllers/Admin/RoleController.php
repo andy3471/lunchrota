@@ -4,14 +4,17 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\ImportCsvRolesRequest;
+use App\Http\Requests\Admin\SetUserRoleRequest;
 use App\Http\Requests\Admin\UpdateRolesRequest;
 use App\Jobs\Admin\ImportCsvRolesJob;
+use App\Jobs\Admin\SetUserRoleJob;
 use App\Jobs\Admin\UpdateRolesJob;
 use App\Models\Role;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class RoleController extends Controller
@@ -31,25 +34,14 @@ class RoleController extends Controller
         return ($roles->isEmpty()) ? 'None' : $roles[0]->name;
     }
 
+    //TODO rename this
     /**
-     * @param Request $request
+     * @param SetUserRoleRequest $request
      * @return string
      */
-    public function post(Request $request)
+    public function post(SetUserRoleRequest $request)
     {
-        //TODO Tidy this - Make it a request + Job
-        $date = Carbon::parse($request->date)->toDateString();
-        $user = User::find($request->user_id);
-
-        $user->roles()->wherePivot('date', $date)->detach();
-
-        if ($request->role == 0) {
-            return 'None';
-        } else {
-            $user->roles()->attach($request->role, ['date' => $date]);
-            $role = Role::find($request->role);
-            return $role->name;
-        }
+        return SetUserRoleJob::dispatchNow($request);
     }
 
     /**
@@ -168,6 +160,6 @@ class RoleController extends Controller
     {
         // TODO Fix this functionality
         $messages = ImportCsvRolesJob::dispatchNow($request);
-        return view('admin.userroles.confirmupload')->withMessages($messages->all());
+        return Redirect::route('admin.upload')->with("message", "Password Changed")->with('alerts', $messages->all());
     }
 }

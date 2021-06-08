@@ -94,7 +94,7 @@ export default {
         .post('./userroles/post', {
           date: this.date,
           user_id: this.userid,
-          role: role
+          role_id: role
         })
         .then(response => [
           (this.selectedRole = response.data),

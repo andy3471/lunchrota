@@ -23,10 +23,9 @@ class StoreAppDelSupportDayRequest extends FormRequest
      */
     public function rules()
     {
-        // TODO make sure user ID exists
         return [
             'date'          => 'date|required',
-            'user_id'       => 'required',
+            'user_id'       => 'required|exists:App\Models\User,id',
             'on_support'    => 'required|boolean',
         ];
     }

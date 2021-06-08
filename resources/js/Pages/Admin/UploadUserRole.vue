@@ -2,7 +2,7 @@
   <main-layout>
     <b-container>
       <b-card title="Bulk upload user roles">
-        <b-form>
+        <b-form @submit.prevent="submit">
           Please download the export. Once edited, you can upload it to override all roles in bulk
           <a :href="$route('admin.download_csv')">Download All Current Data </a>
           <b-form-group
@@ -10,8 +10,9 @@
             label="File"
           >
             <b-form-file
-              v-model="file1"
-              :state="Boolean(file1)"
+              v-model="form.csv"
+              :state="!errors.hasOwnProperty('csv')"
+              :invalid-feedback="errors.csv"
               placeholder="Choose a file or drop it here..."
               drop-placeholder="Drop file here..."
             ></b-form-file>
@@ -27,6 +28,21 @@
 import MainLayout from '../../Layouts/MainLayout'
 
 export default {
-  components: { MainLayout }
+  components: { MainLayout },
+  props: {
+    errors: Object
+  },
+  data () {
+    return {
+      form: this.$inertia.form({
+        csv: null
+      })
+    }
+  },
+  methods: {
+    submit () {
+      this.form.post('/admin/upload/uploadcsv', this.form)
+    }
+  }
 }
 </script>

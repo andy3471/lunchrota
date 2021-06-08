@@ -23,9 +23,8 @@ class ClaimLunchSlotRequest extends FormRequest
      */
     public function rules()
     {
-        // TODO check lunch slot exists
         return [
-            'id' => 'required',
+            'id' => 'required|exists:App\Models\LunchSlot,id',
         ];
     }
 }

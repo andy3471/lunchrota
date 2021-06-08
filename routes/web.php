@@ -1,4 +1,5 @@
 <?php
+// TODO tidy and rename these
 
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('about', 'HomeController@about')->name('about');

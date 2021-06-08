@@ -49,6 +49,7 @@ class ImportCsvRolesJob implements ShouldQueue
         fclose($file);
 
         $messages = collect();
+        $errors = collect();
 
         $count =  count($content);
 
@@ -59,11 +60,13 @@ class ImportCsvRolesJob implements ShouldQueue
                 $date = Carbon::createFromFormat('d/m/Y', $content[$i][1])->toDateString();
                 $role = Role::where('name', $content[$i][2])->first();
 
-                $user->roles()->wherePivot('date', $date)->detach();
-
                 if (! $user) {
                     $messages->push(['message' => "User " . $content[$i][0] . " does not exist", 'type' => 'danger']);
-                } else if (! $role) {
+                }
+
+                $user->roles()->wherePivot('date', $date)->detach();
+
+                if (! $role) {
                     $messages->push(['message' => "Role " . $content[$i][2] . " does not exist", 'type' => 'danger']);
                 } else if (! $date) {
                     $messages->push(['message' => "Date " . $content[$i][1] . " is not valid", 'type' => 'danger']);

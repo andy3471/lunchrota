@@ -3,6 +3,7 @@
     <b-container>
       <b-card title="Login">
         <b-form @submit.prevent="submit">
+<!--            TODO show login validation errors -->
           <b-form-group
             label="Email"
             :state="!errors.hasOwnProperty('email')"
