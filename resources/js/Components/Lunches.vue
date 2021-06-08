@@ -1,5 +1,6 @@
 <template>
   <table class="table table-bordered">
+<!--      TODO see why refresh doesn't seem to be carrying over lunch slot -->
     <tbody>
       <tr>
         <th colspan="3">

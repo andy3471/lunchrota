@@ -1,0 +1,5 @@
+default:
+#  suites:
+#    auth:
+#      paths: [tests/auth/features]
+#      contexts: [tests\auth\Contexts\FeatureContext]
