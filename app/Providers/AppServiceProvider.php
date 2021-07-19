@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\DailyPassword;
 use App\AppDelSupportDay;
 use Carbon\Carbon;
+use GuzzleHttp\Exception\ConnectException;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\DB;
@@ -57,14 +58,17 @@ class AppServiceProvider extends ServiceProvider
 
                 $client = new Client(['http_errors' => false]);
 
-                $response = $client->get($url, ['verify' => false]);
-                $statuscode = $response->getStatusCode();
-
-                if ($statuscode === 200) {
-                    return $response->getBody();
-                } else {
+                try {
+                    $response = $client->get($url, ['verify' => false]);
+                    $statuscode = $response->getStatusCode();
+                    if ($statuscode === 200) {
+                        return $response->getBody();
+                    }
+                } catch(ConnectException $e) {
                     return null;
                 }
+
+                return null;
             });
 
             $view->with('dsp', $dsp)->with('ads', $appDelSupport)->with('versionalert', $versionAlert);
