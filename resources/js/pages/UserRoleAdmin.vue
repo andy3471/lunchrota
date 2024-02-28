@@ -71,13 +71,11 @@ export default {
       type: Array
     }
   },
+
   data() {
     return {
       date: new Date()
     };
-  },
-  mounted() {},
-  methods: {
   }
 };
 </script>
