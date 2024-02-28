@@ -2,10 +2,8 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
-use App\User;
-use App\Role;
 use Carbon\Carbon;
+use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
 class RolesClear extends Command
@@ -44,6 +42,6 @@ class RolesClear extends Command
         $date = Carbon::now()->addWeek(-3);
         DB::table('role_user')->where('date', '<', $date)->delete();
         DB::table('app_del_support_days')->where('date', '<', $date)->delete();
-        $this->line('Deleted roles older than ' . $date);
+        $this->line('Deleted roles older than '.$date);
     }
 }

@@ -25,7 +25,7 @@ class UpdateRolesRequest extends FormRequest
     {
         return [
             'roles.*.name' => 'required|string',
-            'roles.*.available'    => 'required|boolean',
+            'roles.*.available' => 'required|boolean',
         ];
     }
 }

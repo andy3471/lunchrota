@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\LunchSlot;
-use Illuminate\Http\Request;
-use Carbon\Carbon;
+use App\Models\LunchSlot;
 use Auth;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class LunchSlotController extends Controller
@@ -47,7 +47,6 @@ class LunchSlotController extends Controller
     }
 
     /**
-     * @param Request $request
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Support\Collection
      */
     public function claim(Request $request)
@@ -55,9 +54,10 @@ class LunchSlotController extends Controller
         $date = Carbon::today()->toDateString();
         $lunchslot = LunchSlot::find($request->id);
 
-        if ((Auth::User()->app_del || !Auth::User()->available) || $lunchslot->available_today >= 1) {
+        if ((Auth::User()->app_del || ! Auth::User()->available) || $lunchslot->available_today >= 1) {
             Auth::User()->lunches()->detach();
             Auth::User()->lunches()->attach($request->id, ['date' => $date]);
+
             return $this->userLunches();
         } else {
             return response()->json('This lunch slot has been claimed by another user', 403);
@@ -70,7 +70,7 @@ class LunchSlotController extends Controller
     public function unclaim()
     {
         Auth::User()->lunches()->detach();
+
         return $this->userLunches();
     }
-
 }

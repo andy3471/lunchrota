@@ -2,23 +2,20 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\Admin\UpdateRolesRequest;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\ImportCsvRolesRequest;
-use App\Jobs\Admin\UpdateRolesJob;
+use App\Http\Requests\Admin\UpdateRolesRequest;
 use App\Jobs\Admin\ImportCsvRolesJob;
-use App\Role;
-use App\User;
+use App\Jobs\Admin\UpdateRolesJob;
+use App\Models\Role;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Controller;
 
 class RoleController extends Controller
 {
-
-
     /**
-     * @param Request $request
      * @return string
      */
     public function get(Request $request)
@@ -34,7 +31,6 @@ class RoleController extends Controller
     }
 
     /**
-     * @param Request $request
      * @return string
      */
     public function post(Request $request)
@@ -50,6 +46,7 @@ class RoleController extends Controller
         } else {
             $user->roles()->attach($request->role, ['date' => $date]);
             $role = Role::find($request->role);
+
             return $role->name;
         }
     }
@@ -71,12 +68,12 @@ class RoleController extends Controller
     }
 
     /**
-     * @param UpdateRolesRequest $request
      * @return mixed
      */
     public function adminUpdateRoleRequest(UpdateRolesRequest $request)
     {
         UpdateRolesJob::dispatchNow($request);
+
         return Role::orderBy('name')->get();
     }
 
@@ -87,6 +84,7 @@ class RoleController extends Controller
     {
         $users = User::Where('app_del', '=', false)->get();
         $roles = Role::orderBy('name')->get();
+
         return view('admin.userroles.index')->withUsers($users)->withRoles($roles);
     }
 
@@ -103,14 +101,14 @@ class RoleController extends Controller
      */
     public function downloadCsv()
     {
-        $filename = "commrotaexport.csv";
+        $filename = 'commrotaexport.csv';
 
         $headers = [
-            'Cache-Control'       => 'must-revalidate, post-check=0, pre-check=0',
-            'Content-type'        => 'text/csv',
+            'Cache-Control' => 'must-revalidate, post-check=0, pre-check=0',
+            'Content-type' => 'text/csv',
             'Content-Disposition' => 'attachment; filename=galleries.csv',
-            'Expires'             => '0',
-            'Pragma'              => 'public'
+            'Expires' => '0',
+            'Pragma' => 'public',
         ];
 
         $date = Carbon::yesterday();
@@ -120,7 +118,7 @@ class RoleController extends Controller
                 ->select('users.name', DB::raw('DATE_FORMAT(role_user.date,"%d/%m/%Y") as date'), 'roles.name as role')
                 ->join('role_user', 'users.id', '=', 'role_user.user_id')
                 ->join('roles', 'roles.id', '=', 'role_user.role_id')
-                ->where('date', '>', $date )
+                ->where('date', '>', $date)
                 ->orderBy('role_user.date')
                 ->get();
         } else {
@@ -128,7 +126,7 @@ class RoleController extends Controller
                 ->select('users.name', DB::raw("FORMAT(role_user.date, 'd', 'en-gb') as date"), 'roles.name as role')
                 ->join('role_user', 'users.id', '=', 'role_user.user_id')
                 ->join('roles', 'roles.id', '=', 'role_user.role_id')
-                ->where('date', '>', $date )
+                ->where('date', '>', $date)
                 ->orderBy('role_user.date')
                 ->get();
         }
@@ -149,7 +147,7 @@ class RoleController extends Controller
             $callback = function () {
                 $FH = fopen('php://output', 'w');
 
-                fputcsv($FH, array('name', 'date', 'role'));
+                fputcsv($FH, ['name', 'date', 'role']);
                 fclose($FH);
             };
         }
@@ -158,12 +156,12 @@ class RoleController extends Controller
     }
 
     /**
-     * @param ImportCsvRolesRequest $request
      * @return mixed
      */
     public function importCsvRoles(ImportCsvRolesRequest $request)
     {
         $messages = ImportCsvRolesJob::dispatchNow($request);
+
         return view('admin.userroles.confirmupload')->withMessages($messages->all());
     }
 }

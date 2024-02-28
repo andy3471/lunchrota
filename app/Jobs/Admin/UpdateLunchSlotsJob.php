@@ -3,7 +3,7 @@
 namespace App\Jobs\Admin;
 
 use App\Http\Requests\Admin\UpdateLunchSlotsRequest;
-use App\LunchSlot;
+use App\Models\LunchSlot;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -42,7 +42,7 @@ class UpdateLunchSlotsJob implements ShouldQueue
         foreach ($deletedSlots as $slot) {
             $slot->users()->detach();
             $slot->delete();
-        };
+        }
 
         foreach ($slots as $s) {
             if ($s['id'] == 0) {
@@ -52,7 +52,7 @@ class UpdateLunchSlotsJob implements ShouldQueue
                 $slot = LunchSlot::find($s['id']);
             }
 
-            if (!config('app.lunch_slot_calculated')) {
+            if (! config('app.lunch_slot_calculated')) {
                 $slot->available = $s['available'];
             }
 

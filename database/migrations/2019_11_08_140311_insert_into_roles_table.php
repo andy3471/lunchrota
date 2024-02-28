@@ -1,8 +1,6 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
 
 class InsertIntoRolesTable extends Migration
 {
@@ -35,7 +33,7 @@ class InsertIntoRolesTable extends Migration
             ['name' => 'On-Call/Backlog', 'available' => '1'],
             ['name' => 'Early/Backlog/On-Call', 'available' => '1'],
             ['name' => 'Workshop', 'available' => '1'],
-            ['name' => 'WFH', 'available' => '0']
+            ['name' => 'WFH', 'available' => '0'],
         ]);
     }
 

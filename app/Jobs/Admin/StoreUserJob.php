@@ -3,7 +3,7 @@
 namespace App\Jobs\Admin;
 
 use App\Http\Requests\Admin\StoreUserRequest;
-use App\User;
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -37,6 +37,7 @@ class StoreUserJob implements ShouldQueue
     public function handle()
     {
         $user = User::create($this->request->validated());
+
         return $user;
     }
 }

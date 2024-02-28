@@ -24,7 +24,7 @@ class UpdateLunchSlotsRequest extends FormRequest
     public function rules()
     {
         return [
-            'slots.*.time'      => 'required|date_format:H:i',
+            'slots.*.time' => 'required|date_format:H:i',
             'roles.*.available' => 'required|integer',
         ];
     }
