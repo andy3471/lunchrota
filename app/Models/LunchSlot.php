@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -16,7 +16,7 @@ class LunchSlot extends Model
 
     public function users()
     {
-        return $this->belongsToMany('App\User')->withPivot('date');
+        return $this->belongsToMany('App\Models\User')->withPivot('date');
     }
 
     public function getTimeAttribute($value)
@@ -52,7 +52,10 @@ class LunchSlot extends Model
             ->count();
 
         $remainingAvailable = $totalAvailable - $totalClaimed;
-        if ($remainingAvailable < 0) { return 0; };
+        if ($remainingAvailable < 0) {
+            return 0;
+        }
+
         return $remainingAvailable;
     }
 }

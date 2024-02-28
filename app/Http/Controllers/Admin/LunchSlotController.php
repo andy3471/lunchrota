@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\UpdateLunchSlotsRequest;
 use App\Jobs\Admin\UpdateLunchSlotsJob;
-use App\LunchSlot;
-use Auth;
-use App\Http\Controllers\Controller;
+use App\Models\LunchSlot;
 
 class LunchSlotController extends Controller
 {
@@ -27,12 +26,12 @@ class LunchSlotController extends Controller
     }
 
     /**
-     * @param UpdateLunchSlotsRequest $request
      * @return mixed
      */
     public function adminUpdateLunchSlots(UpdateLunchSlotsRequest $request)
     {
         UpdateLunchSlotsJob::dispatchNow($request);
+
         return LunchSlot::orderBy('time')->get();
     }
 }

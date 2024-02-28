@@ -3,7 +3,7 @@
 namespace App\Jobs\Admin;
 
 use App\Http\Requests\Admin\UpdateRolesRequest;
-use App\Role;
+use App\Models\Role;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -42,7 +42,7 @@ class UpdateRolesJob implements ShouldQueue
         foreach ($deletedRoles as $role) {
             $role->users()->detach();
             $role->delete();
-        };
+        }
 
         foreach ($roles as $r) {
             if ($r['id'] == 0) {

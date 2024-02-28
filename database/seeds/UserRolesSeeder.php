@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Database\Seeder;
+use App\Models\Role;
+use App\Models\User;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
-use App\User;
-use App\Role;
+use Illuminate\Database\Seeder;
 
 class UserRolesSeeder extends Seeder
 {
@@ -28,7 +28,7 @@ class UserRolesSeeder extends Seeder
                 foreach ($users as $user) {
                     $role = Role::all()->random()->id;
                     $user->roles()->attach($role, ['date' => $dateString]);
-                };
+                }
             }
         }
     }

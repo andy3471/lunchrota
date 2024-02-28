@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\AppDelSupportDay;
-use Illuminate\Http\Request;
-use App\User;
+use App\Http\Controllers\Controller;
+use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Controller;
 
 class AppDelSupportDayController extends Controller
 {
@@ -18,6 +18,7 @@ class AppDelSupportDayController extends Controller
     public function appDelAdmin()
     {
         $appdels = User::where('app_del', '=', true)->get();
+
         return view('admin.appdel.index')->withAppdels($appdels);
     }
 
@@ -30,18 +31,18 @@ class AppDelSupportDayController extends Controller
 
         $appDelSupport = Cache::remember('appdelsupport', 600, function () {
             $today = Carbon::now()->toDateString();
+
             return DB::table('users')
-            ->select('users.name')
-            ->join('app_del_support_days', 'users.id', '=', 'app_del_support_days.user_id')
-            ->where('app_del_support_days.date', $today)
-            ->get();
+                ->select('users.name')
+                ->join('app_del_support_days', 'users.id', '=', 'app_del_support_days.user_id')
+                ->where('app_del_support_days.date', $today)
+                ->get();
         });
 
         return $appDelSupport;
     }
 
     /**
-     * @param Request $request
      * @return bool
      */
     public function get(Request $request)
@@ -59,7 +60,6 @@ class AppDelSupportDayController extends Controller
     }
 
     /**
-     * @param Request $request
      * @return bool
      */
     public function post(Request $request)
@@ -74,11 +74,13 @@ class AppDelSupportDayController extends Controller
             $supportDay->date = $date;
             $supportDay->Save();
             Cache::forget('appdelsupport');
+
             return true;
-        } else {;
+        } else {
             $supportDay = AppDelSupportDay::where('user_id', '=', $user_id)->where('date', '=', $date);
             $supportDay->delete();
             Cache::forget('appdelsupport');
+
             return false;
         }
     }

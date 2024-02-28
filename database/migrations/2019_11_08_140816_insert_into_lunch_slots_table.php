@@ -1,8 +1,6 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
 
 class InsertIntoLunchSlotsTable extends Migration
 {
@@ -16,7 +14,7 @@ class InsertIntoLunchSlotsTable extends Migration
         DB::table('lunch_slots')->insert([
             ['time' => '12:30'],
             ['time' => '13:30'],
-            ['time' => '14:30']
+            ['time' => '14:30'],
         ]);
     }
 

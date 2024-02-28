@@ -1,9 +1,10 @@
 <?php
 
 namespace App\Rules;
+
 use Auth;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Contracts\Validation\Rule;
+use Illuminate\Support\Facades\Hash;
 
 class CurrentPassword implements Rule
 {
@@ -26,7 +27,7 @@ class CurrentPassword implements Rule
      */
     public function passes($attribute, $value)
     {
-        return Hash::check($value,Auth::user()->password);
+        return Hash::check($value, Auth::user()->password);
     }
 
     /**

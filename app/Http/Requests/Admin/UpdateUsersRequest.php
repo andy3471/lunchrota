@@ -24,12 +24,12 @@ class UpdateUsersRequest extends FormRequest
     public function rules()
     {
         return [
-            'users.*.name'      => 'required|string',
-            'users.*.email'     => 'email',
+            'users.*.name' => 'required|string',
+            'users.*.email' => 'email',
             'users.*.scheduled' => 'required|boolean',
-            'users.*.admin'     => 'required|boolean',
-            'users.*.app_del'     => 'required|boolean',
-            'users.*.deleted'   => 'required|boolean',
+            'users.*.admin' => 'required|boolean',
+            'users.*.app_del' => 'required|boolean',
+            'users.*.deleted' => 'required|boolean',
             'users.*.new_password' => 'nullable|string|min:6',
         ];
     }

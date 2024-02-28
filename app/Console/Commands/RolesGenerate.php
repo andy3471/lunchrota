@@ -1,11 +1,12 @@
 <?php
+
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
+use App\Models\Role;
+use App\Models\User;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
-use App\User;
-use App\Role;
+use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
 class RolesGenerate extends Command
@@ -45,6 +46,7 @@ class RolesGenerate extends Command
 
         if (config('app.default_role') == 'none') {
             $this->line('No default role set');
+
             return;
         }
 
@@ -54,9 +56,10 @@ class RolesGenerate extends Command
         $dateRange = CarbonPeriod::create($startDate, $endDate);
 
         if ($defaultRole) {
-            $this->line('The Default Role is ' . $defaultRole->name);
+            $this->line('The Default Role is '.$defaultRole->name);
         } else {
             $this->error('The default role in the .env file does not match the name of a role');
+
             return;
         }
 
@@ -66,27 +69,26 @@ class RolesGenerate extends Command
                 $dateString = Carbon::parse($date)->toDateString();
 
                 $usersWithRoles = DB::table('role_user')
-                        ->select('user_id')
-                        ->where('date', $dateString)
-                        ->get();
+                    ->select('user_id')
+                    ->where('date', $dateString)
+                    ->get();
 
                 $usersWithRoles = json_decode(json_encode($usersWithRoles), true);
 
                 $users = User::whereNotIn('id', $usersWithRoles)->get();
-                
-                foreach ($users as $user) {
-                    if (($user->scheduled) & (!$user->app_del)) {
-                        $user->roles()->attach($defaultRole, ['date' => $dateString]);
-                        $this->line($user->name .' Given Role Of '. $defaultRole->name . ' For ' . $dateString);
-                    } else {
-                        $this->line($user->name .' is not a scheduled user');
-                    }
-                };
-            } else {
-                $this->line($date . ' Is Weekend');
-            }
-        };
 
-        
+                foreach ($users as $user) {
+                    if (($user->scheduled) & (! $user->app_del)) {
+                        $user->roles()->attach($defaultRole, ['date' => $dateString]);
+                        $this->line($user->name.' Given Role Of '.$defaultRole->name.' For '.$dateString);
+                    } else {
+                        $this->line($user->name.' is not a scheduled user');
+                    }
+                }
+            } else {
+                $this->line($date.' Is Weekend');
+            }
+        }
+
     }
 }

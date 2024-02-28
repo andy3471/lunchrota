@@ -1,14 +1,14 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
 
 class DailyPassword extends Model
 {
     protected $appends = [
-        'code'
+        'code',
     ];
 
     public function getCodeAttribute()
@@ -17,6 +17,7 @@ class DailyPassword extends Model
         $date = Carbon::parse($this->date);
         $dsp = $epoch->diffInDays($date);
         $dsp = strrev($dsp);
+
         return $dsp;
     }
 }

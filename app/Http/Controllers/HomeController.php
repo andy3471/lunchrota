@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
-use App\LunchSlot;
-use Carbon\Carbon;
+use App\Models\LunchSlot;
+use App\Models\User;
 use Auth;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
@@ -50,6 +50,7 @@ class HomeController extends Controller
     public function about()
     {
         $admins = User::Select('name', 'meme')->where('admin', true)->orderBy('name')->get();
+
         return view('about')->with('admins', $admins);
     }
 
