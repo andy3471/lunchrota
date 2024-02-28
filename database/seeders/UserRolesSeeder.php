@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use App\Models\Role;
 use App\Models\User;
 use Carbon\Carbon;
@@ -8,12 +10,7 @@ use Illuminate\Database\Seeder;
 
 class UserRolesSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
-    public function run()
+    public function run(): void
     {
         $startDate = Carbon::now()->addMonth(-1);
         $endDate = Carbon::now()->addMonth(1);
