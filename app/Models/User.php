@@ -3,7 +3,10 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -11,12 +14,15 @@ use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable
 {
+    use HasFactory;
     use Notifiable;
     use SoftDeletes;
-    use HasFactory;
 
     protected $fillable = [
-        'name', 'email', 'password', 'admin',
+        'name',
+        'email',
+        'password',
+        'admin',
     ];
 
     protected $appends = [
@@ -25,83 +31,90 @@ class User extends Authenticatable
     ];
 
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
+        'remember_token',
     ];
 
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
 
-    public function getDeletedAttribute()
+    public function isDeleted(): Attribute
     {
-        if ($this->deleted_at == null) {
-            return false;
-        } else {
-            return true;
-        }
+        return Attribute::make(
+            get: function () {
+                return $this->deleted_at != null;
+            }
+        );
     }
 
-    public function getAdminAttribute($value)
+    // TODO: Tidy this all up
+    public function admin(): Attribute
     {
-        if ($value == '0') {
-            return false;
-        } else {
-            return true;
-        }
+        return Attribute::make(
+            get: function ($value) {
+                return $value > 0;
+            }
+        );
     }
 
-    public function getScheduledAttribute($value)
+    // TODO: Tidy this all up
+    public function scheduled(): Attribute
     {
-        if ($value == '0') {
-            return false;
-        } else {
-            return true;
-        }
+        return Attribute::make(
+            get: function ($value) {
+                return $value > 0;
+            }
+        );
     }
 
-    public function getAppDelAttribute($value)
+    // TODO: Tidy this all up
+    public function appDel(): Attribute
     {
-        if ($value == '0') {
-            return false;
-        } else {
-            return true;
-        }
+        return Attribute::make(
+            get: function ($value) {
+                return $value > 0;
+            }
+        );
     }
 
-    public function getAvailableAttribute()
+    // TODO: Tidy this all up
+    public function available(): Attribute
     {
-        if (! config('app.roles_enabled')) {
-            return true;
-        }
+        return Attribute::make(
+            get: function () {
+                if (! config('app.roles_enabled')) {
+                    return true;
+                }
 
-        $date = Carbon::today()->toDateString();
+                $date = Carbon::today()->toDateString();
 
-        $available = DB::table('role_user')
-            ->select('roles.available')
-            ->join('roles', 'role_user.role_id', 'roles.id')
-            ->where('role_user.user_id', $this->id)
-            ->where('role_user.date', $date)
-            ->first();
+                $available = DB::table('role_user')
+                    ->select('roles.available')
+                    ->join('roles', 'role_user.role_id', 'roles.id')
+                    ->where('role_user.user_id', $this->id)
+                    ->where('role_user.date', $date)
+                    ->first();
 
-        if (isset($available->available) && $available->available) {
-            return true;
-        } else {
-            return false;
-        }
+                return isset($available->available) && $available->available;
+            }
+        );
     }
 
-    public function roles()
+    public function roles(): BelongsToMany
     {
-        return $this->belongsToMany('App\Models\Role')->withPivot('date');
+        return $this->belongsToMany(Role::class)
+            ->withPivot('date');
     }
 
-    public function lunches()
+    public function lunches(): BelongsToMany
     {
-        return $this->belongsToMany('App\Models\LunchSlot')->withPivot('date');
+        return $this->belongsToMany(LunchSlot::class)
+            ->withPivot('date');
     }
 
-    public function appdelsupportdays()
+    public function appdelsupportdays(): HasMany
     {
-        return $this->hasMany('App\AppDelSupportDay');
+        return $this->hasMany(AppDelSupportDay::class);
     }
 }

@@ -11,36 +11,12 @@ use Illuminate\Support\Facades\DB;
 
 class RolesGenerate extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
     protected $signature = 'roles:generate';
 
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
     protected $description = 'Generate Roles';
 
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
-     * Execute the console command.
-     *
-     * @return mixed
-     */
-    public function handle()
+    // TODO: Tidy up the code in this file
+    public function handle(): void
     {
         //Get Default role from .env file
 

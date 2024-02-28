@@ -3,17 +3,14 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class RoleController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Request $request)
+    // TODO: Refactor this
+    public function index(Request $request): JsonResponse
     {
         $date = $request->date;
         $date = Carbon::parse($date)->toDateString();
@@ -27,6 +24,6 @@ class RoleController extends Controller
             ->orderBy('users.name')
             ->get();
 
-        return $roles;
+        return response()->json($roles);
     }
 }

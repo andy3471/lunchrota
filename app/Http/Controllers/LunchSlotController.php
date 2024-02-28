@@ -3,25 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\LunchSlot;
-use Auth;
 use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class LunchSlotController extends Controller
 {
-    /**
-     * @return mixed
-     */
-    public function getSlots()
+    // TODO: Rename
+    public function getSlots(): JsonResponse
     {
-        return LunchSlot::orderBy('time')->get();
+        return response()->json(LunchSlot::orderBy('time')->get());
     }
 
-    /**
-     * @return \Illuminate\Support\Collection
-     */
-    public function userLunches()
+    // TODO: Rename
+    public function userLunches(): JsonResponse
     {
         $date = Carbon::today()->toDateString();
 
@@ -43,20 +39,17 @@ class LunchSlotController extends Controller
                 ->get();
         }
 
-        return $userLunches;
+        return response()->json($userLunches);
     }
 
-    /**
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\Support\Collection
-     */
-    public function claim(Request $request)
+    public function claim(Request $request): JsonResponse
     {
         $date = Carbon::today()->toDateString();
         $lunchslot = LunchSlot::find($request->id);
 
-        if ((Auth::User()->app_del || ! Auth::User()->available) || $lunchslot->available_today >= 1) {
-            Auth::User()->lunches()->detach();
-            Auth::User()->lunches()->attach($request->id, ['date' => $date]);
+        if ((auth()->user()->app_del || ! auth()->user()->available) || $lunchslot->available_today >= 1) {
+            auth()->user()->lunches()->detach();
+            auth()->user()->lunches()->attach($request->id, ['date' => $date]);
 
             return $this->userLunches();
         } else {
@@ -64,12 +57,9 @@ class LunchSlotController extends Controller
         }
     }
 
-    /**
-     * @return \Illuminate\Support\Collection
-     */
-    public function unclaim()
+    public function unclaim(): JsonResponse
     {
-        Auth::User()->lunches()->detach();
+        auth()->user()->lunches()->detach();
 
         return $this->userLunches();
     }

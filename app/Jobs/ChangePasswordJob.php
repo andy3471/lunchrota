@@ -13,29 +13,16 @@ class ChangePasswordJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    /**
-     * @var ChangePasswordRequest
-     */
-    private $request;
+    // TODO: NEVER pass the request object to the job constructor
 
-    /**
-     * Create a new job instance.
-     *
-     * @return void
-     */
-    public function __construct(ChangePasswordRequest $request)
-    {
-        $this->request = $request;
+    public function __construct(
+        public ChangePasswordRequest $request
+    ) {
     }
 
-    /**
-     * Execute the job.
-     *
-     * @return void
-     */
     public function handle()
     {
-        $user = Auth::user();
+        $user = auth()->user();
         $user->password = bcrypt($this->request->newpassword);
         $user->save();
     }

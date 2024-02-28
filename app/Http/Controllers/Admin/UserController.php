@@ -12,6 +12,8 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    // TODO: Move to filament
+
     /**
      * @return \Illuminate\Http\RedirectResponse
      */

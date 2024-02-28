@@ -14,27 +14,16 @@ class UpdateLunchSlotsJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    /**
-     * @var UpdateLunchSlotsRequest
-     */
-    private $request;
+    // TODO: Move to filament
+    // TODO: Never pass the request
 
-    /**
-     * Create a new job instance.
-     *
-     * @return void
-     */
-    public function __construct(UpdateLunchSlotsRequest $request)
-    {
-        $this->request = $request;
+    public function __construct(
+        public UpdateLunchSlotsRequest $request
+    ) {
     }
 
-    /**
-     * Execute the job.
-     *
-     * @return void
-     */
-    public function handle()
+    // TODO: Tidy this
+    public function handle(): void
     {
         $slots = collect($this->request->slots);
         $deletedSlots = LunchSlot::whereNotIn('id', $slots->where('id', '!=', null)->pluck('id')->toArray())->get();

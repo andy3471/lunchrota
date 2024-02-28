@@ -14,27 +14,16 @@ class UpdateRolesJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    /**
-     * @var UpdateRolesRequest
-     */
-    private $request;
+    // TODO: Move to filament
+    // TODO: Never pass the request
 
-    /**
-     * Create a new job instance.
-     *
-     * @return void
-     */
-    public function __construct(UpdateRolesRequest $request)
-    {
-        $this->request = $request;
+    public function __construct(
+        public UpdateRolesRequest $request
+    ) {
     }
 
-    /**
-     * Execute the job.
-     *
-     * @return void
-     */
-    public function handle()
+    // TODO: Tidy this
+    public function handle(): void
     {
         $roles = collect($this->request->roles);
         $deletedRoles = Role::whereNotIn('id', $roles->where('id', '!=', null)->pluck('id')->toArray())->get();

@@ -14,27 +14,15 @@ class StoreUserJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    /**
-     * @var StoreUserRequest
-     */
-    private $request;
+    // TODO: Move to filament
+    // TODO: Never pass the request
 
-    /**
-     * Create a new job instance.
-     *
-     * @return void
-     */
-    public function __construct(StoreUserRequest $request)
-    {
-        $this->request = $request;
+    public function __construct(
+        public StoreUserRequest $request
+    ) {
     }
 
-    /**
-     * Execute the job.
-     *
-     * @return void
-     */
-    public function handle()
+    public function handle(): User
     {
         $user = User::create($this->request->validated());
 
