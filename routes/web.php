@@ -36,10 +36,6 @@ Route::prefix('admin')->middleware('can:admin')->group(function () {
     Route::get('lunches', 'Admin\LunchSlotController@index')->name('lunchadmin');
     Route::get('lunches/get', 'Admin\LunchSlotController@getAdminSlots');
     Route::post('lunches', 'Admin\LunchSlotController@adminUpdateLunchSlots');
-
-    Route::get('appdel', 'Admin\AppDelSupportDayController@appDelAdmin')->name('appdeladmin');
-    Route::get('appdel/get', 'Admin\AppDelSupportDayController@get');
-    Route::post('appdel/post', 'Admin\AppDelSupportDayController@post');
 });
 
 //Disable Register Route if Registration Disabled
