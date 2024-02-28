@@ -14,6 +14,11 @@ class LunchSlot extends Model
         'available_today',
     ];
 
+    protected $fillable = [
+        'time',
+        'available',
+    ];
+
     protected $hidden = [
         'created_at',
         'updated_at',
