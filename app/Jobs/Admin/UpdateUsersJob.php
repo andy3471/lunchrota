@@ -9,7 +9,6 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Cache;
 
 class UpdateUsersJob implements ShouldQueue
 {
@@ -27,7 +26,6 @@ class UpdateUsersJob implements ShouldQueue
     public function handle(): void
     {
         $users = collect($this->request->users);
-        Cache::forget('appdelsupport');
 
         foreach ($users as $u) {
             $user = User::withTrashed()->where('id', $u['id'])->first();

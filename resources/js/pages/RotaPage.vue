@@ -65,9 +65,6 @@ export default {
         return {
             date: new Date()
         };
-    },
-    mounted() {},
-    methods: {
     }
 };
 </script>
