@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Front;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\ChangePasswordRequest;
 use App\Jobs\ChangePasswordJob;
 use Illuminate\Http\RedirectResponse;

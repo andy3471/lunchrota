@@ -10,49 +10,10 @@ use App\Jobs\Admin\UpdateRolesJob;
 use App\Models\Role;
 use App\Models\User;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class RoleController extends Controller
 {
-    // TODO: Move to filament
-
-    /**
-     * @return string
-     */
-    public function get(Request $request)
-    {
-        $date = Carbon::parse($request->date)->toDateString();
-        $roles = User::find($request->user_id)->roles()->wherePivot('date', $date)->get();
-
-        if ($roles->isEmpty()) {
-            return 'None';
-        } else {
-            return $roles[0]->name;
-        }
-    }
-
-    /**
-     * @return string
-     */
-    public function post(Request $request)
-    {
-        $date = Carbon::parse($request->date)->toDateString();
-
-        $user = User::find($request->user_id);
-
-        $user->roles()->wherePivot('date', $date)->detach();
-
-        if ($request->role == 0) {
-            return 'None';
-        } else {
-            $user->roles()->attach($request->role, ['date' => $date]);
-            $role = Role::find($request->role);
-
-            return $role->name;
-        }
-    }
-
     /**
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -82,7 +43,7 @@ class RoleController extends Controller
     /**
      * @return mixed
      */
-    public function userRolesAdmin()
+    public function index()
     {
         $users = User::all();
         $roles = Role::orderBy('name')->get();
@@ -93,7 +54,7 @@ class RoleController extends Controller
     /**
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function userRolesUpload()
+    public function upload()
     {
         return view('admin.userroles.upload');
     }
@@ -101,7 +62,7 @@ class RoleController extends Controller
     /**
      * @return \Symfony\Component\HttpFoundation\StreamedResponse
      */
-    public function downloadCsv()
+    public function download()
     {
         $filename = 'commrotaexport.csv';
 
@@ -160,7 +121,7 @@ class RoleController extends Controller
     /**
      * @return mixed
      */
-    public function importCsvRoles(ImportCsvRolesRequest $request)
+    public function import(ImportCsvRolesRequest $request)
     {
         $messages = ImportCsvRolesJob::dispatchNow($request);
 

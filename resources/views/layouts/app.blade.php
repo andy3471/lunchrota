@@ -91,8 +91,8 @@
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="{{ route('filament.admin.pages.dashboard') }}">Admin Panel</a>
                             @if( config('app.roles_enabled') )
-                                <a class="dropdown-item" href="{{ route('userrolesadmin') }}">User Roles</a>
-                                <a class="dropdown-item" href="{{ route('upload') }}">Bulk Upload</a>
+                                <a class="dropdown-item" href="{{ route('admin.user-roles.index') }}">User Roles</a>
+                                <a class="dropdown-item" href="{{ route('admin.user-roles.index') }}">Bulk Upload</a>
                             @endif
                         </div>
                     </li>
@@ -179,7 +179,7 @@
     @auth
     <div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
-            <form method="POST" action="{{ route('changepassword') }}">
+            <form method="POST" action="{{ route('password.change') }}">
                 @csrf
                 <div class="modal-content">
                 <div class="modal-header bg-primary">

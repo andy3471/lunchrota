@@ -82,7 +82,7 @@ export default {
       this.userRoles = [];
       this.loading = true;
       axios
-        .get("./roles", {
+        .get("./api/roles", {
           params: {
             date: this.date
           }
