@@ -47,7 +47,7 @@ class LunchSlotController extends Controller
         $date = Carbon::today()->toDateString();
         $lunchslot = LunchSlot::find($request->id);
 
-        if ((auth()->user()->app_del || ! auth()->user()->available) || $lunchslot->available_today >= 1) {
+        if ((! auth()->user()->available) || $lunchslot->available_today >= 1) {
             auth()->user()->lunches()->detach();
             auth()->user()->lunches()->attach($request->id, ['date' => $date]);
 

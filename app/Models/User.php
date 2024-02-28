@@ -69,16 +69,6 @@ class User extends Authenticatable
     }
 
     // TODO: Tidy this all up
-    public function appDel(): Attribute
-    {
-        return Attribute::make(
-            get: function ($value) {
-                return $value > 0;
-            }
-        );
-    }
-
-    // TODO: Tidy this all up
     public function available(): Attribute
     {
         return Attribute::make(

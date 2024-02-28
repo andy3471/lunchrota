@@ -44,7 +44,6 @@ class UpdateUsersJob implements ShouldQueue
             $user->name = $u['name'];
             $user->email = $u['email'];
             $user->admin = $u['admin'];
-            $user->app_del = $u['app_del'];
             $user->scheduled = $u['scheduled'];
             $user->save();
         }

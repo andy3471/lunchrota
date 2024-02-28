@@ -96,9 +96,6 @@
                                 <a class="dropdown-item" href="{{ route('userrolesadmin') }}">User Roles</a>
                                 <a class="dropdown-item" href="{{ route('upload') }}">Bulk Upload</a>
                             @endif
-                            @if( config('app.app_del_enabled') )
-                                <a class="dropdown-item" href="{{ route('appdeladmin') }}">App Del</a>
-                            @endif
                         </div>
                     </li>
                     @endcan
@@ -118,26 +115,12 @@
                     <li class="nav-item">
                         <a class="nav-link modal-link" data-toggle="modal" data-target="#loginModal">Login</a>
                     </li>
-                        @if( config('app.register_enabled') )
-                            <li class="nav-item">
-                                <a href="{{ route('register') }}" class="nav-link">Register</a>
-                            </li>
-                        @endif
-                    @else
-
-                        @if( config('app.support_code') and (!$dsp->isEmpty()) )
-                            <li class="nav-item">
-                                <span class="navbar-text" disabled="">{{$dsp[0]->code}}</span>
-                            </li>
-                            <li class="nav-item">
-                                <span class="navbar-text" disabled="">{{$dsp[0]->password}}</span>
-                            </li>
-                            @if($dsp[0]->password2)
-                            <li class="nav-item">
-                                <span class="navbar-text" disabled="">{{$dsp[0]->password2}}</span>
-                            </li>
-                        @endif
+                    @if( config('app.register_enabled') )
+                        <li class="nav-item">
+                            <a href="{{ route('register') }}" class="nav-link">Register</a>
+                        </li>
                     @endif
+                    @else
                     <li class="nav-item">
                         <a class="nav-link modal-link" data-toggle="modal" data-target="#changePasswordModal">
                             Change Password

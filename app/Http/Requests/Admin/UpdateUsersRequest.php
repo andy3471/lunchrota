@@ -15,7 +15,6 @@ class UpdateUsersRequest extends FormRequest
             'users.*.email' => 'email',
             'users.*.scheduled' => 'required|boolean',
             'users.*.admin' => 'required|boolean',
-            'users.*.app_del' => 'required|boolean',
             'users.*.deleted' => 'required|boolean',
             'users.*.new_password' => 'nullable|string|min:6',
         ];

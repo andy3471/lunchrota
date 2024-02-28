@@ -7,12 +7,7 @@
 
         <div class="col-lg-6 order-lg-1" id="corePane">
             <form method="post" id="userAdmin">
-                <user-admin
-                    @if( config('app.app_del_enabled') )
-                        :appdelenabled="true"
-                    @endif
-                >
-                </user-admin>
+                <user-admin />
             </form>
             <div class="col" id="error2">
             </div>
