@@ -16,7 +16,7 @@
                             Created By:
                         </td>
                         <td>
-                            Complete rewrite by <a href="https://andyh.app">Andrew Hargrave</a>, based on an original project by <a href="https://curtisreet.co.uk">Curtis Reet</a>.
+                            Rewrite by <a href="https://andyh.app">Andrew Hargrave</a>, based on an original project by <a href="https://curtisreet.co.uk">Curtis Reet</a>.
                         </td>
                     </tr>
                     <tr>
@@ -24,7 +24,7 @@
                             Created Using:
                         </td>
                         <td>
-                            Laravel 6, Vue JS, HTML5, Bootstrap 4, PHP, JavaScript and MySQL.
+                            Laravel 10, Vue JS, HTML5, Bootstrap 4, PHP, JavaScript and Postgres.
                         </td>
                     </tr>
                     <tr>
