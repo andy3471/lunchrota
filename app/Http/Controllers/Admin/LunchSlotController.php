@@ -9,6 +9,8 @@ use App\Models\LunchSlot;
 
 class LunchSlotController extends Controller
 {
+    // TODO: Move to filament
+
     /**
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */

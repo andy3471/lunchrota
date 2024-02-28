@@ -2,39 +2,17 @@
 
 namespace App\Rules;
 
-use Auth;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Support\Facades\Hash;
 
 class CurrentPassword implements Rule
 {
-    /**
-     * Create a new rule instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    // TODO: Is this needed?
+    public function passes($attribute, $value): bool
     {
-        //
+        return Hash::check($value, auth()->user()->password);
     }
 
-    /**
-     * Determine if the validation rule passes.
-     *
-     * @param  string  $attribute
-     * @param  mixed  $value
-     * @return bool
-     */
-    public function passes($attribute, $value)
-    {
-        return Hash::check($value, Auth::user()->password);
-    }
-
-    /**
-     * Get the validation error message.
-     *
-     * @return string
-     */
     public function message()
     {
         return 'The Current Password is incorrect.';

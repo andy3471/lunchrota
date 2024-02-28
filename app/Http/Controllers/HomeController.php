@@ -7,18 +7,17 @@ use App\Models\User;
 use Auth;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\View\View;
 
 class HomeController extends Controller
 {
-    /**
-     * @return mixed
-     */
-    public function index()
+    // TODO: Refactor
+    public function index(): View
     {
         $lunchslots = LunchSlot::orderBy('time')->get();
         $date = Carbon::today()->toDateString();
 
-        if (Auth::check()) {
+        if (auth()->check()) {
             $initialSlot = DB::table('users')
                 ->select('lunch_slots.id')
                 ->join('lunch_slot_user', 'users.id', '=', 'lunch_slot_user.user_id')
@@ -35,8 +34,8 @@ class HomeController extends Controller
             $initialSlot = '-1';
         }
 
-        if (Auth::user()) {
-            $available = Auth::user()->available;
+        if (auth()->user()) {
+            $available = auth()->user()->available;
         } else {
             $available = true;
         }
@@ -44,20 +43,17 @@ class HomeController extends Controller
         return view('home')->withLunchSlots($lunchslots)->withInitialSlot($initialSlot)->withAvailable($available);
     }
 
-    /**
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function about()
+    public function about(): View
     {
-        $admins = User::Select('name', 'meme')->where('admin', true)->orderBy('name')->get();
+        $admins = User::Select('name', 'meme')
+            ->where('admin', true)
+            ->orderBy('name')
+            ->get();
 
         return view('about')->with('admins', $admins);
     }
 
-    /**
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function demo()
+    public function demo(): View
     {
         return view('auth.demomode');
     }

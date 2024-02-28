@@ -15,27 +15,16 @@ class UpdateUsersJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    /**
-     * @var UpdateUsersRequest
-     */
-    private $request;
+    // TODO: Move to filament
+    // TODO: Never pass the request
 
-    /**
-     * Create a new job instance.
-     *
-     * @return void
-     */
-    public function __construct(UpdateUsersRequest $request)
-    {
-        $this->request = $request;
+    public function __construct(
+        public UpdateUsersRequest $request
+    ) {
     }
 
-    /**
-     * Execute the job.
-     *
-     * @return void
-     */
-    public function handle()
+    // TODO: Tidy this
+    public function handle(): void
     {
         $users = collect($this->request->users);
         Cache::forget('appdelsupport');
@@ -43,9 +32,9 @@ class UpdateUsersJob implements ShouldQueue
         foreach ($users as $u) {
             $user = User::withTrashed()->where('id', $u['id'])->first();
 
-            if ($u['deleted'] and ! $user->deleted) {
+            if ($u['deleted'] and ! $user->is_deleted) {
                 $user->delete();
-            } elseif (! $u['deleted'] and $user->deleted) {
+            } elseif (! $u['deleted'] and $user->is_deleted) {
                 $user->restore();
             }
             if (! $u['new_password'] == '') {

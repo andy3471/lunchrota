@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\DB;
 
 class RoleController extends Controller
 {
+    // TODO: Move to filament
+
     /**
      * @return string
      */
