@@ -1,10 +1,22 @@
 <template>
   <div>
-    <div v-if="this.loading" class="spinner-border spinner-border-sm text-dark" role="status">
+    <div
+      v-if="loading"
+      class="spinner-border spinner-border-sm text-dark"
+      role="status"
+    >
       <span class="sr-only">Loading...</span>
     </div>
-    <div v-else class="form-check">
-      <input class="form-check-input" type="checkbox" v-model="onSupport" v-on:click="setSupport()">
+    <div
+      v-else
+      class="form-check"
+    >
+      <input
+        v-model="onSupport"
+        class="form-check-input"
+        type="checkbox"
+        @click="setSupport()"
+      >
     </div>
   </div>
 </template>
@@ -14,10 +26,12 @@ export default {
   props: {
     userid: {
       required: true,
+      type: Number,
       default: null
     },
     date: {
-      required: true
+      required: true,
+      type: Date
     }
   },
   data() {
@@ -25,6 +39,11 @@ export default {
       loading: true,
       onSupport: false
     };
+  },
+  watch: {
+    date: function() {
+      this.getSupport();
+    }
   },
   mounted() {
     this.getSupport();
@@ -47,7 +66,7 @@ export default {
           console.log(error);
         });
     },
-    setSupport: function(role) {
+    setSupport: function() {
       this.loading = true;
       axios
         .post("./appdel/post", {
@@ -70,11 +89,6 @@ export default {
         variant: variant,
         solid: true
       });
-    }
-  },
-  watch: {
-    date: function() {
-      this.getSupport();
     }
   }
 };

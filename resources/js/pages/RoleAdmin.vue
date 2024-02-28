@@ -3,30 +3,49 @@
     <table class="table table-bordered">
       <tbody>
         <tr>
-          <th style="width: 65%">Role</th>
-          <th style="width: 30%">Available</th>
-          <th style="width: 5%"></th>
+          <th style="width: 65%">
+            Role
+          </th>
+          <th style="width: 30%">
+            Available
+          </th>
+          <th style="width: 5%" />
         </tr>
-        <tr v-for="(role, index) in this.roles" v-bind:key="role.id">
+        <tr
+          v-for="(role, index) in roles"
+          :key="role.id"
+        >
           <td>{{ role.name }}</td>
           <td>
             <div class="form-check">
-              <input type="checkbox" class="form-check-input" v-model="role.available" />
+              <input
+                v-model="role.available"
+                type="checkbox"
+                class="form-check-input"
+              >
             </div>
           </td>
           <td>
-              <div class="text-right">
-                <button
+            <div class="text-right">
+              <button
                 type="button"
                 class="btn btn-danger btn-sm"
-                v-on:click="deleteRole(index)"
-                >Delete</button>
-              </div>
+                @click="deleteRole(index)"
+              >
+                Delete
+              </button>
+            </div>
           </td>
         </tr>
-        <tr v-if="this.loading == true" class="text-center">
+        <tr
+          v-if="loading == true"
+          class="text-center"
+        >
           <td colspan="3">
-            <div class="spinner-border spinner-border-sm" role="status">
+            <div
+              class="spinner-border spinner-border-sm"
+              role="status"
+            >
               <span class="sr-only">Loading...</span>
             </div>
           </td>
@@ -34,27 +53,43 @@
         <tr v-else>
           <td>
             <input
+              v-model="newRole.name"
               type="text"
               class="form-control"
-              v-model="newRole.name"
               @keyup.enter="createRole()"
-            />
+            >
           </td>
           <td>
             <div class="form-check">
-              <input type="checkbox" class="form-check-input" v-model.number="newRole.available" />
+              <input
+                v-model.number="newRole.available"
+                type="checkbox"
+                class="form-check-input"
+              >
             </div>
           </td>
           <td>
             <div class="text-right">
-              <button type="button" class="btn btn-primary btn-sm" @click="createRole()">Add</button>
+              <button
+                type="button"
+                class="btn btn-primary btn-sm"
+                @click="createRole()"
+              >
+                Add
+              </button>
             </div>
           </td>
         </tr>
-        <tr v-if="!this.loading == true">
+        <tr v-if="!loading == true">
           <td colspan="3">
             <div class="text-right">
-              <button type="button" class="btn btn-primary btn-sm" @click="postRoles()">Save</button>
+              <button
+                type="button"
+                class="btn btn-primary btn-sm"
+                @click="postRoles()"
+              >
+                Save
+              </button>
             </div>
           </td>
         </tr>
@@ -62,8 +97,9 @@
     </table>
   </div>
 </template>
-
 <script>
+import axios from "axios";
+
 export default {
   props: {
     autoCalculatedEnabled: {
