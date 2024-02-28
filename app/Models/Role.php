@@ -8,16 +8,21 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Role extends Model
 {
+    protected $fillable = [
+        'name',
+        'available',
+    ];
+
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class)
             ->withPivot('date');
     }
 
-    public function available($value): Attribute
+    public function available(): Attribute
     {
         return Attribute::make(
-            get: function () use ($value) {
+            get: function ($value) {
                 return $value > 0;
             }
         );
