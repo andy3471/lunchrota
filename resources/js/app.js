@@ -1,5 +1,6 @@
-require("./bootstrap");
-window.Vue = require("vue");
+import "./bootstrap";
+import Vue from "vue";
+window.Vue = Vue;
 
 import BootstrapVue from 'bootstrap-vue'
 
