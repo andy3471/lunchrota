@@ -1,5 +1,5 @@
 import "./bootstrap";
-import Vue from "vue";
+import Vue from 'vue/dist/vue.esm.js';
 // window.Vue = Vue;
 
 import BootstrapVue from 'bootstrap-vue'
@@ -38,13 +38,7 @@ Vue.component("RoleSelector", RoleSelector);
 Vue.component("DatePicker", DatePicker);
 Vue.component("TimePicker", TimePicker);
 
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
 
-// eslint-disable-next-line no-unused-vars
-const app = new Vue({
+window.app = new Vue({
     el: "#app"
 });
