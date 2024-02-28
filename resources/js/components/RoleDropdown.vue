@@ -1,43 +1,56 @@
 <template>
   <div class="dropdown">
     <button
+      id="dropdown9"
       type="button"
       class="btn btn-primary dropdown-toggle"
       data-toggle="dropdown"
-      id="dropdown9"
       changed="0"
     >
-      {{this.selectedRole}}
-      <div v-if="this.loading" class="spinner-border spinner-border-sm text-light" role="status">
+      {{ selectedRole }}
+      <div
+        v-if="loading"
+        class="spinner-border spinner-border-sm text-light"
+        role="status"
+      >
         <span class="sr-only">Loading...</span>
       </div>
     </button>
     <div class="dropdown-menu scrollable-menu">
       <a
-        class="dropdown-item"
         v-for="role in roles"
-        v-bind:key="role.id"
-        v-bind:value="role.id"
-        v-on:click="selectRole(role.id)"
+        :key="role.id"
+        class="dropdown-item"
+        :value="role.id"
+        @click="selectRole(role.id)"
       >{{ role.name }}</a>
-      <a class="dropdown-item" v-on:click="selectRole('0')">None</a>
+      <a
+        class="dropdown-item"
+        @click="selectRole('0')"
+      >None</a>
     </div>
   </div>
 </template>
-
 <script>
+import axios from "axios";
+
 export default {
   props: {
     roles: {
       required: true,
-      default: []
+      type: Array,
+      default () {
+        return [];
+      }
     },
     userid: {
       required: true,
+      type: Number,
       default: null
     },
     date: {
-      required: true
+      required: true,
+      type: Date
     }
   },
   data() {
@@ -45,6 +58,11 @@ export default {
       selectedRole: null,
       loading: true
     };
+  },
+  watch: {
+    date: function() {
+      this.getRole();
+    }
   },
   mounted() {
     this.getRole();
@@ -92,11 +110,6 @@ export default {
         variant: variant,
         solid: true
       });
-    }
-  },
-  watch: {
-    date: function() {
-      this.getRole();
     }
   }
 };

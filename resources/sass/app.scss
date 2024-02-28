@@ -4,8 +4,9 @@
 // Variables
 @import "variables";
 // Bootstrap
-@import "~bootstrap/scss/bootstrap";
-@import 'node_modules/bootstrap-vue/src/index.scss';
+@import "../../node_modules/bootstrap/scss/bootstrap";
+@import '../../node_modules/bootstrap-vue/src/index.scss';
+
 body {
     background-color: #fff;
     color: #212529;
