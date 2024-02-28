@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <rota
+    <rota-page
         :LunchSlots="{{ $lunchSlots }}"
         :initiallunch="{{ $initialSlot }}"
         @if( config('app.roles_enabled') )
@@ -17,5 +17,5 @@
             @endif
         @endauth
     >
-    </rota>
+    </rota-page>
 @endsection

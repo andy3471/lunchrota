@@ -2,46 +2,98 @@
   <table class="table table-bordered">
     <tbody>
       <tr>
-        <th style="width: 20%">Name</th>
-        <th style="width: 25%">Email</th>
-        <th style="width: 8%">Scheduled</th>
-        <th v-if="appdelenabled" style="width: 8%">App Del</th>
-        <th style="width: 8%">Admin</th>
-        <th style="width: 8%">Expired</th>
-        <th style="width: 16%">New Password</th>
+        <th style="width: 20%">
+          Name
+        </th>
+        <th style="width: 25%">
+          Email
+        </th>
+        <th style="width: 8%">
+          Scheduled
+        </th>
+        <th
+          v-if="appdelenabled"
+          style="width: 8%"
+        >
+          App Del
+        </th>
+        <th style="width: 8%">
+          Admin
+        </th>
+        <th style="width: 8%">
+          Expired
+        </th>
+        <th style="width: 16%">
+          New Password
+        </th>
       </tr>
-      <tr v-if="this.loading == true">
-        <td colspan="5" class="text-center">
-          <div class="spinner-border spinner-border-sm" role="status">
+      <tr v-if="loading == true">
+        <td
+          colspan="5"
+          class="text-center"
+        >
+          <div
+            class="spinner-border spinner-border-sm"
+            role="status"
+          >
             <span class="sr-only">Loading...</span>
           </div>
         </td>
       </tr>
-      <tr v-else v-for="user in filteredUsers" v-bind:key="user.id">
+      <tr
+        v-for="user in filteredUsers"
+        v-else
+        :key="user.id"
+      >
         <td>
-          <input type="text" class="form-control" v-model="user.name" />
+          <input
+            v-model="user.name"
+            type="text"
+            class="form-control"
+          >
         </td>
         <td>
-          <input type="email" class="form-control" data-lpignore="true" v-model="user.email" />
+          <input
+            v-model="user.email"
+            type="email"
+            class="form-control"
+            data-lpignore="true"
+          >
         </td>
         <td>
           <div class="form-check">
-            <input v-model="user.scheduled" class="form-check-input position-static" type="checkbox" />
+            <input
+              v-model="user.scheduled"
+              class="form-check-input position-static"
+              type="checkbox"
+            >
           </div>
         </td>
         <td v-if="appdelenabled">
           <div class="form-check">
-            <input v-model="user.app_del" class="form-check-input position-static" type="checkbox" />
+            <input
+              v-model="user.app_del"
+              class="form-check-input position-static"
+              type="checkbox"
+            >
           </div>
         </td>
         <td>
           <div class="form-check">
-            <input v-model="user.admin" class="form-check-input position-static" type="checkbox" />
+            <input
+              v-model="user.admin"
+              class="form-check-input position-static"
+              type="checkbox"
+            >
           </div>
         </td>
         <td>
           <div class="form-check">
-            <input v-model="user.deleted" class="form-check-input" type="checkbox" />
+            <input
+              v-model="user.deleted"
+              class="form-check-input"
+              type="checkbox"
+            >
           </div>
         </td>
         <td>
@@ -50,7 +102,7 @@
             data-lpignore="true"
             type="password"
             class="form-control"
-          />
+          >
         </td>
       </tr>
       <tr>
@@ -58,13 +110,23 @@
           <div class="container">
             <div class="row">
               <div class="col">
-                <input type="checkbox" class="form-check-input" v-model="showExpired" />
+                <input
+                  v-model="showExpired"
+                  type="checkbox"
+                  class="form-check-input"
+                >
                 <label class="form-check-label">Show Expired</label>
               </div>
               <div class="col">
-                <div class="form-check"></div>
+                <div class="form-check" />
                 <div class="text-right">
-                  <button type="button" class="btn btn-primary" @click="postUsers()">Save</button>
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    @click="postUsers()"
+                  >
+                    Save
+                  </button>
                 </div>
               </div>
             </div>
@@ -138,7 +200,6 @@ export default {
           .catch(error => {
             this.errors = $.map(error.response.data.errors, function(
               value,
-              index
             ) {
               return [value];
             });

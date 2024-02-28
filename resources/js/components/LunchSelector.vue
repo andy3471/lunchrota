@@ -3,53 +3,73 @@
     <tbody>
       <tr>
         <th colspan="3">
-          <h4 class="text-center">Lunches</h4>
+          <h4 class="text-center">
+            Lunches
+          </h4>
         </th>
       </tr>
-      <tr></tr>
+      <tr />
       <tr>
         <td colspan="3">
-          <div class="btn-group btn-block" style="height: 46px">
+          <div
+            class="btn-group btn-block"
+            style="height: 46px"
+          >
             <button
-              v-for="lunchslot in this.slots"
-              v-bind:key="lunchslot.id"
+              v-for="lunchslot in slots"
+              :key="lunchslot.id"
               class="btn btn-primary lunchbtn"
               style="width:100%;"
               value="12:30"
-              v-on:click="setLunch(lunchslot.id, 1)"
-              v-bind:disabled="
-                                loggedin == false ||
-                                lunchslot.id == selectedLunch ||
-                                slotsLoading == true ||
-                                !(appdel || !available) && (lunchslot.available_today == 0)
-                            "
+              :disabled="
+                loggedin == false ||
+                  lunchslot.id == selectedLunch ||
+                  slotsLoading == true ||
+                  !(appdel || !available) && (lunchslot.available_today == 0)
+              "
+              @click="setLunch(lunchslot.id, 1)"
             >
               {{ lunchslot.time }} ({{
-              lunchslot.available_today
+                lunchslot.available_today
               }})
             </button>
             <button
               class="btn btn-primary lunchbtn"
               style="width: 20%;"
-              v-bind:disabled="
-                                loggedin == false || selectedLunch == null
-                            "
-              v-on:click="removeLunch()"
-            >X</button>
+              :disabled="
+                loggedin == false || selectedLunch == null
+              "
+              @click="removeLunch()"
+            >
+              X
+            </button>
           </div>
         </td>
       </tr>
       <tr>
-        <th style="width: 66%">Name</th>
-        <th style="width: 34%">Lunch Slot</th>
+        <th style="width: 66%">
+          Name
+        </th>
+        <th style="width: 34%">
+          Lunch Slot
+        </th>
       </tr>
-      <tr v-for="user in userLunches" v-bind:key="user.id">
+      <tr
+        v-for="user in userLunches"
+        :key="user.id"
+      >
         <td>{{ user.name }}</td>
         <td>{{ user.time }}</td>
       </tr>
-      <tr v-if="this.loading == true || this.usersLoading == true">
-        <td colspan="3" class="text-center">
-          <div class="spinner-border spinner-border-sm" role="status">
+      <tr v-if="loading == true || usersLoading == true">
+        <td
+          colspan="3"
+          class="text-center"
+        >
+          <div
+            class="spinner-border spinner-border-sm"
+            role="status"
+          >
             <span class="sr-only">Loading...</span>
           </div>
         </td>
