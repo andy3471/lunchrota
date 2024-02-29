@@ -56,6 +56,6 @@ class HomeController extends Controller
 
     public function demo(): View
     {
-        return view('auth.demomode');
+        return view('auth.demo-mode');
     }
 }

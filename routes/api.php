@@ -27,5 +27,5 @@ Route::middleware('auth')->group(function () {
 
 Route::prefix('admin')->middleware('can:admin')->name('admin.')->group(function () {
     Route::get('user-roles', [RoleController::class, 'index'])->name('user-roles.index');
-    Route::post('user-roles', [RoleController::class, 'store'])->name('user-roles.store');
+    Route::post('user-roles', [RoleController::class, 'update'])->name('user-roles.update');
 });

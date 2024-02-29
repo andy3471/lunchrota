@@ -4,9 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\ImportCsvRolesRequest;
-use App\Http\Requests\Admin\UpdateRolesRequest;
 use App\Jobs\Admin\ImportCsvRolesJob;
-use App\Jobs\Admin\UpdateRolesJob;
 use App\Models\Role;
 use App\Models\User;
 use Carbon\Carbon;
@@ -14,54 +12,18 @@ use Illuminate\Support\Facades\DB;
 
 class RoleController extends Controller
 {
-    /**
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function roleAdmin()
-    {
-        return view('admin.roles.index');
-    }
-
-    /**
-     * @return mixed
-     */
-    public function roleAdminGetRoles()
-    {
-        return Role::orderBy('name')->get();
-    }
-
-    /**
-     * @return mixed
-     */
-    public function adminUpdateRoleRequest(UpdateRolesRequest $request)
-    {
-        UpdateRolesJob::dispatchNow($request);
-
-        return Role::orderBy('name')->get();
-    }
-
-    /**
-     * @return mixed
-     */
     public function index()
     {
-        $users = User::all();
-        $roles = Role::orderBy('name')->get();
-
-        return view('admin.userroles.index')->withUsers($users)->withRoles($roles);
+        return view('admin.user-roles.index')
+            ->with('users', User::all())
+            ->with('roles', Role::orderBy('name')->get());
     }
 
-    /**
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
     public function upload()
     {
-        return view('admin.userroles.upload');
+        return view('admin.user-roles.upload');
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\StreamedResponse
-     */
     public function download()
     {
         $filename = 'commrotaexport.csv';
@@ -118,13 +80,10 @@ class RoleController extends Controller
         return response()->streamDownload($callback, $filename, $headers);
     }
 
-    /**
-     * @return mixed
-     */
     public function import(ImportCsvRolesRequest $request)
     {
         $messages = ImportCsvRolesJob::dispatchNow($request);
 
-        return view('admin.userroles.confirmupload')->withMessages($messages->all());
+        return view('admin.user-roles.confirm-upload')->withMessages($messages->all());
     }
 }

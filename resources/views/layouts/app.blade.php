@@ -92,7 +92,7 @@
                             <a class="dropdown-item" href="{{ route('filament.admin.pages.dashboard') }}">Admin Panel</a>
                             @if( config('app.roles_enabled') )
                                 <a class="dropdown-item" href="{{ route('admin.user-roles.index') }}">User Roles</a>
-                                <a class="dropdown-item" href="{{ route('admin.user-roles.index') }}">Bulk Upload</a>
+                                <a class="dropdown-item" href="{{ route('admin.user-roles.upload') }}">Bulk Upload</a>
                             @endif
                         </div>
                     </li>

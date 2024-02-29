@@ -43,7 +43,7 @@ export default {
         return [];
       }
     },
-    userid: {
+    userId: {
       required: true,
       type: Number,
       default: null
@@ -72,10 +72,10 @@ export default {
       this.selectedRole = null;
       this.loading = true;
       axios
-        .get("./userroles/get", {
+        .get("/api/admin/user-roles", {
           params: {
             date: this.date,
-            user_id: this.userid
+            user_id: this.userId
           }
         })
         .then(response => [
@@ -90,9 +90,9 @@ export default {
       this.selectedRole = null;
       this.loading = true;
       axios
-        .post("./userroles/post", {
+        .post("/api/admin/user-roles", {
           date: this.date,
-          user_id: this.userid,
+          user_id: this.userId,
           role: role
         })
         .then(response => [

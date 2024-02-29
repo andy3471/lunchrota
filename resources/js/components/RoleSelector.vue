@@ -58,7 +58,7 @@ export default {
       default: new Date()
     },
     csrf: {
-      reqiured: true,
+      required: true,
       type: String,
       default: ''
     }

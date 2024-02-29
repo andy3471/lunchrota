@@ -22,7 +22,7 @@
               style="width:100%;"
               value="12:30"
               :disabled="
-                loggedin == false ||
+                loggedIn == false ||
                   lunchslot.id == selectedLunch ||
                   slotsLoading == true ||
                   !(appdel || !available) && (lunchslot.available_today == 0)
@@ -37,7 +37,7 @@
               class="btn btn-primary lunchbtn"
               style="width: 20%;"
               :disabled="
-                loggedin == false || selectedLunch == null
+                loggedIn == false || selectedLunch == null
               "
               @click="removeLunch()"
             >
@@ -61,7 +61,7 @@
         <td>{{ user.name }}</td>
         <td>{{ user.time }}</td>
       </tr>
-      <tr v-if="loading == true || usersLoading == true">
+      <tr v-if="loading || usersLoading">
         <td
           colspan="3"
           class="text-center"
@@ -81,21 +81,17 @@
 <script>
 export default {
   props: {
-    lunchslots: {
+    lunchSlots: {
       required: true,
       type: Array
     },
-    loggedin: {
+    loggedIn: {
       default: false,
       type: Boolean
     },
-    initiallunch: {
+    initialLunch: {
       default: null,
       type: Number
-    },
-    appdel: {
-      default: true,
-      type: Boolean
     },
     available: {
       default: false,
@@ -104,9 +100,9 @@ export default {
   },
   data() {
     return {
-      slots: this.lunchslots,
+      slots: this.lunchSlots,
       userLunches: [],
-      selectedLunch: this.initiallunch,
+      selectedLunch: this.initialLunch,
       loading: false,
       slotsLoading: false,
       usersLoading: false,

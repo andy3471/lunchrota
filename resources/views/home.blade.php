@@ -2,18 +2,15 @@
 
 @section('content')
     <rota-page
-        :LunchSlots="{{ $lunchSlots }}"
-        :initiallunch="{{ $initialSlot }}"
+        :lunch-slots="{{ $lunchSlots }}"
+        :initial-lunch="{{ $initialSlot }}"
         @if( config('app.roles_enabled') )
-            :rolesenabled="true"
+            roles-enabled
         @endif
         @auth
-            :loggedin="true"
-            @if( Auth::user()->app_del )
-                :appdel=true
-            @endif
+            logged-in
             @if ($available)
-                :available=true
+                available
             @endif
         @endauth
     >
