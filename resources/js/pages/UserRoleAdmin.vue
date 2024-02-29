@@ -34,7 +34,7 @@
                 <td>{{ user.name }}</td>
                 <td>
                   <role-dropdown
-                    :userid="user.id"
+                    :user-id="user.id"
                     :roles="roles"
                     :date="date"
                     :csrf="csrf"

@@ -2,14 +2,14 @@
   <div class="container-fluid">
     <div class="row justify-content-center">
       <div
-        v-if="rolesenabled"
+        v-if="rolesEnabled"
         class="col-lg-4 order-lg-1"
       >
         <role-selector :date="date" />
       </div>
 
       <div
-        v-if="rolesenabled"
+        v-if="rolesEnabled"
         class="col-lg-4 order-lg-2"
       >
         <date-picker
@@ -20,11 +20,10 @@
 
       <div class="col-lg-4 order-lg-3">
         <lunches-selector
-          :lunchslots="lunchslots"
-          :loggedin="loggedin"
-          :initiallunch="initiallunch"
+          :lunch-slots="lunchSlots"
+          :logged-in="loggedIn"
+          :initial-lunch="initialLunch"
           :available="available"
-          :appdel="appdel"
         />
       </div>
     </div>
@@ -34,27 +33,23 @@
 <script>
 export default {
     props: {
-        lunchslots: {
+        lunchSlots: {
             default () {
                 return [];
             },
             type: Array
         },
-        loggedin: {
+        loggedIn: {
             default: false,
             type: Boolean
         },
-        rolesenabled: {
+        rolesEnabled: {
             type: Boolean,
             default: false
         },
-        initiallunch: {
+        initialLunch: {
             type: Number,
             default: null
-        },
-        appdel: {
-            type: Boolean,
-            default: false
         },
         available: {
             type: Boolean,

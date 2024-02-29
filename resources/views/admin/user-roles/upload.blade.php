@@ -7,7 +7,7 @@
                 Please download the export. Once edited, you can upload it to override all roles in bulk <br>
             </div>
             <div class="col-lg-4 order-lg-2" id="corePane">
-                <a href="{{ route('downloadcsv') }}"> Download All Current Data </a>
+                <a href="{{ route('admin.user-roles.download') }}"> Download All Current Data </a>
             </div>
             <div class="col-xl-4 order-xl-3" id="corePane">
                 @error('csv')
@@ -15,7 +15,7 @@
                         <strong>{{ $message }}</strong>
                     </span>
                 @enderror
-                <form action="{{ route('uploadcsv') }}" method="post" enctype="multipart/form-data">
+                <form action="{{ route('admin.user-roles.import') }}" method="post" enctype="multipart/form-data">
                     @csrf
                     Select amended export:
                     <input type="file" name="csv" id="csv">
