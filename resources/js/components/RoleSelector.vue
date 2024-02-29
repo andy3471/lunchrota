@@ -33,7 +33,7 @@
           Unavailable
         </td>
       </tr>
-      <tr v-if="loading == true">
+      <tr v-if="loading">
         <td
           colspan="3"
           class="text-center"
