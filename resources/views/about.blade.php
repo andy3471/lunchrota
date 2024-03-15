@@ -24,7 +24,7 @@
                             Created Using:
                         </td>
                         <td>
-                            Laravel 10, Vue JS, HTML5, Bootstrap 4, PHP, JavaScript and Postgres.
+                            Laravel 11, Vue JS, HTML5, Bootstrap 4, PHP, JavaScript and Postgres.
                         </td>
                     </tr>
                     <tr>
