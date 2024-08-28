@@ -5,20 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\ImportCsvRolesRequest;
 use App\Jobs\Admin\ImportCsvRolesJob;
-use App\Models\Role;
-use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class RoleController extends Controller
 {
-    public function index()
-    {
-        return view('admin.user-roles.index')
-            ->with('users', User::all())
-            ->with('roles', Role::orderBy('name')->get());
-    }
-
     public function upload()
     {
         return view('admin.user-roles.upload');
