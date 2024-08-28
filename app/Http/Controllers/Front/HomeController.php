@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use App\Models\LunchSlot;
-use App\Models\User;
 use Auth;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -42,16 +41,6 @@ class HomeController extends Controller
         }
 
         return view('home')->withLunchSlots($lunchslots)->withInitialSlot($initialSlot)->withAvailable($available);
-    }
-
-    public function about(): View
-    {
-        $admins = User::Select('name')
-            ->where('admin', true)
-            ->orderBy('name')
-            ->get();
-
-        return view('about')->with('admins', $admins);
     }
 
     public function demo(): View
