@@ -15,18 +15,6 @@ namespace App\Models{
 /**
  * 
  *
- * @property-read \App\Models\User|null $user
- * @method static \Illuminate\Database\Eloquent\Builder|AppDelSupportDay newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|AppDelSupportDay newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|AppDelSupportDay query()
- */
-	class AppDelSupportDay extends \Eloquent {}
-}
-
-namespace App\Models{
-/**
- * 
- *
  * @property int $id
  * @property-read string $time
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -55,7 +43,7 @@ namespace App\Models{
  * @property string $name
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read int $available
+ * @property bool $available
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $users
  * @property-read int|null $users_count
  * @method static \Illuminate\Database\Eloquent\Builder|Role newModelQuery()
@@ -75,6 +63,31 @@ namespace App\Models{
  * 
  *
  * @property int $id
+ * @property int $role_id
+ * @property int $user_id
+ * @property string $date
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\Role $role
+ * @property-read \App\Models\User $user
+ * @method static \Illuminate\Database\Eloquent\Builder|RoleUser newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|RoleUser newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|RoleUser query()
+ * @method static \Illuminate\Database\Eloquent\Builder|RoleUser whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|RoleUser whereDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|RoleUser whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|RoleUser whereRoleId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|RoleUser whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|RoleUser whereUserId($value)
+ */
+	class RoleUser extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @property int $id
  * @property string $name
  * @property string $email
  * @property \Illuminate\Support\Carbon|null $email_verified_at
@@ -82,9 +95,9 @@ namespace App\Models{
  * @property string|null $remember_token
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read int $admin
+ * @property bool $admin
  * @property \Illuminate\Support\Carbon|null $deleted_at
- * @property-read int $scheduled
+ * @property bool $scheduled
  * @property-read mixed $available
  * @property-read bool $deleted
  * @property-read mixed $is_deleted
@@ -114,18 +127,5 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|User withoutTrashed()
  */
 	class User extends \Eloquent implements \Filament\Models\Contracts\FilamentUser {}
-}
-
-namespace App\Models{
-/**
- * 
- *
- * @property-read \App\Models\Role|null $role
- * @property-read \App\Models\User|null $user
- * @method static \Illuminate\Database\Eloquent\Builder|UserRole newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|UserRole newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|UserRole query()
- */
-	class UserRole extends \Eloquent {}
 }
 

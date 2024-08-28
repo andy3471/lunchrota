@@ -2,11 +2,16 @@
 
 namespace App\Filament\Pages;
 
+use App\Filament\Exports\UserRoleExporter;
+use App\Filament\Imports\UserRoleImporter;
 use App\Models\Role;
 use App\Models\User;
 use Carbon\Carbon;
+use Filament\Actions\ExportAction;
+use Filament\Actions\ImportAction;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Livewire\Attributes\Computed;
 
@@ -19,6 +24,24 @@ class UserRoles extends Page
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
 
     protected static string $view = 'filament.pages.user-roles';
+
+    protected static ?string $navigationGroup = 'Users';
+
+    public function getHeaderActions(): array
+    {
+        return [
+            ExportAction::make('export')
+                ->modifyQueryUsing(function (Builder $query) {
+                    return $query
+                        ->where('date', '>', now()->startOfDay())
+                        ->with('user', 'role');
+                })
+                ->exporter(UserRoleExporter::class)
+                ->columnMapping(false),
+            ImportAction::make('import')
+                ->importer(UserRoleImporter::class),
+        ];
+    }
 
     public function mount(): void
     {
