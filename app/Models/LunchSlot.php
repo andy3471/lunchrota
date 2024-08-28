@@ -26,7 +26,9 @@ class LunchSlot extends Model
 
     public function users(): BelongsToMany
     {
-        return $this->belongsToMany(User::class)->withPivot('date');
+        return $this
+            ->belongsToMany(User::class)
+            ->withPivot('date');
     }
 
     public function time(): Attribute
