@@ -12,14 +12,14 @@ Route::get('demo', [HomeController::class, 'demo'])->name('demo-mode');
 Route::middleware('auth')->group(function () {
     Route::post('change-password', [UserController::class, 'changePassword'])->name('password.change')->middleware('demo_mode');
 });
-
-Route::prefix('admin')->middleware('can:admin')->name('admin.')->group(function () {
-    Route::get('user-roles/upload', [RoleController::class, 'upload'])->name('user-roles.upload');
-    Route::get('user-roles/upload/download-csv', [RoleController::class, 'download'])->name('user-roles.download');
-    Route::Post('user-roles/upload/upload-csv', [RoleController::class, 'import'])->name('user-roles.import');
-
-    Route::get('user-roles', [RoleController::class, 'index'])->name('user-roles.index');
-});
+//
+//Route::prefix('admin')->middleware('can:admin')->name('admin.')->group(function () {
+//    Route::get('user-roles/upload', [RoleController::class, 'upload'])->name('user-roles.upload');
+//    Route::get('user-roles/upload/download-csv', [RoleController::class, 'download'])->name('user-roles.download');
+//    Route::Post('user-roles/upload/upload-csv', [RoleController::class, 'import'])->name('user-roles.import');
+//
+//    Route::get('user-roles', [RoleController::class, 'index'])->name('user-roles.index');
+//});
 
 //Disable Register Route if Registration Disabled
 if (config('app.register_enabled')) {

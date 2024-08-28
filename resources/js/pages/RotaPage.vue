@@ -5,7 +5,7 @@
         v-if="rolesEnabled"
         class="col-lg-4 order-lg-1"
       >
-        <role-selector :date="date" />
+        <RoleSelector :date="date" />
       </div>
 
       <div
@@ -31,7 +31,12 @@
 </template>
 
 <script>
+import RoleSelector from "../components/RoleSelector.vue";
+
 export default {
+    components: {
+        RoleSelector
+    },
     props: {
         lunchSlots: {
             default () {
