@@ -25,7 +25,7 @@
                 loggedIn == false ||
                   lunchslot.id == selectedLunch ||
                   slotsLoading == true ||
-                  !(appdel || !available) && (lunchslot.available_today == 0)
+                  available && (lunchslot.available_today == 0)
               "
               @click="setLunch(lunchslot.id, 1)"
             >
