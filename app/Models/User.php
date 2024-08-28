@@ -38,6 +38,8 @@ class User extends Authenticatable implements FilamentUser
 
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'admin' => 'boolean',
+        'scheduled' => 'boolean',
     ];
 
     public function canAccessPanel(Panel $panel): bool
@@ -56,26 +58,6 @@ class User extends Authenticatable implements FilamentUser
         return Attribute::make(
             get: function () {
                 return $this->deleted_at != null;
-            }
-        );
-    }
-
-    // TODO: Tidy this all up
-    public function admin(): Attribute
-    {
-        return Attribute::make(
-            get: function ($value) {
-                return $value > 0;
-            }
-        );
-    }
-
-    // TODO: Tidy this all up
-    public function scheduled(): Attribute
-    {
-        return Attribute::make(
-            get: function ($value) {
-                return $value > 0;
             }
         );
     }
