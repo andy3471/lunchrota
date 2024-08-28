@@ -75,23 +75,10 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('home') }}">Rota</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('about') }}">About</a>
-                    </li>
-                    @if (config('app.sd_rota') == true)
-                        <li class="nav-item">
-                            <a class="nav-link" href="https://sd-rota.adastra.co.uk/Rota2/default.aspx" target="_blank">SDRota</a>
-                        </li>
-                    @endif
                     @can('admin',Auth::user())
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown" aria-expanded="false">
-                            Admin
-                        </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="{{ route('filament.admin.pages.dashboard') }}">Admin Panel</a>
-                        </div>
-                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('filament.admin.pages.dashboard') }}">Admin</a>
+                        </li>
                     @endcan
                 </ul>
                 <ul class="nav navbar-nav">
