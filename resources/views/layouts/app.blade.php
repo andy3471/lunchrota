@@ -4,7 +4,6 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-        <!-- CSRF Token -->
         <meta name="csrf-token" content="{{ csrf_token() }}" />
 
         <title>{{ config('app.name', 'Rota') }}</title>
@@ -22,12 +21,12 @@
         @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 
         @error('email')
-        <script type="text/javascript">
-            window.onload = function () {
-                $('#loginModal').modal('show');
-            };
-        </script>
-        @endif
+            <script type="text/javascript">
+                window.onload = function () {
+                    $('#loginModal').modal('show');
+                };
+            </script>
+        @enderror
 
         @error('password')
             <script type="text/javascript">
@@ -238,7 +237,7 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                @if (config('app.demo_mode') == true)
+                                @if (config('app.demo_mode'))
                                     {{ __('auth.demochangepassword') }}
                                 @else
                                     <div class="form-group row">
@@ -328,7 +327,7 @@
                                     >
                                         Close
                                     </button>
-                                    @if (! config('app.demo_mode') == true)
+                                    @if (! config('app.demo_mode'))
                                         <button
                                             type="submit"
                                             class="btn btn-primary"
@@ -369,7 +368,7 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                @if (config('app.demo_mode') == true)
+                                @if (config('app.demo_mode'))
                                     {{ __('auth.demomodelogin') }}
                                 @endif
 
@@ -455,7 +454,7 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                @if (config('app.reset_password_enabled') == true)
+                                @if (config('app.reset_password_enabled'))
                                     <a
                                         class="btn btn-link"
                                         href="{{ route('password.request') }}"
