@@ -1,10 +1,10 @@
-@extends('layouts.app')
+@extends("layouts.app")
 
-@section('content')
+@section("content")
     <rota-page
         :lunch-slots="{{ $lunchSlots }}"
         :initial-lunch="{{ $initialSlot }}"
-        @if( config('app.roles_enabled') )
+        @if (config("app.roles_enabled"))
             roles-enabled
         @endif
         @auth
@@ -13,6 +13,5 @@
                 available
             @endif
         @endauth
-    >
-    </rota-page>
+    ></rota-page>
 @endsection
