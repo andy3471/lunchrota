@@ -8,43 +8,30 @@ use Auth;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class HomeController extends Controller
 {
-    // TODO: Refactor
-    public function index(): View
+    public function __invoke(): Response
     {
-        $lunchslots = LunchSlot::orderBy('time')->get();
-        $date = Carbon::today()->toDateString();
-
+        $initialSlot = null;
+        // TODO: Refactor this
         if (auth()->check()) {
             $initialSlot = DB::table('users')
                 ->select('lunch_slots.id')
                 ->join('lunch_slot_user', 'users.id', '=', 'lunch_slot_user.user_id')
                 ->join('lunch_slots', 'lunch_slots.id', '=', 'lunch_slot_user.lunch_slot_id')
-                ->where('lunch_slot_user.date', $date)
-                ->where('users.id', Auth::user()->id)
+                ->where('lunch_slot_user.date', Carbon::today()->toDateString())
+                ->where('users.id', auth()->user()->id)
                 ->orderBy('users.name')
                 ->first();
         }
 
-        if (isset($initialSlot->id)) {
-            $initialSlot = $initialSlot->id;
-        } else {
-            $initialSlot = '-1';
-        }
-
-        if (auth()->user()) {
-            $available = auth()->user()->available;
-        } else {
-            $available = true;
-        }
-
-        return view('home')->withLunchSlots($lunchslots)->withInitialSlot($initialSlot)->withAvailable($available);
-    }
-
-    public function demo(): View
-    {
-        return view('auth.demo-mode');
+        return Inertia::render('HomePage', [
+            'lunchSlots' => fn () => LunchSlot::orderBy('time')->get(),
+            'initialSlot' => $initialSlot?->id ?: -1,
+            'available' => fn () => auth()->user()?->available ?: true,
+        ]);
     }
 }

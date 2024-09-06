@@ -8,10 +8,13 @@
         "php": "^8.2",
         "filament/filament": "^3.2",
         "guzzlehttp/guzzle": "^7.2",
+        "inertiajs/inertia-laravel": "^1.0",
         "laravel/framework": "^11.0",
+        "laravel/jetstream": "^5.1",
+        "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.8",
         "laravel/ui": "^4.4",
-        "inertiajs/inertia-laravel": "^1.0",
+        "tightenco/ziggy": "^2.0",
         "wendelladriel/laravel-lift": "^0.14.0"
     },
     "require-dev": {
