@@ -2,16 +2,20 @@
     "name": "laravel/laravel",
     "type": "project",
     "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "keywords": [
+        "framework",
+        "laravel"
+    ],
     "license": "MIT",
     "require": {
         "php": "^8.2",
         "filament/filament": "^3.2",
+        "filament/minimal-theme": "^3.0",
         "guzzlehttp/guzzle": "^7.2",
+        "inertiajs/inertia-laravel": "^1.0",
         "laravel/framework": "^11.0",
         "laravel/tinker": "^2.8",
         "laravel/ui": "^4.4",
-        "inertiajs/inertia-laravel": "^1.0",
         "wendelladriel/laravel-lift": "^0.14.0"
     },
     "require-dev": {
@@ -27,12 +31,16 @@
         "spatie/laravel-ignition": "^2.0",
         "beyondcode/laravel-query-detector": "dev-l11-compatibility"
     },
-    "repositories": [
-        {
+    "repositories": {
+        "whizzy": {
+            "type": "composer",
+            "url": "https://whizzy.dev/composer"
+        },
+        "0": {
             "type": "vcs",
             "url": "https://github.com/laravel-shift/laravel-query-detector.git"
         }
-    ],
+    },
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
