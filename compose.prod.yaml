@@ -3,7 +3,7 @@ services:
     image: ghcr.io/andy3471/lunchrota:latest
     restart: unless-stopped
     volumes:
-      - ./lunchrota/storage:/var/www/storage:ro
+      - ./lunchrota/storage:/var/www/storage
     env_file: .env
     networks:
       - lunchrota
