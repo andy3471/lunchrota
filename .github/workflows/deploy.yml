@@ -38,7 +38,6 @@ jobs:
       - name: NPM install and build
         run: |
           npm install
-#          php artisan ziggy:generate
           npm run build
 
       - name: Log in to GHCR
