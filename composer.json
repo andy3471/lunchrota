@@ -17,6 +17,7 @@
         "laravel/octane": "^2.4",
         "laravel/tinker": "^2.8",
         "laravel/ui": "^4.4",
+        "nesbot/carbon": "^3.9",
         "sentry/sentry-laravel": "^4.13"
     },
     "require-dev": {
