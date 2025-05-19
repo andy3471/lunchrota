@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Imports;
 
 use App\Models\Role;
@@ -20,7 +22,7 @@ class UserRoleImporter extends Importer
                 ->castStateUsing(function (string $state) {
                     return User::where('name', $state)->first();
                 })
-                ->fillRecordUsing(function (RoleUser $roleUser, User $user) {
+                ->fillRecordUsing(function (RoleUser $roleUser, User $user): void {
                     $roleUser->user_id = $user->id;
                 })
                 ->rules(['exists:users,name']),
@@ -28,23 +30,13 @@ class UserRoleImporter extends Importer
                 ->castStateUsing(function (string $state) {
                     return Role::where('name', $state)->first();
                 })
-                ->fillRecordUsing(function (RoleUser $roleUser, Role $role) {
+                ->fillRecordUsing(function (RoleUser $roleUser, Role $role): void {
                     $roleUser->role_id = $role->id;
                 })
                 ->rules(['exists:roles,name']),
             ImportColumn::make('Date')
                 ->rules(['date']),
         ];
-    }
-
-    public function beforeSave(): void
-    {
-        RoleUser::all()->each->delete();
-    }
-
-    public function resolveRecord(): ?RoleUser
-    {
-        return new RoleUser;
     }
 
     public static function getCompletedNotificationBody(Import $import): string
@@ -56,5 +48,15 @@ class UserRoleImporter extends Importer
         }
 
         return $body;
+    }
+
+    public function beforeSave(): void
+    {
+        RoleUser::all()->each->delete();
+    }
+
+    public function resolveRecord(): ?RoleUser
+    {
+        return new RoleUser;
     }
 }

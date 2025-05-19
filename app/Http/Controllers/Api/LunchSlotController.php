@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
@@ -22,13 +24,13 @@ class LunchSlotController extends Controller
     {
         $date = Carbon::today()->toDateString();
 
-        if (config('database.default') == 'sqlsrv') {
+        if (config('database.default') === 'sqlsrv') {
             $userLunches = DB::table('users')
                 ->select('users.id', 'users.name', DB::RAW("FORMAT(CAST(lunch_slots.time as datetime2), N'HH:mm') as time"))
                 ->join('lunch_slot_user', 'users.id', '=', 'lunch_slot_user.user_id')
                 ->join('lunch_slots', 'lunch_slots.id', '=', 'lunch_slot_user.lunch_slot_id')
                 ->where('lunch_slot_user.date', $date)
-                ->orderBy('time')
+                ->oldest('time')
                 ->get();
         } else {
             $userLunches = DB::table('users')
@@ -36,7 +38,7 @@ class LunchSlotController extends Controller
                 ->join('lunch_slot_user', 'users.id', '=', 'lunch_slot_user.user_id')
                 ->join('lunch_slots', 'lunch_slots.id', '=', 'lunch_slot_user.lunch_slot_id')
                 ->where('lunch_slot_user.date', $date)
-                ->orderBy('users.name')
+                ->oldest('users.name')
                 ->get();
         }
 
@@ -45,7 +47,7 @@ class LunchSlotController extends Controller
 
     public function claim(Request $request): JsonResponse
     {
-        $date = Carbon::today()->toDateString();
+        $date      = Carbon::today()->toDateString();
         $lunchslot = LunchSlot::find($request->id);
 
         if ((! auth()->user()->available) || $lunchslot->available_today >= 1) {
@@ -53,9 +55,9 @@ class LunchSlotController extends Controller
             auth()->user()->lunches()->attach($request->id, ['date' => $date]);
 
             return $this->userLunches();
-        } else {
-            return response()->json('This lunch slot has been claimed by another user', 403);
         }
+
+        return response()->json('This lunch slot has been claimed by another user', 403);
     }
 
     public function unclaim(): JsonResponse

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\LunchSlotResource\Pages;
@@ -74,9 +76,9 @@ class LunchSlotResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListLunchSlots::route('/'),
+            'index'  => Pages\ListLunchSlots::route('/'),
             'create' => Pages\CreateLunchSlot::route('/create'),
-            'edit' => Pages\EditLunchSlot::route('/{record}/edit'),
+            'edit'   => Pages\EditLunchSlot::route('/{record}/edit'),
         ];
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
@@ -15,7 +17,7 @@ class HomeController extends Controller
     public function index(): View
     {
         $lunchslots = LunchSlot::orderBy('time')->get();
-        $date = Carbon::today()->toDateString();
+        $date       = Carbon::today()->toDateString();
 
         if (auth()->check()) {
             $initialSlot = DB::table('users')
@@ -24,21 +26,13 @@ class HomeController extends Controller
                 ->join('lunch_slots', 'lunch_slots.id', '=', 'lunch_slot_user.lunch_slot_id')
                 ->where('lunch_slot_user.date', $date)
                 ->where('users.id', Auth::user()->id)
-                ->orderBy('users.name')
+                ->oldest('users.name')
                 ->first();
         }
 
-        if (isset($initialSlot->id)) {
-            $initialSlot = $initialSlot->id;
-        } else {
-            $initialSlot = '-1';
-        }
+        $initialSlot = isset($initialSlot->id) ? $initialSlot->id : '-1';
 
-        if (auth()->user()) {
-            $available = auth()->user()->available;
-        } else {
-            $available = true;
-        }
+        $available = auth()->user() ? auth()->user()->available : true;
 
         return view('home')->withLunchSlots($lunchslots)->withInitialSlot($initialSlot)->withAvailable($available);
     }

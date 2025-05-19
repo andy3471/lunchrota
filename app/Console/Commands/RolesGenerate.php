@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands;
 
 use App\Models\Role;
@@ -20,16 +22,16 @@ class RolesGenerate extends Command
     {
         // Get Default role from .env file
 
-        if (config('app.default_role') == 'none') {
+        if (config('app.default_role') === 'none') {
             $this->line('No default role set');
 
             return;
         }
 
         $defaultRole = Role::where('name', config('app.default_role'))->first();
-        $startDate = Carbon::now();
-        $endDate = Carbon::now()->addWeek();
-        $dateRange = CarbonPeriod::create($startDate, $endDate);
+        $startDate   = Carbon::now();
+        $endDate     = Carbon::now()->addWeek();
+        $dateRange   = CarbonPeriod::create($startDate, $endDate);
 
         if ($defaultRole) {
             $this->line('The Default Role is '.$defaultRole->name);

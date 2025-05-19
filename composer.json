@@ -8,13 +8,13 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^8.2",
+        "php": "^8.3",
         "filament/filament": "^3.2",
         "filament/minimal-theme": "^3.0",
         "guzzlehttp/guzzle": "^7.2",
-        "inertiajs/inertia-laravel": "^1.0",
-        "laravel/framework": "^11.0",
-        "laravel/octane": "^2.4",
+        "inertiajs/inertia-laravel": "^2.0",
+        "laravel/framework": "^12.0",
+        "laravel/octane": "^2.9",
         "laravel/tinker": "^2.8",
         "laravel/ui": "^4.4",
         "sentry/sentry-laravel": "^4.13"
@@ -28,18 +28,16 @@
         "laravel/sail": "^1.28",
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^8.1",
-        "phpunit/phpunit": "^10.1",
+        "phpunit/phpunit": "^11",
         "spatie/laravel-ignition": "^2.0",
-        "beyondcode/laravel-query-detector": "dev-l11-compatibility"
+        "beyondcode/laravel-query-detector": "^2.0",
+        "rector/rector": "^2.0",
+        "driftingly/rector-laravel": "^2.0"
     },
     "repositories": {
         "whizzy": {
             "type": "composer",
             "url": "https://whizzy.dev/composer"
-        },
-        "0": {
-            "type": "vcs",
-            "url": "https://github.com/laravel-shift/laravel-query-detector.git"
         }
     },
     "config": {

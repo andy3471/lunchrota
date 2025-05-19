@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Jobs\Admin;
 
 use App\Http\Requests\Admin\UpdateLunchSlotsRequest;
@@ -12,8 +14,10 @@ use Illuminate\Queue\SerializesModels;
 
 class UpdateLunchSlotsJob implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
+    use Dispatchable;
+    use InteractsWithQueue;
+    use Queueable;
+    use SerializesModels;
     // TODO: Move to filament
     // TODO: Never pass the request
 
@@ -24,7 +28,7 @@ class UpdateLunchSlotsJob implements ShouldQueue
     // TODO: Tidy this
     public function handle(): void
     {
-        $slots = collect($this->request->slots);
+        $slots        = collect($this->request->slots);
         $deletedSlots = LunchSlot::whereNotIn('id', $slots->where('id', '!=', null)->pluck('id')->toArray())->get();
 
         foreach ($deletedSlots as $slot) {
@@ -33,8 +37,8 @@ class UpdateLunchSlotsJob implements ShouldQueue
         }
 
         foreach ($slots as $s) {
-            if ($s['id'] == 0) {
-                $slot = new LunchSlot;
+            if ($s['id'] === 0) {
+                $slot       = new LunchSlot;
                 $slot->time = $s['time'];
             } else {
                 $slot = LunchSlot::find($s['id']);

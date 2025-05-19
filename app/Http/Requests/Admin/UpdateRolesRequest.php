@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
@@ -11,8 +13,8 @@ class UpdateRolesRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'roles.*.name' => 'required|string',
-            'roles.*.available' => 'required|boolean',
+            'roles.*.name'      => ['required', 'string'],
+            'roles.*.available' => ['required', 'boolean'],
         ];
     }
 }

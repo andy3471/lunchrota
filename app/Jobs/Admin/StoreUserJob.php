@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Jobs\Admin;
 
 use App\Http\Requests\Admin\StoreUserRequest;
@@ -12,8 +14,10 @@ use Illuminate\Queue\SerializesModels;
 
 class StoreUserJob implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
+    use Dispatchable;
+    use InteractsWithQueue;
+    use Queueable;
+    use SerializesModels;
     // TODO: Move to filament
     // TODO: Never pass the request
 
@@ -23,8 +27,6 @@ class StoreUserJob implements ShouldQueue
 
     public function handle(): User
     {
-        $user = User::create($this->request->validated());
-
-        return $user;
+        return User::create($this->request->validated());
     }
 }

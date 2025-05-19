@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Jobs\Admin;
 
 use App\Http\Requests\Admin\UpdateUsersRequest;
@@ -12,8 +14,10 @@ use Illuminate\Queue\SerializesModels;
 
 class UpdateUsersJob implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
+    use Dispatchable;
+    use InteractsWithQueue;
+    use Queueable;
+    use SerializesModels;
     // TODO: Move to filament
     // TODO: Never pass the request
 
@@ -29,18 +33,19 @@ class UpdateUsersJob implements ShouldQueue
         foreach ($users as $u) {
             $user = User::withTrashed()->where('id', $u['id'])->first();
 
-            if ($u['deleted'] and ! $user->is_deleted) {
+            if ($u['deleted'] && ! $user->is_deleted) {
                 $user->delete();
-            } elseif (! $u['deleted'] and $user->is_deleted) {
+            } elseif (! $u['deleted'] && $user->is_deleted) {
                 $user->restore();
             }
-            if (! $u['new_password'] == '') {
+
+            if (! $u['new_password'] === '') {
                 $user->password = bcrypt($u['new_password']);
             }
 
-            $user->name = $u['name'];
-            $user->email = $u['email'];
-            $user->admin = $u['admin'];
+            $user->name      = $u['name'];
+            $user->email     = $u['email'];
+            $user->admin     = $u['admin'];
             $user->scheduled = $u['scheduled'];
             $user->save();
         }
