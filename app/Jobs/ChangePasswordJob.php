@@ -17,8 +17,7 @@ class ChangePasswordJob implements ShouldQueue
 
     public function __construct(
         public ChangePasswordRequest $request
-    ) {
-    }
+    ) {}
 
     public function handle()
     {

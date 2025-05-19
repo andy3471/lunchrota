@@ -19,8 +19,7 @@ class UpdateUsersJob implements ShouldQueue
 
     public function __construct(
         public UpdateUsersRequest $request
-    ) {
-    }
+    ) {}
 
     // TODO: Tidy this
     public function handle(): void

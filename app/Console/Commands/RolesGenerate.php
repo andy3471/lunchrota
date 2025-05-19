@@ -18,7 +18,7 @@ class RolesGenerate extends Command
     // TODO: Tidy up the code in this file
     public function handle(): void
     {
-        //Get Default role from .env file
+        // Get Default role from .env file
 
         if (config('app.default_role') == 'none') {
             $this->line('No default role set');

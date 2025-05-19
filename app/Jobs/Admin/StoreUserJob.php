@@ -19,8 +19,7 @@ class StoreUserJob implements ShouldQueue
 
     public function __construct(
         public StoreUserRequest $request
-    ) {
-    }
+    ) {}
 
     public function handle(): User
     {

@@ -44,7 +44,7 @@ class UserRoleImporter extends Importer
 
     public function resolveRecord(): ?RoleUser
     {
-        return new RoleUser();
+        return new RoleUser;
     }
 
     public static function getCompletedNotificationBody(Import $import): string

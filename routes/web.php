@@ -11,7 +11,7 @@ Route::middleware('auth')->group(function () {
     Route::post('change-password', [UserController::class, 'changePassword'])->name('password.change')->middleware('demo_mode');
 });
 
-//Disable Register Route if Registration Disabled
+// Disable Register Route if Registration Disabled
 if (config('app.register_enabled')) {
     Auth::routes();
 } else {
