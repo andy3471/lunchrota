@@ -56,7 +56,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->databaseNotifications()
             ->plugins([
-                LunchrotaTheme::make()
+                LunchrotaTheme::make(),
             ])
             ->viteTheme('resources/css/filament/admin/theme.css');
     }
