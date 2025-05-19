@@ -16,4 +16,4 @@ yarn-error.log
 /public/img/memes
 frankenphp
 /config/composer
-/data
+/dataconfig/composer/auth.json
