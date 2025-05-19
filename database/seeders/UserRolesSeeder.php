@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders;
 
 use App\Models\Role;
@@ -13,7 +15,7 @@ class UserRolesSeeder extends Seeder
     public function run(): void
     {
         $startDate = Carbon::now()->addMonth(-1);
-        $endDate = Carbon::now()->addMonth(1);
+        $endDate   = Carbon::now()->addMonth(1);
         $dateRange = CarbonPeriod::create($startDate, $endDate);
 
         foreach ($dateRange as $date) {

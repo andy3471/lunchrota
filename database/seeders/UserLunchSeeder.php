@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders;
 
+use Artisan;
 use Illuminate\Database\Seeder;
 
 class UserLunchSeeder extends Seeder
@@ -11,6 +14,6 @@ class UserLunchSeeder extends Seeder
      */
     public function run(): void
     {
-        \Artisan::call('demo:seedlunch');
+        Artisan::call('demo:seedlunch');
     }
 }
