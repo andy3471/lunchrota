@@ -14,9 +14,10 @@
         "guzzlehttp/guzzle": "^7.2",
         "inertiajs/inertia-laravel": "^1.0",
         "laravel/framework": "^11.0",
+        "laravel/octane": "^2.4",
         "laravel/tinker": "^2.8",
         "laravel/ui": "^4.4",
-        "wendelladriel/laravel-lift": "^0.14.0"
+        "sentry/sentry-laravel": "^4.13"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.12",

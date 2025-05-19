@@ -17,7 +17,7 @@ services:
       - "traefik.http.routers.lunchrota-demo.entrypoints=websecure"
       - "traefik.http.routers.lunchrota-demo.tls=true"
       - "traefik.http.routers.lunchrota-demo.tls.certresolver=le"
-      - "traefik.http.services.lunchrota-demo.loadbalancer.server.port=80"
+      - "traefik.http.services.lunchrota-demo.loadbalancer.server.port=8000"
       - "traefik.docker.network=traefik"
 
   postgres:
