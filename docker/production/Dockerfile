@@ -5,7 +5,8 @@ RUN install-php-extensions \
     pdo_mysql \
     redis \
     pdo_pgsql \
-    zip
+    zip \
+    intl
 
 COPY . /app
 
