@@ -75,18 +75,14 @@ class User extends Authenticatable implements FilamentUser
         );
     }
 
-    /**
-     * @return BelongsToMany<Role, $this, \Illuminate\Database\Eloquent\Relations\Pivot>
-     */
+    /** @return BelongsToMany<Role, $this, \Illuminate\Database\Eloquent\Relations\Pivot> */
     public function roles(): BelongsToMany
     {
         return $this->belongsToMany(Role::class)
             ->withPivot('date');
     }
 
-    /**
-     * @return BelongsToMany<LunchSlot, $this, \Illuminate\Database\Eloquent\Relations\Pivot>
-     */
+    /** @return BelongsToMany<LunchSlot, $this, \Illuminate\Database\Eloquent\Relations\Pivot> */
     public function lunches(): BelongsToMany
     {
         return $this->belongsToMany(LunchSlot::class)

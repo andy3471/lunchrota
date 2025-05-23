@@ -22,17 +22,19 @@
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.12",
         "barryvdh/laravel-ide-helper": "^3.0",
+        "beyondcode/laravel-query-detector": "^2.0",
+        "calebdw/larastan-livewire": "^2.2",
         "doctrine/dbal": "^3.8",
+        "driftingly/rector-laravel": "^2.0",
         "fakerphp/faker": "^1.9.1",
+        "larastan/larastan": "^3.4",
         "laravel/pint": "^1.14",
         "laravel/sail": "^1.28",
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^8.1",
         "phpunit/phpunit": "^11",
-        "spatie/laravel-ignition": "^2.0",
-        "beyondcode/laravel-query-detector": "^2.0",
         "rector/rector": "^2.0",
-        "driftingly/rector-laravel": "^2.0"
+        "spatie/laravel-ignition": "^2.0"
     },
     "repositories": {
         "whizzy": {

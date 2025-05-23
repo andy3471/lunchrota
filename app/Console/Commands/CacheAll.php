@@ -23,9 +23,7 @@ class CacheAll extends Command
      */
     protected $description = 'Command description';
 
-    /**
-     * Execute the console command.
-     */
+    /** Execute the console command. */
     public function handle(): void
     {
         $this->info('Caching Icons...');

@@ -29,9 +29,7 @@ class Handler extends ExceptionHandler
         'password_confirmation',
     ];
 
-    /**
-     * Report or log an exception.
-     */
+    /** Report or log an exception. */
     public function report(Throwable $exception): void
     {
         parent::report($exception);

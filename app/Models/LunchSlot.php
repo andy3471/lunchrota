@@ -26,9 +26,7 @@ class LunchSlot extends Model
         'updated_at',
     ];
 
-    /**
-     * @return BelongsToMany<User, $this, \Illuminate\Database\Eloquent\Relations\Pivot>
-     */
+    /** @return BelongsToMany<User, $this, \Illuminate\Database\Eloquent\Relations\Pivot> */
     public function users(): BelongsToMany
     {
         return $this
