@@ -6,6 +6,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class Role extends Model
 {
@@ -14,7 +15,7 @@ class Role extends Model
         'available',
     ];
 
-    /** @return BelongsToMany<User, $this, \Illuminate\Database\Eloquent\Relations\Pivot> */
+    /** @return BelongsToMany<User, $this, Pivot> */
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class)

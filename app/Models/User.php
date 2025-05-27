@@ -53,7 +53,7 @@ class User extends Authenticatable implements FilamentUser
     }
 
     // TODO: Tidy this all up
-    public function available(): Attribute
+    protected function available(): Attribute
     {
         return Attribute::make(
             get: function (): bool {

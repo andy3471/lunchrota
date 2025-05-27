@@ -34,7 +34,8 @@ class LunchSlot extends Model
             ->withPivot('date');
     }
 
-    public function time(): Attribute
+    /** @return Attribute<string, never> */
+    protected function time(): Attribute
     {
         return Attribute::make(
             get: function ($value): string {
@@ -43,7 +44,9 @@ class LunchSlot extends Model
     }
 
     // TODO: Tidy this all up
-    public function availableToday(): Attribute
+
+    /** @return Attribute<int|float, never> */
+    protected function availableToday(): Attribute
     {
         return Attribute::make(
             get: function (): int|float {
