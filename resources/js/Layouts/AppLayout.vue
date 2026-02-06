@@ -18,9 +18,6 @@ const toggleMobileMenu = () => {
     showMobileMenu.value = !showMobileMenu.value;
 };
 
-const handleLogout = () => {
-    router.post('/logout');
-};
 </script>
 
 <template>
@@ -68,12 +65,15 @@ const handleLogout = () => {
                             >
                                 Change Password
                             </button>
-                            <button
-                                @click="handleLogout"
+                            <Link
+                                href="/logout"
+                                method="post"
+                                as="button"
+                                type="button"
                                 class="px-3 py-1.5 rounded-md text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/60 transition-colors"
                             >
                                 Logout
-                            </button>
+                            </Link>
                         </template>
                         <template v-else>
                             <Link
@@ -139,12 +139,16 @@ const handleLogout = () => {
                         >
                             Change Password
                         </button>
-                        <button
-                            @click="handleLogout; showMobileMenu = false"
+                        <Link
+                            href="/logout"
+                            method="post"
+                            as="button"
+                            type="button"
                             class="block w-full text-left px-3 py-2 rounded-md text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/60"
+                            @click="showMobileMenu = false"
                         >
                             Logout
-                        </button>
+                        </Link>
                     </template>
                     <template v-else>
                         <Link
