@@ -17,6 +17,7 @@ class ChangePasswordJob implements ShouldQueue
     use InteractsWithQueue;
     use Queueable;
     use SerializesModels;
+
     // TODO: NEVER pass the request object to the job constructor
 
     public function __construct(

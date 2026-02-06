@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use Carbon\Carbon;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -43,7 +42,21 @@ class User extends Authenticatable implements FilamentUser
         return $this->admin;
     }
 
-    public function isDeleted(): Attribute
+    /** @return BelongsToMany<Role, $this, \Illuminate\Database\Eloquent\Relations\Pivot> */
+    public function roles(): BelongsToMany
+    {
+        return $this->belongsToMany(Role::class)
+            ->withPivot('date');
+    }
+
+    /** @return BelongsToMany<LunchSlot, $this, \Illuminate\Database\Eloquent\Relations\Pivot> */
+    public function lunches(): BelongsToMany
+    {
+        return $this->belongsToMany(LunchSlot::class)
+            ->withPivot('date');
+    }
+
+    protected function isDeleted(): Attribute
     {
         return Attribute::make(
             get: function (): bool {
@@ -61,7 +74,7 @@ class User extends Authenticatable implements FilamentUser
                     return true;
                 }
 
-                $date = Carbon::today()->toDateString();
+                $date = \Illuminate\Support\Facades\Date::today()->toDateString();
 
                 $available = DB::table('role_user')
                     ->select('roles.available')
@@ -73,20 +86,6 @@ class User extends Authenticatable implements FilamentUser
                 return isset($available->available) && $available->available;
             }
         );
-    }
-
-    /** @return BelongsToMany<Role, $this, \Illuminate\Database\Eloquent\Relations\Pivot> */
-    public function roles(): BelongsToMany
-    {
-        return $this->belongsToMany(Role::class)
-            ->withPivot('date');
-    }
-
-    /** @return BelongsToMany<LunchSlot, $this, \Illuminate\Database\Eloquent\Relations\Pivot> */
-    public function lunches(): BelongsToMany
-    {
-        return $this->belongsToMany(LunchSlot::class)
-            ->withPivot('date');
     }
 
     protected function casts(): array

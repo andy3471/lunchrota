@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -50,7 +49,7 @@ class LunchSlot extends Model
     {
         return Attribute::make(
             get: function (): int|float {
-                $date = Carbon::today()->toDateString();
+                $date = \Illuminate\Support\Facades\Date::today()->toDateString();
 
                 if (config('app.lunch_slot_calculated')) {
                     $ratio = config('app.lunch_slot_calculated_ratio');

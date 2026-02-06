@@ -18,6 +18,7 @@ class UpdateRolesJob implements ShouldQueue
     use InteractsWithQueue;
     use Queueable;
     use SerializesModels;
+
     // TODO: Move to filament
     // TODO: Never pass the request
 
@@ -29,7 +30,7 @@ class UpdateRolesJob implements ShouldQueue
     public function handle(): void
     {
         $roles        = collect($this->request->roles);
-        $deletedRoles = Role::whereNotIn('id', $roles->where('id', '!=', null)->pluck('id')->toArray())->get();
+        $deletedRoles = Role::whereNotIn('id', $roles->where('id', '!=')->pluck('id')->toArray())->get();
 
         foreach ($deletedRoles as $role) {
             $role->users()->detach();

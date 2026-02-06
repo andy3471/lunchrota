@@ -12,7 +12,6 @@ const config = computed(() => page.props.config || {});
 const flash = computed(() => page.props.flash || {});
 
 const showMobileMenu = ref(false);
-const showChangePasswordModal = ref(false);
 
 const toggleMobileMenu = () => {
     showMobileMenu.value = !showMobileMenu.value;
@@ -59,12 +58,12 @@ const toggleMobileMenu = () => {
                     <!-- Right nav items - Desktop -->
                     <div class="hidden md:flex items-center gap-2">
                         <template v-if="auth.user">
-                            <button
-                                @click="showChangePasswordModal = true"
+                            <Link
+                                href="/change-password"
                                 class="px-3 py-1.5 rounded-md text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/60 transition-colors"
                             >
                                 Change Password
-                            </button>
+                            </Link>
                             <Link
                                 href="/logout"
                                 method="post"
@@ -133,12 +132,13 @@ const toggleMobileMenu = () => {
                         Admin
                     </a>
                     <template v-if="auth.user">
-                        <button
-                            @click="showChangePasswordModal = true; showMobileMenu = false"
-                            class="block w-full text-left px-3 py-2 rounded-md text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/60"
+                        <Link
+                            href="/change-password"
+                            class="block px-3 py-2 rounded-md text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/60"
+                            @click="showMobileMenu = false"
                         >
                             Change Password
-                        </button>
+                        </Link>
                         <Link
                             href="/logout"
                             method="post"
@@ -209,13 +209,5 @@ const toggleMobileMenu = () => {
             </div>
         </footer>
 
-        <!-- Change Password Modal -->
-        <Modal
-            :show="showChangePasswordModal"
-            @close="showChangePasswordModal = false"
-            title="Change Password"
-        >
-            <ChangePasswordForm @success="showChangePasswordModal = false" />
-        </Modal>
     </div>
 </template>

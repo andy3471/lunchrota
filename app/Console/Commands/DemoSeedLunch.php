@@ -6,7 +6,6 @@ namespace App\Console\Commands;
 
 use App\Models\LunchSlot;
 use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Console\Command;
 
 class DemoSeedLunch extends Command
@@ -18,10 +17,10 @@ class DemoSeedLunch extends Command
     // TODO: Refactor
     public function handle(): void
     {
-        $date = Carbon::now();
+        $date = \Illuminate\Support\Facades\Date::now();
 
         if ($date->isWeekday()) {
-            $dateString = Carbon::parse($date)->toDateString();
+            $dateString = \Illuminate\Support\Facades\Date::parse($date)->toDateString();
 
             $users = User::all();
 

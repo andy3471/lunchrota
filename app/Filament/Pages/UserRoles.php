@@ -8,7 +8,6 @@ use App\Filament\Exports\UserRoleExporter;
 use App\Filament\Imports\UserRoleImporter;
 use App\Models\Role;
 use App\Models\User;
-use Carbon\Carbon;
 use DateTimeInterface;
 use Filament\Actions\ExportAction;
 use Filament\Actions\ImportAction;
@@ -38,7 +37,7 @@ class UserRoles extends Page
 
     public function updatedDate(DateTimeInterface|\Carbon\WeekDay|\Carbon\Month|string|int|float|null $date): void
     {
-        $this->date = Carbon::parse($date)->startOfDay()->format('Y-m-d');
+        $this->date = \Illuminate\Support\Facades\Date::parse($date)->startOfDay()->format('Y-m-d');
         $this->getUserRoles();
     }
 

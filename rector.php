@@ -8,7 +8,6 @@ use Rector\CodeQuality\Rector\If_\ExplicitBoolCompareRector;
 use Rector\CodingStyle\Rector\Encapsed\EncapsedStringsToSprintfRector;
 use Rector\Config\RectorConfig;
 use Rector\Set\ValueObject\SetList;
-use Rector\Strict\Rector\If_\BooleanInIfConditionRuleFixerRector;
 use RectorLaravel\Rector\Class_\AddExtendsAnnotationToModelFactoriesRector;
 use RectorLaravel\Rector\ClassMethod\AddGenericReturnTypeToRelationsRector;
 use RectorLaravel\Rector\FuncCall\FactoryFuncCallToStaticCallRector;
@@ -33,7 +32,6 @@ return RectorConfig::configure()
     ->withSets([
         SetList::CODE_QUALITY,
         SetList::CODING_STYLE,
-        SetList::STRICT_BOOLEANS,
         SetList::DEAD_CODE,
         SetList::TYPE_DECLARATION,
         SetList::EARLY_RETURN,
@@ -60,13 +58,11 @@ return RectorConfig::configure()
         codeQuality: true,
         typeDeclarations: true,
         privatization: true,
-        earlyReturn: true,
-        strictBooleans: true
+        earlyReturn: true
     )
     ->withSkip([
         EncapsedStringsToSprintfRector::class,
         ExplicitBoolCompareRector::class,
-        BooleanInIfConditionRuleFixerRector::class,
         ArgumentAdderRector::class => [
             __DIR__.'/app/Http/Middleware/Filament/Authenticate.php',
         ],

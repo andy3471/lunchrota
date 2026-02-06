@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -16,7 +15,7 @@ class RoleController extends Controller
     public function index(Request $request): JsonResponse
     {
         $date = $request->date;
-        $date = Carbon::parse($date)->toDateString();
+        $date = \Illuminate\Support\Facades\Date::parse($date)->toDateString();
 
         $roles = DB::table('users')
             ->select('users.name', 'roles.name as role', 'roles.available')

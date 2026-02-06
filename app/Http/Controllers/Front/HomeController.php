@@ -1,10 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use App\Models\LunchSlot;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
@@ -14,8 +15,8 @@ class HomeController extends Controller
 {
     public function index(): Response
     {
-        $lunchslots = LunchSlot::orderBy('time')->get();
-        $date = Carbon::today()->toDateString();
+        $lunchslots  = LunchSlot::orderBy('time')->get();
+        $date        = \Illuminate\Support\Facades\Date::today()->toDateString();
         $initialSlot = null;
 
         if (auth()->check()) {
@@ -34,9 +35,9 @@ class HomeController extends Controller
         $available = auth()->user()?->available ?? true;
 
         return Inertia::render('Home', [
-            'lunchSlots' => $lunchslots,
+            'lunchSlots'  => $lunchslots,
             'initialSlot' => $initialSlot,
-            'available' => (bool) $available,
+            'available'   => (bool) $available,
         ]);
     }
 }

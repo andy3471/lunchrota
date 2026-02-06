@@ -6,7 +6,6 @@ namespace App\Console\Commands;
 
 use App\Models\Role;
 use App\Models\User;
-use Carbon\Carbon;
 use Carbon\CarbonImmutable;
 use Carbon\CarbonPeriod;
 use Illuminate\Console\Command;

@@ -18,6 +18,7 @@ class UpdateUsersJob implements ShouldQueue
     use InteractsWithQueue;
     use Queueable;
     use SerializesModels;
+
     // TODO: Move to filament
     // TODO: Never pass the request
 

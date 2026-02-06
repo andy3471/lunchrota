@@ -6,7 +6,6 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\LunchSlot;
-use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -22,7 +21,7 @@ class LunchSlotController extends Controller
     // TODO: Rename
     public function userLunches(): JsonResponse
     {
-        $date = Carbon::today()->toDateString();
+        $date = \Illuminate\Support\Facades\Date::today()->toDateString();
 
         if (config('database.default') === 'sqlsrv') {
             $userLunches = DB::table('users')
@@ -47,7 +46,7 @@ class LunchSlotController extends Controller
 
     public function claim(Request $request): JsonResponse
     {
-        $date      = Carbon::today()->toDateString();
+        $date      = \Illuminate\Support\Facades\Date::today()->toDateString();
         $lunchslot = LunchSlot::find($request->id);
 
         if ((! auth()->user()->available) || $lunchslot->available_today >= 1) {

@@ -18,6 +18,7 @@ class UpdateLunchSlotsJob implements ShouldQueue
     use InteractsWithQueue;
     use Queueable;
     use SerializesModels;
+
     // TODO: Move to filament
     // TODO: Never pass the request
 
@@ -29,7 +30,7 @@ class UpdateLunchSlotsJob implements ShouldQueue
     public function handle(): void
     {
         $slots        = collect($this->request->slots);
-        $deletedSlots = LunchSlot::whereNotIn('id', $slots->where('id', '!=', null)->pluck('id')->toArray())->get();
+        $deletedSlots = LunchSlot::whereNotIn('id', $slots->where('id', '!=')->pluck('id')->toArray())->get();
 
         foreach ($deletedSlots as $slot) {
             $slot->users()->detach();
