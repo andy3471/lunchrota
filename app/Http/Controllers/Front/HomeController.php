@@ -4,21 +4,22 @@ namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use App\Models\LunchSlot;
-use Auth;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\View\View;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class HomeController extends Controller
 {
-    // TODO: Refactor
-    public function index(): View
+    public function index(): Response
     {
         $lunchslots = LunchSlot::orderBy('time')->get();
         $date = Carbon::today()->toDateString();
+        $initialSlot = null;
 
         if (auth()->check()) {
-            $initialSlot = DB::table('users')
+            $slotResult = DB::table('users')
                 ->select('lunch_slots.id')
                 ->join('lunch_slot_user', 'users.id', '=', 'lunch_slot_user.user_id')
                 ->join('lunch_slots', 'lunch_slots.id', '=', 'lunch_slot_user.lunch_slot_id')
@@ -26,25 +27,16 @@ class HomeController extends Controller
                 ->where('users.id', Auth::user()->id)
                 ->orderBy('users.name')
                 ->first();
+
+            $initialSlot = $slotResult?->id;
         }
 
-        if (isset($initialSlot->id)) {
-            $initialSlot = $initialSlot->id;
-        } else {
-            $initialSlot = '-1';
-        }
+        $available = auth()->user()?->available ?? true;
 
-        if (auth()->user()) {
-            $available = auth()->user()->available;
-        } else {
-            $available = true;
-        }
-
-        return view('home')->withLunchSlots($lunchslots)->withInitialSlot($initialSlot)->withAvailable($available);
-    }
-
-    public function demo(): View
-    {
-        return view('auth.demo-mode');
+        return Inertia::render('Home', [
+            'lunchSlots' => $lunchslots,
+            'initialSlot' => $initialSlot,
+            'available' => (bool) $available,
+        ]);
     }
 }

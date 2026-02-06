@@ -1,28 +1,23 @@
-import "./bootstrap";
-import Vue from 'vue/dist/vue.esm.js';
-// window.Vue = Vue;
+import './bootstrap';
+import '../css/app.css';
 
-import BootstrapVue from 'bootstrap-vue'
+import { createApp, h } from 'vue';
+import { createInertiaApp } from '@inertiajs/vue3';
+import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
+import VCalendar from 'v-calendar';
 
-Vue.use(BootstrapVue)
+const appName = import.meta.env.VITE_APP_NAME || 'Rota';
 
-// Import components directly with ES module syntax
-import RotaPage from './pages/RotaPage.vue';
-import LunchesSelector from './components/LunchSelector.vue';
-import DatePicker from 'andyh-datepicker';
-import TimePicker from 'andyh-timepicker';
-
-//Pages
-Vue.component("RotaPage", RotaPage);
-
-//Components
-Vue.component("LunchesSelector", LunchesSelector);
-
-//External Components
-Vue.component("DatePicker", DatePicker);
-Vue.component("TimePicker", TimePicker);
-
-
-window.app = new Vue({
-    el: "#app"
+createInertiaApp({
+    title: (title) => title ? `${title} - ${appName}` : appName,
+    resolve: (name) => resolvePageComponent(`./Pages/${name}.vue`, import.meta.glob('./Pages/**/*.vue')),
+    setup({ el, App, props, plugin }) {
+        return createApp({ render: () => h(App, props) })
+            .use(plugin)
+            .use(VCalendar, {})
+            .mount(el);
+    },
+    progress: {
+        color: '#6366f1',
+    },
 });

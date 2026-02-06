@@ -1,0 +1,83 @@
+<script setup>
+import { ref, onMounted } from 'vue';
+
+const props = defineProps({
+    message: {
+        type: String,
+        required: true,
+    },
+    type: {
+        type: String,
+        default: 'success',
+        validator: (value) => ['success', 'error', 'warning', 'info'].includes(value),
+    },
+    duration: {
+        type: Number,
+        default: 5000,
+    },
+});
+
+const show = ref(true);
+
+const typeStyles = {
+    success: 'bg-emerald-600 border-emerald-500',
+    error: 'bg-red-600 border-red-500',
+    warning: 'bg-amber-600 border-amber-500',
+    info: 'bg-blue-600 border-blue-500',
+};
+
+const icons = {
+    success: 'M5 13l4 4L19 7',
+    error: 'M6 18L18 6M6 6l12 12',
+    warning: 'M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z',
+    info: 'M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z',
+};
+
+onMounted(() => {
+    if (props.duration > 0) {
+        setTimeout(() => {
+            show.value = false;
+        }, props.duration);
+    }
+});
+
+const close = () => {
+    show.value = false;
+};
+</script>
+
+<template>
+    <Transition
+        enter-active-class="transition ease-out duration-300"
+        enter-from-class="translate-y-2 opacity-0"
+        enter-to-class="translate-y-0 opacity-100"
+        leave-active-class="transition ease-in duration-200"
+        leave-from-class="translate-y-0 opacity-100"
+        leave-to-class="translate-y-2 opacity-0"
+    >
+        <div
+            v-if="show"
+            class="fixed top-4 right-4 z-50 max-w-sm"
+        >
+            <div
+                :class="[
+                    'flex items-center gap-3 px-4 py-3 rounded-lg border shadow-lg',
+                    typeStyles[type]
+                ]"
+            >
+                <svg class="w-5 h-5 text-white flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" :d="icons[type]" />
+                </svg>
+                <p class="text-white text-sm font-medium flex-1">{{ message }}</p>
+                <button
+                    @click="close"
+                    class="text-white/80 hover:text-white transition-colors"
+                >
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </Transition>
+</template>
