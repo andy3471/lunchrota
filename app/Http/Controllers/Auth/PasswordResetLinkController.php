@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
@@ -12,9 +14,7 @@ use Inertia\Response;
 
 class PasswordResetLinkController extends Controller
 {
-    /**
-     * Display the password reset link request view.
-     */
+    /** Display the password reset link request view. */
     public function create(): Response
     {
         return Inertia::render('Auth/ForgotPassword', [
@@ -25,12 +25,12 @@ class PasswordResetLinkController extends Controller
     /**
      * Handle an incoming password reset link request.
      *
-     * @throws \Illuminate\Validation\ValidationException
+     * @throws ValidationException
      */
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'email' => 'required|email',
+            'email' => ['required', 'email'],
         ]);
 
         // We will send the password reset link to this user. Once we have attempted
@@ -40,7 +40,7 @@ class PasswordResetLinkController extends Controller
             $request->only('email')
         );
 
-        if ($status == Password::RESET_LINK_SENT) {
+        if ($status === Password::RESET_LINK_SENT) {
             return back()->with('status', __($status));
         }
 

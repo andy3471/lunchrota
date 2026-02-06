@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Carbon\Carbon;
@@ -36,37 +38,25 @@ class User extends Authenticatable implements FilamentUser
         'remember_token',
     ];
 
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-        'admin' => 'boolean',
-        'scheduled' => 'boolean',
-    ];
-
     public function canAccessPanel(Panel $panel): bool
     {
         return $this->admin;
     }
 
-    // TODO: For backwards compatibility, remove this in the future
-    public function getDeletedAttribute(): bool
-    {
-        return $this->is_deleted;
-    }
-
     public function isDeleted(): Attribute
     {
         return Attribute::make(
-            get: function () {
-                return $this->deleted_at != null;
+            get: function (): bool {
+                return $this->deleted_at !== null;
             }
         );
     }
 
     // TODO: Tidy this all up
-    public function available(): Attribute
+    protected function available(): Attribute
     {
         return Attribute::make(
-            get: function () {
+            get: function (): bool {
                 if (! config('app.roles_enabled')) {
                     return true;
                 }
@@ -85,15 +75,26 @@ class User extends Authenticatable implements FilamentUser
         );
     }
 
+    /** @return BelongsToMany<Role, $this, \Illuminate\Database\Eloquent\Relations\Pivot> */
     public function roles(): BelongsToMany
     {
         return $this->belongsToMany(Role::class)
             ->withPivot('date');
     }
 
+    /** @return BelongsToMany<LunchSlot, $this, \Illuminate\Database\Eloquent\Relations\Pivot> */
     public function lunches(): BelongsToMany
     {
         return $this->belongsToMany(LunchSlot::class)
             ->withPivot('date');
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'email_verified_at' => 'datetime',
+            'admin'             => 'boolean',
+            'scheduled'         => 'boolean',
+        ];
     }
 }

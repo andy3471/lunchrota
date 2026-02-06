@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Jobs\Admin;
 
 use App\Http\Requests\Admin\UpdateRolesRequest;
@@ -12,20 +14,21 @@ use Illuminate\Queue\SerializesModels;
 
 class UpdateRolesJob implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
+    use Dispatchable;
+    use InteractsWithQueue;
+    use Queueable;
+    use SerializesModels;
     // TODO: Move to filament
     // TODO: Never pass the request
 
     public function __construct(
         public UpdateRolesRequest $request
-    ) {
-    }
+    ) {}
 
     // TODO: Tidy this
     public function handle(): void
     {
-        $roles = collect($this->request->roles);
+        $roles        = collect($this->request->roles);
         $deletedRoles = Role::whereNotIn('id', $roles->where('id', '!=', null)->pluck('id')->toArray())->get();
 
         foreach ($deletedRoles as $role) {
@@ -34,8 +37,8 @@ class UpdateRolesJob implements ShouldQueue
         }
 
         foreach ($roles as $r) {
-            if ($r['id'] == 0) {
-                $role = new Role;
+            if ($r['id'] === 0) {
+                $role       = new Role;
                 $role->name = $r['name'];
             } else {
                 $role = Role::find($r['id']);

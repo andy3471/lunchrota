@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Carbon\Carbon;
@@ -24,6 +26,7 @@ class LunchSlot extends Model
         'updated_at',
     ];
 
+    /** @return BelongsToMany<User, $this, \Illuminate\Database\Eloquent\Relations\Pivot> */
     public function users(): BelongsToMany
     {
         return $this
@@ -31,19 +34,22 @@ class LunchSlot extends Model
             ->withPivot('date');
     }
 
-    public function time(): Attribute
+    /** @return Attribute<string, never> */
+    protected function time(): Attribute
     {
         return Attribute::make(
-            get: function ($value) {
-                return substr($value, 0, 5);
+            get: function ($value): string {
+                return mb_substr($value, 0, 5);
             });
     }
 
     // TODO: Tidy this all up
-    public function availableToday(): Attribute
+
+    /** @return Attribute<int|float, never> */
+    protected function availableToday(): Attribute
     {
         return Attribute::make(
-            get: function () {
+            get: function (): int|float {
                 $date = Carbon::today()->toDateString();
 
                 if (config('app.lunch_slot_calculated')) {

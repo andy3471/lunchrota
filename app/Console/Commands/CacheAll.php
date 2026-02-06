@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
@@ -21,10 +23,8 @@ class CacheAll extends Command
      */
     protected $description = 'Command description';
 
-    /**
-     * Execute the console command.
-     */
-    public function handle()
+    /** Execute the console command. */
+    public function handle(): void
     {
         $this->info('Caching Icons...');
         Artisan::call('icons:cache');

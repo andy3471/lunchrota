@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Pages;
 
 use App\Filament\Exports\UserRoleExporter;
@@ -7,6 +9,7 @@ use App\Filament\Imports\UserRoleImporter;
 use App\Models\Role;
 use App\Models\User;
 use Carbon\Carbon;
+use DateTimeInterface;
 use Filament\Actions\ExportAction;
 use Filament\Actions\ImportAction;
 use Filament\Notifications\Notification;
@@ -27,41 +30,13 @@ class UserRoles extends Page
 
     protected static ?string $navigationGroup = 'Users';
 
-    public function getHeaderActions(): array
-    {
-        return [
-            ExportAction::make('export')
-                ->modifyQueryUsing(function (Builder $query) {
-                    return $query
-                        ->where('date', '>', now()->startOfDay())
-                        ->with('user', 'role');
-                })
-                ->exporter(UserRoleExporter::class)
-                ->columnMapping(false),
-            ImportAction::make('import')
-                ->importer(UserRoleImporter::class),
-        ];
-    }
-
     public function mount(): void
     {
-        $this->date = now()->startOfDay()->format('Y-m-d');
+        $this->date = today()->format('Y-m-d');
         $this->getUserRoles();
     }
 
-    #[Computed]
-    protected function users(): Collection
-    {
-        return User::all();
-    }
-
-    #[Computed]
-    protected function roles(): Collection
-    {
-        return Role::all();
-    }
-
-    public function updatedDate($date): void
+    public function updatedDate(DateTimeInterface|\Carbon\WeekDay|\Carbon\Month|string|int|float|null $date): void
     {
         $this->date = Carbon::parse($date)->startOfDay()->format('Y-m-d');
         $this->getUserRoles();
@@ -92,5 +67,33 @@ class UserRoles extends Page
         foreach ($this->users as $user) {
             $this->userRoles[$user->id] = $user->roles()->wherePivot('date', $this->date)->first()?->id ?: 'none';
         }
+    }
+
+    protected function getHeaderActions(): array
+    {
+        return [
+            ExportAction::make('export')
+                ->modifyQueryUsing(function (Builder $query) {
+                    return $query
+                        ->where('date', '>', today())
+                        ->with('user', 'role');
+                })
+                ->exporter(UserRoleExporter::class)
+                ->columnMapping(false),
+            ImportAction::make('import')
+                ->importer(UserRoleImporter::class),
+        ];
+    }
+
+    #[Computed]
+    protected function users(): Collection
+    {
+        return User::all();
+    }
+
+    #[Computed]
+    protected function roles(): Collection
+    {
+        return Role::all();
     }
 }

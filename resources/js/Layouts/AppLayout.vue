@@ -1,21 +1,25 @@
 <script setup>
 import { ref, computed } from 'vue';
-import { Link, usePage } from '@inertiajs/vue3';
+import { Link, usePage, router } from '@inertiajs/vue3';
 import Toast from '@/Components/Toast.vue';
 import Modal from '@/Components/Modal.vue';
 import ChangePasswordForm from '@/Components/ChangePasswordForm.vue';
 
 const page = usePage();
 
-const auth = computed(() => page.props.auth);
-const config = computed(() => page.props.config);
-const flash = computed(() => page.props.flash);
+const auth = computed(() => page.props.auth || { user: null });
+const config = computed(() => page.props.config || {});
+const flash = computed(() => page.props.flash || {});
 
 const showMobileMenu = ref(false);
 const showChangePasswordModal = ref(false);
 
 const toggleMobileMenu = () => {
     showMobileMenu.value = !showMobileMenu.value;
+};
+
+const handleLogout = () => {
+    router.post('/logout');
 };
 </script>
 
@@ -64,14 +68,12 @@ const toggleMobileMenu = () => {
                             >
                                 Change Password
                             </button>
-                            <Link
-                                href="/logout"
-                                method="post"
-                                as="button"
+                            <button
+                                @click="handleLogout"
                                 class="px-3 py-1.5 rounded-md text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/60 transition-colors"
                             >
                                 Logout
-                            </Link>
+                            </button>
                         </template>
                         <template v-else>
                             <Link
@@ -137,14 +139,12 @@ const toggleMobileMenu = () => {
                         >
                             Change Password
                         </button>
-                        <Link
-                            href="/logout"
-                            method="post"
-                            as="button"
+                        <button
+                            @click="handleLogout; showMobileMenu = false"
                             class="block w-full text-left px-3 py-2 rounded-md text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/60"
                         >
                             Logout
-                        </Link>
+                        </button>
                     </template>
                     <template v-else>
                         <Link

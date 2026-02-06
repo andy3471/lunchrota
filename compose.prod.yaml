@@ -3,9 +3,8 @@ services:
     image: ghcr.io/andy3471/lunchrota:latest
     restart: unless-stopped
     volumes:
-      - ${DIRECTORY}/lunchrota/storage:/var/www/storage:ro
-    environment:
-      - APP_DEBUG=false
+      - ./lunchrota/storage:/var/www/storage
+    env_file: .env
     networks:
       - lunchrota
       - traefik
@@ -18,9 +17,8 @@ services:
       - "traefik.http.routers.lunchrota-demo.entrypoints=websecure"
       - "traefik.http.routers.lunchrota-demo.tls=true"
       - "traefik.http.routers.lunchrota-demo.tls.certresolver=le"
-      - "traefik.http.services.lunchrota-demo.loadbalancer.server.port=80"
+      - "traefik.http.services.lunchrota-demo.loadbalancer.server.port=8000"
       - "traefik.docker.network=traefik"
-
 
   postgres:
     image: postgres:16
@@ -30,7 +28,7 @@ services:
       - POSTGRES_USER=${DB_USERNAME:-laravel}
       - POSTGRES_PASSWORD=${DB_PASSWORD:-secret}
     volumes:
-      - ${DIRECTORY}/postgres:/var/lib/postgresql/data
+      - ./postgres:/var/lib/postgresql/data
     networks:
       - lunchrota
       - traefik
@@ -56,3 +54,4 @@ networks:
   lunchrota:
   traefik:
     external: true
+

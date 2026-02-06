@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class Role extends Model
 {
@@ -12,13 +15,17 @@ class Role extends Model
         'available',
     ];
 
-    protected $casts = [
-        'available' => 'boolean',
-    ];
-
+    /** @return BelongsToMany<User, $this, Pivot> */
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class)
             ->withPivot('date');
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'available' => 'boolean',
+        ];
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
@@ -21,7 +23,7 @@ class RoleController extends Controller
             ->join('role_user', 'users.id', '=', 'role_user.user_id')
             ->join('roles', 'roles.id', '=', 'role_user.role_id')
             ->where('role_user.date', $date)
-            ->orderBy('users.name')
+            ->oldest('users.name')
             ->get();
 
         return response()->json($roles);

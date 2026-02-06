@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
@@ -13,6 +15,6 @@ class UserController extends Controller
     {
         ChangePasswordJob::dispatchSync($request);
 
-        return redirect()->back()->with('message', 'Password Changed');
+        return back()->with('message', 'Password Changed');
     }
 }

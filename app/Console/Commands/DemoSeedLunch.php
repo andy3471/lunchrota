@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands;
 
 use App\Models\LunchSlot;
@@ -25,7 +27,7 @@ class DemoSeedLunch extends Command
 
             foreach ($users as $user) {
                 $allLunchSlots = LunchSlot::all();
-                $lunchSlots = $allLunchSlots->filter(function ($item) {
+                $lunchSlots    = $allLunchSlots->filter(function ($item): bool {
                     return $item->availableToday > 0;
                 });
 

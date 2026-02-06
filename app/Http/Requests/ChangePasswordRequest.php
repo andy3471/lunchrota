@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests;
 
 use App\Rules\CurrentPassword;
@@ -11,7 +13,7 @@ class ChangePasswordRequest extends FormRequest
     {
         return [
             'currentpassword' => ['required', new CurrentPassword],
-            'newpassword' => 'required|string|min:6|confirmed|different:currentpassword',
+            'newpassword'     => ['required', 'string', 'min:6', 'confirmed', 'different:currentpassword'],
         ];
     }
 }

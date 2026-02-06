@@ -1,10 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands;
 
 use App\Models\Role;
 use App\Models\User;
 use Carbon\Carbon;
+use Carbon\CarbonImmutable;
 use Carbon\CarbonPeriod;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
@@ -18,18 +21,16 @@ class RolesGenerate extends Command
     // TODO: Tidy up the code in this file
     public function handle(): void
     {
-        //Get Default role from .env file
-
-        if (config('app.default_role') == 'none') {
+        if (config('app.default_role') === 'none') {
             $this->line('No default role set');
 
             return;
         }
 
         $defaultRole = Role::where('name', config('app.default_role'))->first();
-        $startDate = Carbon::now();
-        $endDate = Carbon::now()->addWeek();
-        $dateRange = CarbonPeriod::create($startDate, $endDate);
+        $startDate   = now();
+        $endDate     = now()->addWeek();
+        $dateRange   = CarbonPeriod::create($startDate, $endDate);
 
         if ($defaultRole) {
             $this->line('The Default Role is '.$defaultRole->name);
@@ -42,14 +43,14 @@ class RolesGenerate extends Command
         foreach ($dateRange as $date) {
             if ($date->isWeekday()) {
                 $this->line($date);
-                $dateString = Carbon::parse($date)->toDateString();
+                $dateString = CarbonImmutable::parse($date)->toDateString();
 
                 $usersWithRoles = DB::table('role_user')
                     ->select('user_id')
                     ->where('date', $dateString)
                     ->get();
 
-                $usersWithRoles = json_decode(json_encode($usersWithRoles), true);
+                $usersWithRoles = json_decode((string) json_encode($usersWithRoles), true);
 
                 $users = User::whereNotIn('id', $usersWithRoles)->get();
 

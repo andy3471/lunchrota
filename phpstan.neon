@@ -1,18 +1,25 @@
 includes:
     - vendor/larastan/larastan/extension.neon
+    - vendor/nesbot/carbon/extension.neon
+    - vendor/calebdw/larastan-livewire/extension.neon
 
 parameters:
+    level: 8
 
     paths:
         - app/
 
-    # Level 9 is the highest level
-    level: 5
+    stubFiles:
+        - _ide_helper.php
+        - _ide_helper_models.php
 
-#    ignoreErrors:
-#        - '#PHPDoc tag @var#'
-#
-#    excludePaths:
-#        - ./*/*/FileToBeExcluded.php
-#
-#    checkMissingIterableValueType: false
+    scanFiles:
+        - .phpstorm.meta.php
+
+    reportUnmatchedIgnoredErrors: false
+
+    universalObjectCratesClasses:
+        - Illuminate\Database\Eloquent\Model
+        - Illuminate\Database\Eloquent\Casts\Attribute
+
+    treatPhpDocTypesAsCertain: true

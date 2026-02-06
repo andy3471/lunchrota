@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Providers\Filament;
 
 use App\Filament\Plugins\LunchrotaTheme;
@@ -56,7 +58,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->databaseNotifications()
             ->plugins([
-                LunchrotaTheme::make()
+                LunchrotaTheme::make(),
             ])
             ->viteTheme('resources/css/filament/admin/theme.css');
     }
