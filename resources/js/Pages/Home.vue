@@ -1,34 +1,68 @@
-<script setup>
-import { ref, computed } from 'vue';
-import { usePage } from '@inertiajs/vue3';
+<script setup lang="ts">
+import { ref, computed, watch } from 'vue';
+import { usePage, router } from '@inertiajs/vue3';
+import { home } from '@/routes';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import LunchSelector from '@/Components/LunchSelector.vue';
 import RoleSelector from '@/Components/RoleSelector.vue';
 import { Calendar } from 'v-calendar';
 import 'v-calendar/style.css';
+import type { HomePageData } from '@/Types/generated';
 
-const props = defineProps({
-    lunchSlots: {
-        type: Array,
-        default: () => [],
-    },
-    initialSlot: {
-        type: Number,
-        default: null,
-    },
-    available: {
-        type: Boolean,
-        default: false,
-    },
-});
+const props = defineProps<HomePageData>();
 
 const page = usePage();
 const config = computed(() => page.props.config);
 const auth = computed(() => page.props.auth);
 
-const date = ref(new Date());
+// Get initial date from props (which comes from server based on URL query param)
+const date = ref(props.selectedDate ? new Date(props.selectedDate) : new Date());
+
+console.log('Initial date from props:', props.selectedDate, 'Date ref:', date.value);
 
 const isLoggedIn = computed(() => !!auth.value.user);
+
+// Sync local date with prop when server updates it
+watch(() => props.selectedDate, (newDateString) => {
+    if (newDateString) {
+        const newDate = new Date(newDateString);
+        const currentDateString = date.value?.toISOString().split('T')[0];
+        // Only update if different to avoid infinite loop
+        if (currentDateString !== newDateString) {
+            date.value = newDate;
+        }
+    }
+});
+
+// Function to handle date change and reload data
+const handleDateChange = (newDate: Date) => {
+    if (!newDate) return;
+    
+    const dateString = newDate.toISOString().split('T')[0];
+    const currentDateString = props.selectedDate;
+    
+    // Skip if we're already on this date (prevents unnecessary reloads)
+    if (dateString === currentDateString) {
+        console.log('Date unchanged, skipping reload:', dateString);
+        return;
+    }
+    
+    console.log('Date changed, reloading data:', { currentDate: currentDateString, newDate: dateString });
+    
+    // Use router.get with data - Inertia will add it as query params
+    router.get('/', {
+        date: dateString
+    }, {
+        preserveScroll: true,
+        only: ['userLunches', 'roles', 'lunchSlots', 'initialSlot', 'selectedDate'],
+    });
+};
+
+// Watch date changes and reload data
+watch(date, (newDate, oldDate) => {
+    console.log('Watch fired:', { newDate, oldDate });
+    handleDateChange(newDate);
+}, { immediate: false });
 
 const selectedDateAttributes = computed(() => {
     if (!date.value) return [];
@@ -50,7 +84,7 @@ const selectedDateAttributes = computed(() => {
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 items-stretch">
             <!-- Roles Panel -->
             <div v-if="config.rolesEnabled" class="order-1 lg:order-1 flex">
-                <RoleSelector :date="date" />
+                <RoleSelector :date="date" :roles="roles" />
             </div>
 
             <!-- Date Picker Panel -->
@@ -70,8 +104,14 @@ const selectedDateAttributes = computed(() => {
                             :rows="1"
                             mode="date"
                             :is-required="false"
-                            @dayclick="(day) => { 
-                                date = new Date(day.date);
+                            @dayclick="(day) => {
+                                console.log('Day clicked:', day);
+                                const newDate = new Date(day.date);
+                                console.log('Setting date to:', newDate);
+                                date.value = newDate;
+                                console.log('Date after set:', date.value);
+                                // Also call handler directly in case watch doesn't fire
+                                handleDateChange(newDate);
                             }"
                         />
                     </div>
@@ -85,6 +125,7 @@ const selectedDateAttributes = computed(() => {
                     :logged-in="isLoggedIn"
                     :initial-lunch="initialSlot"
                     :available="available"
+                    :user-lunches="userLunches"
                 />
             </div>
         </div>

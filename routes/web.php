@@ -7,6 +7,8 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Front\HomeController;
+use App\Http\Controllers\Front\LunchSlotController;
+use App\Http\Controllers\Front\RoleController;
 use App\Http\Controllers\Front\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -39,4 +41,11 @@ Route::middleware('auth')->group(function (): void {
     Route::post('logout', [LoginController::class, 'destroy'])->name('logout');
     Route::get('change-password', [UserController::class, 'show'])->name('password.change');
     Route::post('change-password', [UserController::class, 'changePassword'])->middleware('demo_mode');
+    
+    // Lunch slot actions
+    Route::post('lunch-slots/claim', [LunchSlotController::class, 'claim'])->name('lunch-slots.claim');
+    Route::post('lunch-slots/unclaim', [LunchSlotController::class, 'unclaim'])->name('lunch-slots.unclaim');
+    
+    // Roles
+    Route::get('roles', [RoleController::class, 'index'])->name('roles.index');
 });

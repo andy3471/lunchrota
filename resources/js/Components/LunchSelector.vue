@@ -1,112 +1,92 @@
-<script setup>
-import { ref, onMounted } from 'vue';
-import axios from 'axios';
-import Button from './Button.vue';
+<script setup lang="ts">
+import { ref, watch } from 'vue';
+import { router } from '@inertiajs/vue3';
+import { claim, unclaim } from '@/actions/App/Http/Controllers/Front/LunchSlotController';
 import Toast from './Toast.vue';
+import type { LunchSlotData, UserLunchData } from '@/Types/generated';
 
-const props = defineProps({
-    lunchSlots: {
-        type: Array,
-        required: true,
-    },
-    loggedIn: {
-        type: Boolean,
-        default: false,
-    },
-    initialLunch: {
-        type: Number,
-        default: null,
-    },
-    available: {
-        type: Boolean,
-        default: false,
-    },
+interface Props {
+    lunchSlots: LunchSlotData[];
+    loggedIn?: boolean;
+    initialLunch?: number | null;
+    available?: boolean;
+    userLunches?: UserLunchData[];
+}
+
+const props = withDefaults(defineProps<Props>(), {
+    loggedIn: false,
+    initialLunch: null,
+    available: false,
+    userLunches: () => [],
 });
 
-const slots = ref(props.lunchSlots);
-const userLunches = ref([]);
-const selectedLunch = ref(props.initialLunch);
-const loading = ref(false);
-const slotsLoading = ref(false);
+const slots = ref<LunchSlotData[]>(props.lunchSlots);
+const userLunches = ref<UserLunchData[]>(props.userLunches);
+const selectedLunch = ref<number | null>(props.initialLunch ?? null);
 const usersLoading = ref(false);
-const toast = ref(null);
+const toast = ref<{ type: string; message: string } | null>(null);
 
-onMounted(() => {
-    getUserLunches();
-});
+// Watch for prop changes (when Inertia reloads data)
+watch(() => props.userLunches, (newVal) => {
+    userLunches.value = newVal;
+}, { immediate: true });
 
-const getUserLunches = async () => {
-    loading.value = true;
-    try {
-        const response = await axios.get('./api/lunch-slots/users');
-        userLunches.value = response.data;
-    } catch (error) {
-        console.error('Error fetching user lunches:', error);
-    } finally {
-        loading.value = false;
-    }
-};
+watch(() => props.lunchSlots, (newVal) => {
+    slots.value = newVal;
+}, { immediate: true });
 
-const setLunch = async (id) => {
+watch(() => props.initialLunch, (newVal) => {
+    selectedLunch.value = newVal ?? null;
+}, { immediate: true });
+
+const setLunch = (id) => {
     if (usersLoading.value) return;
 
     usersLoading.value = true;
-    slotsLoading.value = true;
     userLunches.value = [];
 
-    try {
-        const response = await axios.post('./api/lunch-slots/claim', { id });
-        userLunches.value = response.data;
-        selectedLunch.value = id;
-        await getSlots();
-    } catch (error) {
-        showToast('error', error.response?.data || 'Failed to claim lunch slot');
-        await getSlots();
-    } finally {
-        usersLoading.value = false;
-    }
+    router.post(claim().url, { id }, {
+        preserveScroll: true,
+        onSuccess: () => {
+            usersLoading.value = false;
+        },
+        onError: (errors) => {
+            usersLoading.value = false;
+            const errorMessage = errors.id?.[0] || errors.message || 'Failed to claim lunch slot';
+            showToast('error', errorMessage);
+        },
+    });
 };
 
-const removeLunch = async () => {
+const removeLunch = () => {
+    if (usersLoading.value) return;
+
     usersLoading.value = true;
     userLunches.value = [];
 
-    try {
-        const response = await axios.post('./api/lunch-slots/un-claim');
-        userLunches.value = response.data;
-        selectedLunch.value = null;
-        await getSlots();
-    } catch (error) {
-        showToast('error', error.response?.data || 'Failed to remove lunch slot');
-        await getSlots();
-    } finally {
-        usersLoading.value = false;
-    }
+    router.post(unclaim().url, {}, {
+        preserveScroll: true,
+        onSuccess: () => {
+            usersLoading.value = false;
+        },
+        onError: (errors) => {
+            usersLoading.value = false;
+            const errorMessage = errors.message || 'Failed to remove lunch slot';
+            showToast('error', errorMessage);
+        },
+    });
 };
 
-const getSlots = async () => {
-    slotsLoading.value = true;
-    try {
-        const response = await axios.get('./api/lunch-slots');
-        slots.value = response.data;
-    } catch (error) {
-        console.error('Error fetching slots:', error);
-    } finally {
-        slotsLoading.value = false;
-    }
-};
-
-const showToast = (type, message) => {
+const showToast = (type: string, message: string) => {
     toast.value = { type, message };
     setTimeout(() => {
         toast.value = null;
     }, 5000);
 };
 
-const isButtonDisabled = (slot) => {
+const isButtonDisabled = (slot: LunchSlotData) => {
     if (!props.loggedIn) return true;
     if (slot.id === selectedLunch.value) return true;
-    if (slotsLoading.value) return true;
     if (props.available && slot.available_today === 0) return true;
     return false;
 };
@@ -167,7 +147,7 @@ const isButtonDisabled = (slot) => {
                         <td class="text-slate-100">{{ user.name }}</td>
                         <td class="text-slate-300">{{ user.time }}</td>
                     </tr>
-                    <tr v-if="loading || usersLoading">
+                    <tr v-if="usersLoading">
                         <td colspan="2" class="text-center py-6">
                             <div class="flex items-center justify-center gap-2 text-slate-400">
                                 <svg class="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">

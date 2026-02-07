@@ -1,40 +1,22 @@
-<script setup>
-import { ref, watch, onMounted } from 'vue';
-import axios from 'axios';
+<script setup lang="ts">
+import { ref, watch } from 'vue';
+import type { RoleData } from '@/Types/generated';
 
-const props = defineProps({
-    date: {
-        type: Date,
-        required: true,
-    },
+interface Props {
+    date: Date;
+    roles?: RoleData[];
+}
+
+const props = withDefaults(defineProps<Props>(), {
+    roles: () => [],
 });
 
-const userRoles = ref([]);
-const loading = ref(true);
+const userRoles = ref<RoleData[]>(props.roles);
 
-onMounted(() => {
-    getRoles();
-});
-
-watch(() => props.date, () => {
-    getRoles();
-});
-
-const getRoles = async () => {
-    userRoles.value = [];
-    loading.value = true;
-
-    try {
-        const response = await axios.get('./api/roles', {
-            params: { date: props.date },
-        });
-        userRoles.value = response.data;
-    } catch (error) {
-        console.error('Error fetching roles:', error);
-    } finally {
-        loading.value = false;
-    }
-};
+// Watch for prop changes (when Inertia reloads data)
+watch(() => props.roles, (newVal) => {
+    userRoles.value = newVal;
+}, { immediate: true });
 </script>
 
 <template>
@@ -58,8 +40,8 @@ const getRoles = async () => {
                 </thead>
                 <tbody>
                     <tr
-                        v-for="user in userRoles"
-                        :key="user.id"
+                        v-for="(user, index) in userRoles"
+                        :key="`${user.name}-${user.role}-${index}`"
                         :class="{ 'bg-slate-800/30': user.available === 0 }"
                     >
                         <td class="text-slate-100">{{ user.name }}</td>
@@ -79,7 +61,7 @@ const getRoles = async () => {
                             </span>
                         </td>
                     </tr>
-                    <tr v-if="loading">
+                    <tr v-if="false">
                         <td colspan="3" class="text-center py-6">
                             <div class="flex items-center justify-center gap-2 text-slate-400">
                                 <svg class="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">

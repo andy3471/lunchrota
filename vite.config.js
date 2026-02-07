@@ -13,6 +13,10 @@ export default defineConfig({
             refresh: true,
         }),
         vue({
+            script: {
+                defineModel: true,
+                propsDestructure: true,
+            },
             template: {
                 transformAssetUrls: {
                     base: null,
