@@ -97,7 +97,7 @@ const isButtonDisabled = (slot: LunchSlotData) => {
     if (!props.loggedIn) return true;
     if (props.canSelect === false) return true; // Disable if explicitly false (not today)
     if (slot.id === selectedLunch.value) return true;
-    if (props.available && slot.available_today === 0) return true;
+    if (props.available && slot.available_slots === 0) return true;
     return false;
 };
 </script>
@@ -128,7 +128,7 @@ const isButtonDisabled = (slot: LunchSlotData) => {
                     @click="setLunch(slot.id)"
                 >
                     {{ slot.time }}
-                    <span class="ml-1 text-xs opacity-75">({{ slot.available_today }})</span>
+                    <span class="ml-1 text-xs opacity-75">({{ slot.available_slots }})</span>
                 </button>
                 <button
                     :disabled="!loggedIn || selectedLunch === null || !props.canSelect"

@@ -7,14 +7,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class LunchSlot extends Model
 {
-    protected $appends = [
-        'available_today',
-    ];
-
     protected $fillable = [
         'time',
         'available',
@@ -33,6 +30,34 @@ class LunchSlot extends Model
             ->withPivot('date');
     }
 
+    public function getTotalAvailableForDate(string $date): int|float
+    {
+        if (! config('app.lunch_slot_calculated')) {
+            return $this->available;
+        }
+
+        $ratio      = config('app.lunch_slot_calculated_ratio');
+        $rolesToday = RoleUser::query()
+            ->where('date', $date)
+            ->whereHas('role', fn ($query) => $query->where('available', true))
+            ->count();
+
+        return (int) floor(1 + (($rolesToday - 1) * $ratio));
+    }
+
+    public function getClaimedCountForDate(string $date): int
+    {
+        return DB::table('lunch_slot_user')
+            ->where('lunch_slot_id', $this->id)
+            ->where('date', $date)
+            ->count();
+    }
+
+    public function getAvailableForDate(string $date): int|float
+    {
+        return max(0, $this->getTotalAvailableForDate($date) - $this->getClaimedCountForDate($date));
+    }
+
     /** @return Attribute<string, never> */
     protected function time(): Attribute
     {
@@ -42,43 +67,27 @@ class LunchSlot extends Model
             });
     }
 
-    // TODO: Tidy this all up
+    /** @return Attribute<int|float, never> */
+    protected function totalAvailableToday(): Attribute
+    {
+        return Attribute::make(
+            get: fn (): int|float => $this->getTotalAvailableForDate(Carbon::today()->toDateString())
+        );
+    }
+
+    /** @return Attribute<int, never> */
+    protected function claimedCountToday(): Attribute
+    {
+        return Attribute::make(
+            get: fn (): int => $this->getClaimedCountForDate(Carbon::today()->toDateString())
+        );
+    }
 
     /** @return Attribute<int|float, never> */
     protected function availableToday(): Attribute
     {
         return Attribute::make(
-            get: function (): int|float {
-                $date = \Illuminate\Support\Facades\Date::today()->toDateString();
-
-                if (config('app.lunch_slot_calculated')) {
-                    $ratio = config('app.lunch_slot_calculated_ratio');
-
-                    $rolesToday = DB::Table('role_user')
-                        ->join('roles', 'role_user.role_id', 'roles.id')
-                        ->join('users', 'role_user.user_id', 'users.id')
-                        ->where('role_user.date', $date)
-                        ->where('roles.available', true)
-                        ->count();
-
-                    $totalAvailable = floor(1 + (($rolesToday - 1) * ($ratio)));
-                } else {
-                    $totalAvailable = $this->available;
-                }
-
-                $totalClaimed = DB::Table('lunch_slot_user')
-                    ->join('users', 'lunch_slot_user.user_id', 'users.id')
-                    ->where('date', $date)
-                    ->where('lunch_slot_id', $this->id)
-                    ->count();
-
-                $remainingAvailable = $totalAvailable - $totalClaimed;
-                if ($remainingAvailable < 0) {
-                    return 0;
-                }
-
-                return $remainingAvailable;
-            }
+            get: fn (): int|float => $this->getAvailableForDate(Carbon::today()->toDateString())
         );
     }
 }

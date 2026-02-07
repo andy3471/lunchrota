@@ -9,7 +9,7 @@ selectedDate: string;
 export type LunchSlotData = {
 id: number;
 time: string;
-available_today: number;
+available_slots: number;
 };
 export type RoleData = {
 name: string;

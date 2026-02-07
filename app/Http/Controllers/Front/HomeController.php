@@ -70,29 +70,29 @@ class HomeController extends Controller
         $available = auth()->user()?->available ?? true;
 
         $lunchSlotData = $lunchslots->map(fn ($slot) => LunchSlotData::from([
-            'id' => $slot->id,
-            'time' => $slot->time,
-            'available_today' => $slot->available_today,
+            'id'              => $slot->id,
+            'time'            => $slot->time,
+            'available_slots' => $slot->getAvailableForDate($date),
         ]))->toArray();
 
         $userLunchData = $userLunches->map(fn ($lunch) => UserLunchData::from([
-            'id' => $lunch->id,
+            'id'   => $lunch->id,
             'name' => $lunch->name,
             'time' => $lunch->time,
         ]))->toArray();
 
         $roleData = $roles->map(fn ($role) => RoleData::from([
-            'name' => $role->name,
-            'role' => $role->role,
+            'name'      => $role->name,
+            'role'      => $role->role,
             'available' => $role->available,
         ]))->toArray();
 
         $pageData = HomePageData::from([
-            'lunchSlots' => $lunchSlotData,
-            'initialSlot' => $initialSlot,
-            'available' => (bool) $available,
-            'userLunches' => $userLunchData,
-            'roles' => $roleData,
+            'lunchSlots'   => $lunchSlotData,
+            'initialSlot'  => $initialSlot,
+            'available'    => (bool) $available,
+            'userLunches'  => $userLunchData,
+            'roles'        => $roleData,
             'selectedDate' => $date,
         ]);
 
