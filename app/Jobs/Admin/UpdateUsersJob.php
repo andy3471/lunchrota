@@ -44,10 +44,10 @@ class UpdateUsersJob implements ShouldQueue
                 $user->password = bcrypt($u['new_password']);
             }
 
-            $user->name      = $u['name'];
-            $user->email     = $u['email'];
-            $user->admin     = $u['admin'];
-            $user->scheduled = $u['scheduled'];
+            $user->name         = $u['name'];
+            $user->email        = $u['email'];
+            $user->is_admin     = $u['is_admin'];
+            $user->is_scheduled = $u['is_scheduled'];
             $user->save();
         }
 

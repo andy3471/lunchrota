@@ -11,6 +11,12 @@ services:
     depends_on:
       - postgres
       - redis
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+        reservations:
+          memory: 256M
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.lunchrota-demo.rule=Host(`lunchrota.andyh.app`)"

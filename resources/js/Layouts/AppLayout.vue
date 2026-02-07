@@ -28,12 +28,6 @@ const toggleMobileMenu = () => {
                     <!-- Left: Logo and Nav -->
                     <div class="flex items-center gap-6">
                         <Link href="/" class="flex items-center gap-3">
-                            <img
-                                src="/img/logo_default.png"
-                                alt="Logo"
-                                class="h-8 w-auto"
-                                onerror="this.style.display='none'"
-                            />
                             <h1 class="text-xl font-bold text-slate-100">
                                 {{ config.appName }}
                             </h1>

@@ -28,6 +28,8 @@ class LunchSlotData extends Data
 
     public static function collectForDate($items, string $date)
     {
-        return collect($items)->map(fn ($slot) => self::fromLunchSlot($slot, $date));
+        return self::collect(
+            collect($items)->map(fn ($slot) => self::fromLunchSlot($slot, $date))
+        );
     }
 }

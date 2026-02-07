@@ -54,7 +54,7 @@ class RolesGenerate extends Command
                 $users = User::whereNotIn('id', $usersWithRoles)->get();
 
                 foreach ($users as $user) {
-                    if ($user->scheduled) {
+                    if ($user->is_scheduled) {
                         $user->roles()->attach($defaultRole, ['date' => $dateString]);
                         $this->line($user->name.' Given Role Of '.$defaultRole->name.' For '.$dateString);
                     } else {

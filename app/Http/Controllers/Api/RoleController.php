@@ -18,7 +18,7 @@ class RoleController extends Controller
         $date = \Illuminate\Support\Facades\Date::parse($date)->toDateString();
 
         $roles = DB::table('users')
-            ->select('users.name', 'roles.name as role', 'roles.available')
+            ->select('users.name', 'roles.name as role', 'roles.is_available')
             ->join('role_user', 'users.id', '=', 'role_user.user_id')
             ->join('roles', 'roles.id', '=', 'role_user.role_id')
             ->where('role_user.date', $date)

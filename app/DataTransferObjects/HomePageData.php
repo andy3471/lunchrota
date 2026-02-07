@@ -4,23 +4,23 @@ declare(strict_types=1);
 
 namespace App\DataTransferObjects;
 
+use Spatie\LaravelData\Attributes\DataCollectionOf;
 use Spatie\LaravelData\Data;
+use Spatie\LaravelData\DataCollection;
 use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
 #[TypeScript]
 class HomePageData extends Data
 {
-    /**
-     * @param array<int, LunchSlotData> $lunchSlots
-     * @param array<int, UserLunchData> $userLunches
-     * @param array<int, RoleData> $roles
-     */
     public function __construct(
-        public array $lunchSlots,
+        #[DataCollectionOf(LunchSlotData::class)]
+        public DataCollection $lunchSlots,
         public ?int $initialSlot,
         public bool $available,
-        public array $userLunches,
-        public array $roles,
+        #[DataCollectionOf(UserLunchData::class)]
+        public DataCollection $userLunches,
+        #[DataCollectionOf(RoleData::class)]
+        public DataCollection $roles,
         public string $selectedDate,
     ) {}
 }

@@ -6,6 +6,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
+use Throwable;
 
 class CacheAll extends Command
 {
@@ -24,24 +25,26 @@ class CacheAll extends Command
     protected $description = 'Command description';
 
     /** Execute the console command. */
-    public function handle(): void
+    public function handle(): int
     {
-        $this->info('Caching Icons...');
-        Artisan::call('icons:cache');
+        $commands = [
+            ['icons:cache', 'Caching Icons...'],
+            ['event:cache', 'Caching Events...'],
+            ['route:cache', 'Caching Routes...'],
+            ['filament:cache-components', 'Caching Filament Components...'],
+            ['config:cache', 'Caching Config...'],
+            ['view:cache', 'Caching Views...'],
+        ];
 
-        $this->info('Caching Events...');
-        Artisan::call('event:cache');
+        foreach ($commands as [$command, $message]) {
+            try {
+                $this->info($message);
+                Artisan::call($command);
+            } catch (Throwable $e) {
+                $this->error("Failed to cache {$command}: {$e->getMessage()}");
+            }
+        }
 
-        $this->info('Caching Routes...');
-        Artisan::call('route:cache');
-
-        $this->info('Caching Filament Components...');
-        Artisan::call('filament:cache-components');
-
-        $this->info('Caching Config...');
-        Artisan::call('config:cache');
-
-        $this->info('Caching Views...');
-        Artisan::call('view:cache');
+        return Command::SUCCESS;
     }
 }

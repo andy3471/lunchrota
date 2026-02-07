@@ -34,9 +34,9 @@ class UserResource extends Resource
                             ->email()
                             ->required()
                             ->maxLength(255),
-                        Forms\Components\Toggle::make('admin')
+                        Forms\Components\Toggle::make('is_admin')
                             ->required(),
-                        Forms\Components\Toggle::make('scheduled')
+                        Forms\Components\Toggle::make('is_scheduled')
                             ->required(),
                         Forms\Components\Checkbox::make('change_password')
                             ->label('Change Password')
@@ -77,13 +77,13 @@ class UserResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\IconColumn::make('admin')
+                Tables\Columns\IconColumn::make('is_admin')
                     ->boolean(),
                 Tables\Columns\TextColumn::make('deleted_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\IconColumn::make('scheduled')
+                Tables\Columns\IconColumn::make('is_scheduled')
                     ->boolean(),
             ])
             ->filters([

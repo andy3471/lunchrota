@@ -58,6 +58,5 @@ jobs:
             cd /home/admin/lunchrota-demo
             docker compose pull
             docker compose up -d
-            docker compose exec -T lunchrota php artisan view:cache
             docker compose exec -T lunchrota php artisan migrate --force
-            docker compose exec -T lunchrota php artisan cache:all
+            docker compose exec -T lunchrota php artisan cache:all || true

@@ -25,7 +25,9 @@ class User extends Authenticatable implements FilamentUser
         'name',
         'email',
         'password',
-        'admin',
+        'is_admin',
+        'is_approved',
+        'is_scheduled',
     ];
 
     protected $appends = [
@@ -40,7 +42,7 @@ class User extends Authenticatable implements FilamentUser
 
     public function canAccessPanel(Panel $panel): bool
     {
-        return $this->admin;
+        return $this->is_admin;
     }
 
     /** @return BelongsToMany<Role, $this, \Illuminate\Database\Eloquent\Relations\Pivot> */
@@ -79,7 +81,7 @@ class User extends Authenticatable implements FilamentUser
         $roleUser = RoleUser::query()
             ->where('user_id', $this->id)
             ->where('date', $date)
-            ->whereHas('role', fn ($query) => $query->where('available', true))
+            ->whereHas('role', fn ($query) => $query->where('is_available', true))
             ->first();
 
         return $roleUser !== null;
@@ -106,8 +108,9 @@ class User extends Authenticatable implements FilamentUser
     {
         return [
             'email_verified_at' => 'datetime',
-            'admin'             => 'boolean',
-            'scheduled'         => 'boolean',
+            'is_admin'          => 'boolean',
+            'is_approved'       => 'boolean',
+            'is_scheduled'      => 'boolean',
         ];
     }
 }

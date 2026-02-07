@@ -13,14 +13,14 @@
 
 namespace App\Models{
 /**
- * 
- *
  * @property int $id
  * @property string $time
  * @property \Carbon\CarbonImmutable|null $created_at
  * @property \Carbon\CarbonImmutable|null $updated_at
  * @property int $available
  * @property-read int|float $available_today
+ * @property-read int $claimed_count_today
+ * @property-read int|float $total_available_today
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $users
  * @property-read int|null $users_count
  * @method static \Illuminate\Database\Eloquent\Builder<static>|LunchSlot newModelQuery()
@@ -31,27 +31,26 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|LunchSlot whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|LunchSlot whereTime($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|LunchSlot whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|LunchSlot withUsersForDate(string $date)
  */
 	class LunchSlot extends \Eloquent {}
 }
 
 namespace App\Models{
 /**
- * 
- *
  * @property int $id
  * @property string $name
  * @property \Carbon\CarbonImmutable|null $created_at
  * @property \Carbon\CarbonImmutable|null $updated_at
- * @property bool $available
+ * @property bool|null $is_available
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $users
  * @property-read int|null $users_count
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Role newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Role newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Role query()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Role whereAvailable($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Role whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Role whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Role whereIsAvailable($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Role whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Role whereUpdatedAt($value)
  */
@@ -60,16 +59,15 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- * 
- *
  * @property int $id
  * @property int $role_id
  * @property int $user_id
- * @property string $date
+ * @property \Carbon\CarbonImmutable $date
  * @property \Carbon\CarbonImmutable|null $created_at
  * @property \Carbon\CarbonImmutable|null $updated_at
  * @property-read \App\Models\Role $role
  * @property-read \App\Models\User $user
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|RoleUser forDate(string $date)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RoleUser newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RoleUser newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RoleUser query()
@@ -85,8 +83,6 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- * 
- *
  * @property int $id
  * @property string $name
  * @property string $email
@@ -95,10 +91,10 @@ namespace App\Models{
  * @property string|null $remember_token
  * @property \Carbon\CarbonImmutable|null $created_at
  * @property \Carbon\CarbonImmutable|null $updated_at
- * @property bool $admin
+ * @property int|null $is_admin
  * @property \Carbon\CarbonImmutable|null $deleted_at
- * @property bool $scheduled
- * @property-read bool $available
+ * @property int|null $is_scheduled
+ * @property-read bool $available_today
  * @property-read bool $is_deleted
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\LunchSlot> $lunches
  * @property-read int|null $lunches_count
@@ -111,18 +107,19 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User onlyTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User query()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereAdmin($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereEmail($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereEmailVerifiedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereIsAdmin($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereIsScheduled($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User wherePassword($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereRememberToken($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereScheduled($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User withLunchesForDate(string $date)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User withTrashed(bool $withTrashed = true)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User withoutTrashed()
  */
 	class User extends \Eloquent implements \Filament\Models\Contracts\FilamentUser {}

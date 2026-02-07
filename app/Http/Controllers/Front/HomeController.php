@@ -27,7 +27,7 @@ class HomeController extends Controller
             'lunchSlots' => LunchSlotData::collectForDate(
                 LunchSlot::orderBy('time')->get(),
                 $date->toDateString()
-            )->toArray(),
+            ),
             'initialSlot' => auth()->check()
                 ? auth()->user()->lunchesForDate($date->toDateString())->first()?->id
                 : null,
@@ -36,13 +36,13 @@ class HomeController extends Controller
                 User::query()
                     ->withLunchesForDate($date->toDateString())
                     ->get()
-            )->toArray(),
+            ),
             'roles' => RoleData::collect(
                 RoleUser::query()
                     ->forDate($date->toDateString())
                     ->with(['user', 'role'])
                     ->get()
-            )->toArray(),
+            ),
             'selectedDate' => $date->toDateString(),
         ])->toArray());
     }

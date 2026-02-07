@@ -29,7 +29,7 @@ class RoleResource extends Resource
                         Forms\Components\TextInput::make('name')
                             ->required()
                             ->maxLength(255),
-                        Forms\Components\Toggle::make('available')
+                        Forms\Components\Toggle::make('is_available')
                             ->required(),
                     ]),
             ]);
@@ -49,7 +49,7 @@ class RoleResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\IconColumn::make('available')
+                Tables\Columns\IconColumn::make('is_available')
                     ->boolean(),
             ])
             ->filters([

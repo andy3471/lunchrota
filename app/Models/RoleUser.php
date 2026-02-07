@@ -33,4 +33,11 @@ class RoleUser extends Pivot
             ->join('users', "{$table}.user_id", '=', 'users.id')
             ->orderBy('users.name');
     }
+
+    protected function casts(): array
+    {
+        return [
+            'date' => 'date',
+        ];
+    }
 }

@@ -14,15 +14,15 @@ class RoleData extends Data
     public function __construct(
         public string $name,
         public string $role,
-        public int $available,
+        public int $is_available,
     ) {}
 
     public static function fromRoleUser(RoleUser $roleUser): self
     {
         return self::from([
-            'name'      => $roleUser->user->name,
-            'role'      => $roleUser->role->name,
-            'available' => $roleUser->role->available,
+            'name'         => $roleUser->user->name,
+            'role'         => $roleUser->role->name,
+            'is_available' => $roleUser->role->is_available,
         ]);
     }
 

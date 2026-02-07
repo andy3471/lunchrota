@@ -29,7 +29,7 @@ class AppServiceProvider extends ServiceProvider
     public function bootAuth(): void
     {
         Gate::define('admin', function ($user) {
-            return $user->admin;
+            return $user->is_admin;
         });
     }
 

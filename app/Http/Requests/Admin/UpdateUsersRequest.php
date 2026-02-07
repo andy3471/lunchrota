@@ -13,12 +13,12 @@ class UpdateUsersRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'users.*.name'         => ['required', 'string'],
-            'users.*.email'        => ['email'],
-            'users.*.scheduled'    => ['required', 'boolean'],
-            'users.*.admin'        => ['required', 'boolean'],
-            'users.*.deleted'      => ['required', 'boolean'],
-            'users.*.new_password' => ['nullable', 'string', 'min:6'],
+            'users.*.name'          => ['required', 'string'],
+            'users.*.email'         => ['email'],
+            'users.*.is_scheduled'  => ['required', 'boolean'],
+            'users.*.is_admin'      => ['required', 'boolean'],
+            'users.*.deleted'       => ['required', 'boolean'],
+            'users.*.new_password'  => ['nullable', 'string', 'min:6'],
         ];
     }
 }

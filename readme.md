@@ -115,11 +115,6 @@ MAIL_PASSWORD | Email Pasword
 MAIL_ENCRYPTION | can be set to SSL or TLS, if your mail server requires it.
 MAIL_FROM_NAME | Name that emails appear to be sent from.
 
-You can override the logo by adding the following volume bind, and creating a file called logo.png locally, in the docker-compose folder.:
-```yml
-- ./logo.png:/app/public/images/logo_override.png
-```
-
 ### Reverse Proxy
 You can run the site behind an NGINX reverse proxy, using a config like:
 ```conf

@@ -45,7 +45,7 @@ class UpdateRolesJob implements ShouldQueue
                 $role = Role::find($r['id']);
             }
 
-            $role->available = $r['available'];
+            $role->is_available = $r['is_available'];
             $role->save();
         }
     }

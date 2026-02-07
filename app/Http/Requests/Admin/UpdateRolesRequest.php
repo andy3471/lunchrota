@@ -13,8 +13,8 @@ class UpdateRolesRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'roles.*.name'      => ['required', 'string'],
-            'roles.*.available' => ['required', 'boolean'],
+            'roles.*.name'         => ['required', 'string'],
+            'roles.*.is_available' => ['required', 'boolean'],
         ];
     }
 }

@@ -47,7 +47,7 @@ class LunchSlot extends Model
         $ratio      = config('app.lunch_slot_calculated_ratio');
         $rolesToday = RoleUser::query()
             ->where('date', $date)
-            ->whereHas('role', fn ($query) => $query->where('available', true))
+            ->whereHas('role', fn ($query) => $query->where('is_available', true))
             ->count();
 
         return (int) floor(1 + (($rolesToday - 1) * $ratio));
@@ -97,5 +97,13 @@ class LunchSlot extends Model
         return Attribute::make(
             get: fn (): int|float => $this->getAvailableForDate(Carbon::today()->toDateString())
         );
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'time'      => 'datetime',
+            'available' => 'integer',
+        ];
     }
 }

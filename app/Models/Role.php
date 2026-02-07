@@ -12,7 +12,7 @@ class Role extends Model
 {
     protected $fillable = [
         'name',
-        'available',
+        'is_available',
     ];
 
     /** @return BelongsToMany<User, $this, Pivot> */
@@ -25,7 +25,7 @@ class Role extends Model
     protected function casts(): array
     {
         return [
-            'available' => 'boolean',
+            'is_available' => 'boolean',
         ];
     }
 }
