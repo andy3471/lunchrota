@@ -37,7 +37,6 @@ class HandleInertiaRequests extends Middleware
             ],
             'config' => [
                 'appName'              => config('app.name', 'Rota'),
-                'footerText'           => config('app.footer_text'),
                 'demoMode'             => config('app.demo_mode', false),
                 'registerEnabled'      => config('app.register_enabled', true),
                 'resetPasswordEnabled' => config('app.reset_password_enabled', true),

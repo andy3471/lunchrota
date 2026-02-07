@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -28,6 +29,13 @@ class LunchSlot extends Model
         return $this
             ->belongsToMany(User::class)
             ->withPivot('date');
+    }
+
+    public function scopeWithUsersForDate(Builder $query, string $date): Builder
+    {
+        return $query
+            ->with(['users' => fn ($q) => $q->wherePivot('date', $date)])
+            ->whereHas('users', fn ($q) => $q->wherePivot('date', $date));
     }
 
     public function getTotalAvailableForDate(string $date): int|float

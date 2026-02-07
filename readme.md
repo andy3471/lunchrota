@@ -101,7 +101,6 @@ APP_REGISTER_ENAMED | Boolean, whether users can register
 APP_RESET_PASSWORDS_ENABLED | Boolean, allows users to reset their own passwords
 APP_ROLES_ENABLED | Boolean, disabled or enables setting users as specific daily roles. Disable if you just want this to be a way of claiming lunch slots.
 APP_DEFAULT_ROLE | String, must match a role created already. Must be asigned to both the web server and the scheduler.
-APP_FOOTER_TEXT | String, the text that appears in the footer
 LUNCH_SLOT_CALCULATED | Boolean, roles must be enabled. This will make the available users are lunch calculate automatically. This is designed for instances where a certain number of people need to be on the phones at one time. This will look at the number of users with an available role (as in, a role that means they are available on the phones), and then calculate how many people can go at once, depending on the ratio.
 LUNCH_SLOT_RATIO | To be used with LUNCH_SLOT_CALCULATED, defaults at 0.33, this means 1/3 of users with an available role can book one lunch slot. This is too many users who need to be on the phones from booking their own slot.
 DB_HOST | MySQL host, usually the container name of the SQL server

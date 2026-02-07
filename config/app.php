@@ -22,8 +22,6 @@ return [
 
     'default_role' => env('APP_DEFAULT_ROLE', 'none'),
 
-    'footer_text' => env('APP_FOOTER_TEXT', ''),
-
     'aliases' => Facade::defaultAliases()->merge([
         'Redis' => Illuminate\Support\Facades\Redis::class,
     ])->toArray(),

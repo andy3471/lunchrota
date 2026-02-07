@@ -6,13 +6,14 @@ namespace App\Models;
 
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
 
 class User extends Authenticatable implements FilamentUser
 {
@@ -29,7 +30,7 @@ class User extends Authenticatable implements FilamentUser
 
     protected $appends = [
         'deleted',
-        'available',
+        'available_today',
     ];
 
     protected $hidden = [
@@ -56,6 +57,34 @@ class User extends Authenticatable implements FilamentUser
             ->withPivot('date');
     }
 
+    public function lunchesForDate(string $date): BelongsToMany
+    {
+        return $this->lunches()->wherePivot('date', $date);
+    }
+
+    public function scopeWithLunchesForDate(Builder $query, string $date): Builder
+    {
+        return $query
+            ->with(['lunches' => fn ($q) => $q->wherePivot('date', $date)->orderBy('time')])
+            ->whereHas('lunches', fn ($q) => $q->where('lunch_slot_user.date', $date))
+            ->orderBy('name');
+    }
+
+    public function isAvailableForDate(string $date): bool
+    {
+        if (! config('app.roles_enabled')) {
+            return true;
+        }
+
+        $roleUser = RoleUser::query()
+            ->where('user_id', $this->id)
+            ->where('date', $date)
+            ->whereHas('role', fn ($query) => $query->where('available', true))
+            ->first();
+
+        return $roleUser !== null;
+    }
+
     protected function isDeleted(): Attribute
     {
         return Attribute::make(
@@ -65,26 +94,11 @@ class User extends Authenticatable implements FilamentUser
         );
     }
 
-    // TODO: Tidy this all up
-    protected function available(): Attribute
+    /** @return Attribute<bool, never> */
+    protected function availableToday(): Attribute
     {
         return Attribute::make(
-            get: function (): bool {
-                if (! config('app.roles_enabled')) {
-                    return true;
-                }
-
-                $date = \Illuminate\Support\Facades\Date::today()->toDateString();
-
-                $available = DB::table('role_user')
-                    ->select('roles.available')
-                    ->join('roles', 'role_user.role_id', 'roles.id')
-                    ->where('role_user.user_id', $this->id)
-                    ->where('role_user.date', $date)
-                    ->first();
-
-                return isset($available->available) && $available->available;
-            }
+            get: fn (): bool => $this->isAvailableForDate(Carbon::today()->toDateString())
         );
     }
 
