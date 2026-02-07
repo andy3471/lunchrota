@@ -5,10 +5,12 @@ import type { RoleData } from '@/Types/generated';
 interface Props {
     date: Date;
     roles?: RoleData[];
+    loading?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
     roles: () => [],
+    loading: false,
 });
 
 const userRoles = ref<RoleData[]>(props.roles);
@@ -61,7 +63,7 @@ watch(() => props.roles, (newVal) => {
                             </span>
                         </td>
                     </tr>
-                    <tr v-if="false">
+                    <tr v-if="loading">
                         <td colspan="3" class="text-center py-6">
                             <div class="flex items-center justify-center gap-2 text-slate-400">
                                 <svg class="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">

@@ -11,6 +11,8 @@ interface Props {
     initialLunch?: number | null;
     available?: boolean;
     userLunches?: UserLunchData[];
+    loading?: boolean;
+    canSelect?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -18,6 +20,8 @@ const props = withDefaults(defineProps<Props>(), {
     initialLunch: null,
     available: false,
     userLunches: () => [],
+    loading: false,
+    canSelect: true,
 });
 
 const slots = ref<LunchSlotData[]>(props.lunchSlots);
@@ -37,6 +41,11 @@ watch(() => props.lunchSlots, (newVal) => {
 
 watch(() => props.initialLunch, (newVal) => {
     selectedLunch.value = newVal ?? null;
+}, { immediate: true });
+
+// Debug: log canSelect prop
+watch(() => props.canSelect, (newVal) => {
+    console.log('canSelect prop changed:', newVal);
 }, { immediate: true });
 
 const setLunch = (id) => {
@@ -86,6 +95,7 @@ const showToast = (type: string, message: string) => {
 
 const isButtonDisabled = (slot: LunchSlotData) => {
     if (!props.loggedIn) return true;
+    if (props.canSelect === false) return true; // Disable if explicitly false (not today)
     if (slot.id === selectedLunch.value) return true;
     if (props.available && slot.available_today === 0) return true;
     return false;
@@ -121,9 +131,9 @@ const isButtonDisabled = (slot: LunchSlotData) => {
                     <span class="ml-1 text-xs opacity-75">({{ slot.available_today }})</span>
                 </button>
                 <button
-                    :disabled="!loggedIn || selectedLunch === null"
+                    :disabled="!loggedIn || selectedLunch === null || !props.canSelect"
                     class="px-3 py-1.5 text-sm font-medium rounded-md bg-slate-700 text-slate-300 hover:bg-slate-600 hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                    :title="selectedLunch ? 'Remove selection' : ''"
+                    :title="selectedLunch && props.canSelect ? 'Remove selection' : props.canSelect ? '' : 'You can only modify lunch slots for today'"
                     @click="removeLunch"
                 >
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -147,7 +157,7 @@ const isButtonDisabled = (slot: LunchSlotData) => {
                         <td class="text-slate-100">{{ user.name }}</td>
                         <td class="text-slate-300">{{ user.time }}</td>
                     </tr>
-                    <tr v-if="usersLoading">
+                    <tr v-if="usersLoading || loading">
                         <td colspan="2" class="text-center py-6">
                             <div class="flex items-center justify-center gap-2 text-slate-400">
                                 <svg class="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">

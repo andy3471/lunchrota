@@ -48,7 +48,7 @@
 
     /* Card styles */
     .card {
-        @apply bg-gray-800 rounded-lg border border-gray-700 shadow-lg;
+        @apply bg-slate-800/60 rounded-lg border border-slate-700/50 shadow-lg;
     }
 
     /* Table styles */

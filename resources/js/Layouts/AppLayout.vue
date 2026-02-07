@@ -20,7 +20,7 @@ const toggleMobileMenu = () => {
 </script>
 
 <template>
-    <div class="min-h-screen flex flex-col bg-gray-900">
+    <div class="min-h-screen flex flex-col bg-slate-950">
         <!-- Header with Navigation -->
         <header class="bg-slate-900/95 border-b border-slate-800 backdrop-blur-sm">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

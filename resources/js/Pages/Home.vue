@@ -16,13 +16,28 @@ const config = computed(() => page.props.config);
 const auth = computed(() => page.props.auth);
 
 // Get initial date from props (which comes from server based on URL query param)
-const date = ref(props.selectedDate ? new Date(props.selectedDate) : new Date());
-
-console.log('Initial date from props:', props.selectedDate, 'Date ref:', date.value);
+// Server defaults to today if no date param, so props.selectedDate should always have a value
+const date = ref(new Date(props.selectedDate));
+const dateLoading = ref(false);
+let lastHandledDateString = props.selectedDate;
+let isInitialMount = true;
 
 const isLoggedIn = computed(() => !!auth.value.user);
 
-// Sync local date with prop when server updates it
+// Check if the selected date is today
+const isToday = computed(() => {
+    if (!props.selectedDate) return false;
+    const today = new Date();
+    // Use local date strings to avoid timezone issues
+    const todayString = today.getFullYear() + '-' + 
+        String(today.getMonth() + 1).padStart(2, '0') + '-' + 
+        String(today.getDate()).padStart(2, '0');
+    // props.selectedDate is already in YYYY-MM-DD format from the server
+    const selectedDateString = props.selectedDate;
+    return todayString === selectedDateString;
+});
+
+// Sync local date with prop when server updates it (but don't trigger reload)
 watch(() => props.selectedDate, (newDateString) => {
     if (newDateString) {
         const newDate = new Date(newDateString);
@@ -30,6 +45,8 @@ watch(() => props.selectedDate, (newDateString) => {
         // Only update if different to avoid infinite loop
         if (currentDateString !== newDateString) {
             date.value = newDate;
+            // Update last handled date string to prevent reload trigger
+            lastHandledDateString = newDateString;
         }
     }
 });
@@ -43,11 +60,10 @@ const handleDateChange = (newDate: Date) => {
     
     // Skip if we're already on this date (prevents unnecessary reloads)
     if (dateString === currentDateString) {
-        console.log('Date unchanged, skipping reload:', dateString);
         return;
     }
     
-    console.log('Date changed, reloading data:', { currentDate: currentDateString, newDate: dateString });
+    dateLoading.value = true;
     
     // Use router.get with data - Inertia will add it as query params
     router.get('/', {
@@ -55,13 +71,35 @@ const handleDateChange = (newDate: Date) => {
     }, {
         preserveScroll: true,
         only: ['userLunches', 'roles', 'lunchSlots', 'initialSlot', 'selectedDate'],
+        onFinish: () => {
+            dateLoading.value = false;
+        },
+        onError: () => {
+            dateLoading.value = false;
+        },
     });
 };
 
-// Watch date changes and reload data
-watch(date, (newDate, oldDate) => {
-    console.log('Watch fired:', { newDate, oldDate });
-    handleDateChange(newDate);
+// Watch date changes and reload data (skip initial sync)
+watch(() => date.value, (newDate) => {
+    // Skip the initial mount to prevent reload on page load
+    if (isInitialMount) {
+        isInitialMount = false;
+        lastHandledDateString = props.selectedDate;
+        return;
+    }
+    
+    if (!newDate) {
+        return;
+    }
+    
+    const dateString = newDate.toISOString().split('T')[0];
+    
+    // Only handle if the date string actually changed
+    if (dateString && dateString !== lastHandledDateString) {
+        lastHandledDateString = dateString;
+        handleDateChange(newDate);
+    }
 }, { immediate: false });
 
 const selectedDateAttributes = computed(() => {
@@ -84,7 +122,7 @@ const selectedDateAttributes = computed(() => {
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 items-stretch">
             <!-- Roles Panel -->
             <div v-if="config.rolesEnabled" class="order-1 lg:order-1 flex">
-                <RoleSelector :date="date" :roles="roles" />
+                <RoleSelector :date="date" :roles="props.roles" :loading="dateLoading" />
             </div>
 
             <!-- Date Picker Panel -->
@@ -104,13 +142,15 @@ const selectedDateAttributes = computed(() => {
                             :rows="1"
                             mode="date"
                             :is-required="false"
+                            @update:model-value="(value) => {
+                                if (value) {
+                                    date.value = Array.isArray(value) ? value[0] : value;
+                                }
+                            }"
                             @dayclick="(day) => {
-                                console.log('Day clicked:', day);
                                 const newDate = new Date(day.date);
-                                console.log('Setting date to:', newDate);
                                 date.value = newDate;
-                                console.log('Date after set:', date.value);
-                                // Also call handler directly in case watch doesn't fire
+                                // Call handleDateChange directly since watch might not fire immediately
                                 handleDateChange(newDate);
                             }"
                         />
@@ -121,11 +161,13 @@ const selectedDateAttributes = computed(() => {
             <!-- Lunches Panel -->
             <div :class="config.rolesEnabled ? 'order-3 lg:order-3 flex' : 'lg:col-span-3 max-w-2xl mx-auto w-full flex'">
                 <LunchSelector
-                    :lunch-slots="lunchSlots"
+                    :lunch-slots="props.lunchSlots"
                     :logged-in="isLoggedIn"
-                    :initial-lunch="initialSlot"
-                    :available="available"
-                    :user-lunches="userLunches"
+                    :initial-lunch="props.initialSlot"
+                    :available="props.available"
+                    :user-lunches="props.userLunches"
+                    :loading="dateLoading"
+                    :can-select="isToday"
                 />
             </div>
         </div>
