@@ -12,13 +12,3 @@ declare(strict_types=1);
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
-use App\Http\Controllers\AdminApi\RoleController;
-use App\Http\Controllers\Api\RoleController as ApiRoleController;
-
-Route::get('roles', [ApiRoleController::class, 'index']);
-
-Route::prefix('admin')->middleware('can:admin')->name('admin.')->group(function (): void {
-    Route::get('user-roles', [RoleController::class, 'index'])->name('user-roles.index');
-    Route::post('user-roles', [RoleController::class, 'update'])->name('user-roles.update');
-});

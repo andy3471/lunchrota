@@ -2,13 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\Front;
+namespace App\Http\Controllers;
 
 use App\DataTransferObjects\HomePageData;
 use App\DataTransferObjects\LunchSlotData;
 use App\DataTransferObjects\RoleData;
 use App\DataTransferObjects\UserLunchData;
-use App\Http\Controllers\Controller;
 use App\Models\RoleUser;
 use App\Models\Team;
 use App\Models\User;
@@ -19,7 +18,7 @@ use Inertia\Response;
 
 class HomeController extends Controller
 {
-    public function index(Request $request): Response
+    public function __invoke(Request $request): Response
     {
         /** @var Team $team */
         $team = app('currentTeam');

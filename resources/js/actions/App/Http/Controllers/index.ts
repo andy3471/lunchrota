@@ -1,13 +1,17 @@
-import Front from './Front'
 import Auth from './Auth'
-import Api from './Api'
-import AdminApi from './AdminApi'
+import HomeController from './HomeController'
+import ClaimController from './Lunch/ClaimController'
+import PasswordController from './User/PasswordController'
 
 const Controllers = {
-    Front: Object.assign(Front, Front),
     Auth: Object.assign(Auth, Auth),
-    Api: Object.assign(Api, Api),
-    AdminApi: Object.assign(AdminApi, AdminApi),
+    HomeController: Object.assign(HomeController, HomeController),
+    Lunch: {
+        ClaimController: Object.assign(ClaimController, ClaimController),
+    },
+    User: {
+        PasswordController: Object.assign(PasswordController, PasswordController),
+    },
 }
 
 export default Controllers

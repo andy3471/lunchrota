@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use App\Http\Controllers\Front\BrochureController;
-use App\Http\Controllers\Front\TeamRegistrationController;
+use App\Http\Controllers\BrochureController;
+use App\Http\Controllers\Team\RegistrationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [BrochureController::class, 'index'])->name('brochure.home');
+Route::get('/', BrochureController::class)->name('brochure.home');
 
-Route::get('/register', [TeamRegistrationController::class, 'create'])->name('teams.register');
-Route::post('/register', [TeamRegistrationController::class, 'store'])->name('teams.store');
+Route::get('/register', [RegistrationController::class, 'create'])->name('teams.register');
+Route::post('/register', [RegistrationController::class, 'store'])->name('teams.store');

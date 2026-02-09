@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\Front;
+namespace App\Http\Controllers\Team;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterTeamRequest;
@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Hash;
 use Inertia\Inertia;
 use Inertia\Response;
 
-class TeamRegistrationController extends Controller
+class RegistrationController extends Controller
 {
     public function create(): Response
     {
@@ -24,6 +24,8 @@ class TeamRegistrationController extends Controller
 
     public function store(RegisterTeamRequest $request): RedirectResponse
     {
+        $this->authorize('create', Team::class);
+
         $validated = $request->validated();
 
         return DB::transaction(function () use ($request, $validated): RedirectResponse {

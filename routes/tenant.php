@@ -6,10 +6,9 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
-use App\Http\Controllers\Front\HomeController;
-use App\Http\Controllers\Front\LunchSlotController;
-use App\Http\Controllers\Front\RoleController;
-use App\Http\Controllers\Front\UserController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Lunch\ClaimController;
+use App\Http\Controllers\User\PasswordController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,7 +23,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Home
-Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/', HomeController::class)->name('home');
 
 // Guest routes
 Route::middleware('guest')->group(function (): void {
@@ -50,13 +49,11 @@ Route::middleware('guest')->group(function (): void {
 // Authenticated routes
 Route::middleware('auth')->group(function (): void {
     Route::post('logout', [LoginController::class, 'destroy'])->name('logout');
-    Route::get('change-password', [UserController::class, 'show'])->name('password.change');
-    Route::post('change-password', [UserController::class, 'changePassword'])->middleware('demo_mode');
+    Route::get('change-password', [PasswordController::class, 'show'])->name('password.change');
+    Route::put('change-password', [PasswordController::class, 'update'])->middleware('demo_mode');
 
     // Lunch slot actions
-    Route::post('lunch-slots/claim', [LunchSlotController::class, 'claim'])->name('lunch-slots.claim');
-    Route::post('lunch-slots/unclaim', [LunchSlotController::class, 'unclaim'])->name('lunch-slots.unclaim');
+    Route::post('lunch-slots/claim', [ClaimController::class, 'store'])->name('lunch-slots.claim');
+    Route::delete('lunch-slots/claim', [ClaimController::class, 'destroy'])->name('lunch-slots.unclaim');
 
-    // Roles
-    Route::get('roles', [RoleController::class, 'index'])->name('roles.index');
 });

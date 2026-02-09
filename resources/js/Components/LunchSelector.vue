@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
 import { router } from '@inertiajs/vue3';
-import { claim, unclaim } from '@/actions/App/Http/Controllers/Front/LunchSlotController';
+import { claim, unclaim } from '@/actions/App/Http/Controllers/Lunch/ClaimController';
 import Toast from './Toast.vue';
 import type { LunchSlotData, UserLunchData } from '@/Types/generated';
 
@@ -73,7 +73,7 @@ const removeLunch = () => {
     usersLoading.value = true;
     userLunches.value = [];
 
-    router.post(unclaim().url, {}, {
+    router.delete(unclaim().url, {
         preserveScroll: true,
         onSuccess: () => {
             usersLoading.value = false;
