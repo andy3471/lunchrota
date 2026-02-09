@@ -28,7 +28,7 @@ const isDemoMode = config.value?.demoMode;
 
 <template>
     <AuthCard title="Change Password">
-        <p v-if="isDemoMode" class="text-slate-400 text-center mb-6 p-3 bg-slate-500/10 rounded-lg">
+        <p v-if="isDemoMode" class="text-slate-400 text-center mb-6 p-3 bg-slate-500/10 rounded-xl">
             Password changes are disabled in demo mode.
         </p>
 

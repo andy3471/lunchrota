@@ -62,7 +62,7 @@ const submit = () => {
             <div class="flex items-center justify-between pt-4">
                 <Link
                     href="/login"
-                    class="text-sm text-gray-400 hover:text-gray-300 transition-colors"
+                    class="text-sm text-slate-400 hover:text-slate-300 transition-colors"
                 >
                     Back to login
                 </Link>

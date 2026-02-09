@@ -24,7 +24,7 @@ const submit = () => {
 
 <template>
     <AuthCard title="Login">
-        <p v-if="config.demoMode" class="text-amber-400 text-sm text-center mb-6 p-3 bg-amber-500/10 rounded-lg">
+        <p v-if="config.demoMode" class="text-amber-400 text-sm text-center mb-6 p-3 bg-amber-500/10 rounded-xl">
             Demo mode is enabled. Use the pre-filled credentials to log in.
         </p>
 
@@ -51,15 +51,15 @@ const submit = () => {
             <div class="flex items-center gap-2">
                 <Switch
                     v-model="form.remember"
-                    :class="form.remember ? 'bg-primary-600' : 'bg-gray-700'"
-                    class="relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:ring-offset-gray-800"
+                    :class="form.remember ? 'bg-primary-600' : 'bg-slate-700'"
+                    class="relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:ring-offset-slate-800"
                 >
                     <span
                         :class="form.remember ? 'translate-x-4' : 'translate-x-0'"
                         class="pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out"
                     />
                 </Switch>
-                <span class="text-sm text-gray-300">Remember me</span>
+                <span class="text-sm text-slate-300">Remember me</span>
             </div>
 
             <div class="flex items-center justify-between pt-4">
@@ -82,8 +82,8 @@ const submit = () => {
             </div>
         </form>
 
-        <div v-if="config.registerEnabled" class="mt-6 pt-6 border-t border-gray-700 text-center">
-            <p class="text-gray-400 text-sm">
+        <div v-if="config.registerEnabled" class="mt-6 pt-6 border-t border-slate-700/50 text-center">
+            <p class="text-slate-400 text-sm">
                 Don't have an account?
                 <Link href="/register" class="text-primary-400 hover:text-primary-300 transition-colors">
                     Register

@@ -13,7 +13,7 @@ defineProps({
     <AppLayout>
         <div class="max-w-md mx-auto">
             <div class="card">
-                <div class="px-6 py-4 border-b border-gray-700">
+                <div class="px-6 py-4 border-b border-slate-700/50">
                     <h2 class="text-xl font-semibold text-white text-center">
                         {{ title }}
                     </h2>

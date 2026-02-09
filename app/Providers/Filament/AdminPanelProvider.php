@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Providers\Filament;
 
 use App\Filament\Pages\Auth\RegisterTeam;
-use App\Filament\Plugins\LunchrotaTheme;
+use App\Filament\Plugins\OnLunchTheme;
 use App\Models\Team;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -36,7 +36,7 @@ class AdminPanelProvider extends PanelProvider
             ->tenantDomain('{tenant:slug}.'.config('app.domain'))
             ->tenantRegistration(RegisterTeam::class)
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => Color::Indigo,
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
@@ -63,7 +63,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->databaseNotifications()
             ->plugins([
-                LunchrotaTheme::make(),
+                OnLunchTheme::make(),
             ])
             ->viteTheme('resources/css/filament/admin/theme.css');
     }

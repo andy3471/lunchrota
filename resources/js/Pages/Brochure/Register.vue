@@ -37,7 +37,7 @@ function handleSubmit() {
     });
 }
 
-const inputClasses = 'w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent';
+const inputClasses = 'w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent';
 </script>
 
 <template>
@@ -46,10 +46,10 @@ const inputClasses = 'w-full px-3 py-2 bg-slate-900 border border-slate-700 roun
             <div class="max-w-md mx-auto px-4 sm:px-6">
                 <div class="text-center mb-8">
                     <h1 class="text-3xl font-bold text-white">Create Your Team</h1>
-                    <p class="mt-2 text-slate-400">Set up your team and start managing your lunch rota.</p>
+                    <p class="mt-2 text-slate-400">Set up your team and start managing lunches with OnLunch.</p>
                 </div>
 
-                <form @submit.prevent="handleSubmit" class="bg-slate-800/60 rounded-lg border border-slate-700/50 p-6">
+                <form @submit.prevent="handleSubmit" class="bg-slate-800/60 rounded-xl border border-slate-700/50 p-6">
                     <h2 class="text-lg font-semibold text-white mb-4">Team Details</h2>
 
                     <div class="space-y-4 mb-8">
@@ -76,11 +76,11 @@ const inputClasses = 'w-full px-3 py-2 bg-slate-900 border border-slate-700 roun
                                     type="text"
                                     required
                                     pattern="[a-z0-9\-]+"
-                                    class="flex-1 px-3 py-2 bg-slate-900 border border-slate-700 rounded-l-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                                    class="flex-1 px-3 py-2 bg-slate-900 border border-slate-700 rounded-l-xl text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                                     placeholder="acme-corp"
                                 />
-                                <span class="px-3 py-2 bg-slate-700 border border-slate-700 rounded-r-lg text-slate-400 text-sm whitespace-nowrap">
-                                    .lunchrota.app
+                                <span class="px-3 py-2 bg-slate-700 border border-slate-700 rounded-r-xl text-slate-400 text-sm whitespace-nowrap">
+                                    .onlunch.app
                                 </span>
                             </div>
                             <p v-if="errors.team_slug" class="mt-1 text-sm text-red-400">{{ errors.team_slug }}</p>
@@ -145,7 +145,7 @@ const inputClasses = 'w-full px-3 py-2 bg-slate-900 border border-slate-700 roun
                         size="lg"
                         :loading="processing"
                         :disabled="processing"
-                        class="w-full bg-amber-500 text-slate-900 hover:bg-amber-400"
+                        class="w-full"
                     >
                         Create Team
                     </Button>

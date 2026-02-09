@@ -19,13 +19,13 @@ const submit = () => {
 
 <template>
     <AuthCard title="Forgot Password">
-        <p class="text-gray-400 text-sm mb-6">
+        <p class="text-slate-400 text-sm mb-6">
             Forgot your password? No problem. Just enter your email address and we'll send you a password reset link.
         </p>
 
         <div
             v-if="status"
-            class="mb-6 p-3 bg-emerald-500/10 border border-emerald-500/20 rounded-lg text-emerald-400 text-sm"
+            class="mb-6 p-3 bg-emerald-500/10 border border-emerald-500/20 rounded-xl text-emerald-400 text-sm"
         >
             {{ status }}
         </div>
@@ -44,7 +44,7 @@ const submit = () => {
             <div class="flex items-center justify-between pt-4">
                 <Link
                     href="/login"
-                    class="text-sm text-gray-400 hover:text-gray-300 transition-colors"
+                    class="text-sm text-slate-400 hover:text-slate-300 transition-colors"
                 >
                     Back to login
                 </Link>

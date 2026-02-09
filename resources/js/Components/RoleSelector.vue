@@ -49,14 +49,16 @@ watch(() => props.roles, (newVal) => {
                         <td>
                             <span
                                 v-if="user.available === 1"
-                                class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-500/20 text-emerald-400"
+                                class="inline-flex items-center gap-1.5 text-xs text-slate-300"
                             >
+                                <span class="h-2 w-2 rounded-full bg-emerald-400" />
                                 Available
                             </span>
                             <span
                                 v-else
-                                class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-slate-500/20 text-slate-400"
+                                class="inline-flex items-center gap-1.5 text-xs text-slate-500"
                             >
+                                <span class="h-2 w-2 rounded-full bg-slate-600" />
                                 Unavailable
                             </span>
                         </td>

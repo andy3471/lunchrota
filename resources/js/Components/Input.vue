@@ -54,7 +54,7 @@ const updateValue = (event) => {
 
 <template>
     <div class="space-y-1">
-        <label v-if="label" class="block text-sm font-medium text-gray-300">
+        <label v-if="label" class="block text-sm font-medium text-slate-300">
             {{ label }}
             <span v-if="required" class="text-red-400">*</span>
         </label>

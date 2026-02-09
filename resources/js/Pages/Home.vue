@@ -81,7 +81,7 @@ const selectedDateAttributes = computed(() => {
         {
             key: 'selected',
             highlight: {
-                color: 'orange',
+                color: 'indigo',
                 fillMode: 'solid',
             },
             dates: date.value,
@@ -98,7 +98,7 @@ const selectedDateAttributes = computed(() => {
             </div>
 
             <div v-if="config.rolesEnabled" class="order-2 lg:order-2 flex">
-                <div class="bg-slate-800/60 rounded-lg border border-slate-700/50 overflow-hidden flex flex-col w-full self-start">
+                <div class="bg-slate-800/60 rounded-xl border border-slate-700/50 overflow-hidden flex flex-col w-full self-start">
                     <div class="px-4 py-2 border-b border-slate-700/50 flex-shrink-0">
                         <h4 class="text-sm font-medium text-slate-200 text-center">
                             Select Date
@@ -180,33 +180,33 @@ const selectedDateAttributes = computed(() => {
 :deep(.vc-highlight-base),
 :deep(.vc-highlight-content),
 :deep(.vc-highlight-content-wrapper) {
-    background-color: #e6730a !important;
-    border-color: #e6730a !important;
+    background-color: #6366f1 !important;
+    border-color: #6366f1 !important;
     color: #ffffff !important;
 }
 
 :deep(.vc-day:has(.vc-highlight)) .vc-day-content,
 :deep(.vc-day:has(.vc-highlight-base)) .vc-day-content {
-    background-color: #e6730a !important;
+    background-color: #6366f1 !important;
     color: #ffffff !important;
     font-weight: 700 !important;
-    box-shadow: 0 0 0 2px rgba(230, 115, 10, 0.5), 0 2px 4px rgba(230, 115, 10, 0.3) !important;
+    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.5), 0 2px 4px rgba(99, 102, 241, 0.3) !important;
     border-radius: 0.375rem !important;
 }
 
 :deep(.vc-day-content.is-selected),
 :deep(.vc-day-content.is-selected.is-not-in-month),
 :deep(.vc-day-content.is-selected.is-today) {
-    background-color: #e6730a !important;
+    background-color: #6366f1 !important;
     color: #ffffff !important;
     font-weight: 700 !important;
-    box-shadow: 0 0 0 2px rgba(230, 115, 10, 0.5), 0 2px 4px rgba(230, 115, 10, 0.3) !important;
+    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.5), 0 2px 4px rgba(99, 102, 241, 0.3) !important;
     transform: scale(1.05);
 }
 
 :deep(.vc-day-content.is-today:not(.is-selected)) {
-    border: 2px solid #e6730a !important;
-    color: #e6730a !important;
+    border: 2px solid #6366f1 !important;
+    color: #6366f1 !important;
     font-weight: 600;
     background-color: transparent !important;
 }
@@ -230,25 +230,25 @@ const selectedDateAttributes = computed(() => {
 }
 
 :deep(.vc-nav-container:hover) {
-    color: #e6730a;
+    color: #6366f1;
 }
 
 :deep(.vc-day-content) {
     cursor: pointer;
 }
 
-:deep([style*="orange"]),
-:deep([class*="orange"]) {
-    background-color: #e6730a !important;
+:deep([style*="indigo"]),
+:deep([class*="indigo"]) {
+    background-color: #6366f1 !important;
     color: #ffffff !important;
 }
 
 :deep(.vc-day-content[aria-selected="true"]),
 :deep(.vc-day-content[data-selected="true"]) {
-    background-color: #e6730a !important;
+    background-color: #6366f1 !important;
     color: #ffffff !important;
     font-weight: 700 !important;
-    box-shadow: 0 0 0 2px rgba(230, 115, 10, 0.5), 0 2px 4px rgba(230, 115, 10, 0.3) !important;
+    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.5), 0 2px 4px rgba(99, 102, 241, 0.3) !important;
     border-radius: 0.375rem !important;
 }
 </style>

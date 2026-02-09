@@ -68,8 +68,8 @@ const submit = () => {
             </div>
         </form>
 
-        <div class="mt-6 pt-6 border-t border-gray-700 text-center">
-            <p class="text-gray-400 text-sm">
+        <div class="mt-6 pt-6 border-t border-slate-700/50 text-center">
+            <p class="text-slate-400 text-sm">
                 Already have an account?
                 <Link href="/login" class="text-primary-400 hover:text-primary-300 transition-colors">
                     Login
