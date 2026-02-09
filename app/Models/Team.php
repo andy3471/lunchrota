@@ -19,6 +19,12 @@ class Team extends Model
     protected $fillable = [
         'name',
         'slug',
+        'register_enabled',
+        'reset_password_enabled',
+        'roles_enabled',
+        'lunch_slot_calculated',
+        'lunch_slot_calculated_ratio',
+        'default_role',
     ];
 
     /** @return BelongsToMany<User, $this, Pivot> */
@@ -37,5 +43,17 @@ class Team extends Model
     public function lunchSlots(): HasMany
     {
         return $this->hasMany(LunchSlot::class);
+    }
+
+    /** @return array<string, string> */
+    protected function casts(): array
+    {
+        return [
+            'register_enabled'            => 'boolean',
+            'reset_password_enabled'      => 'boolean',
+            'roles_enabled'               => 'boolean',
+            'lunch_slot_calculated'       => 'boolean',
+            'lunch_slot_calculated_ratio' => 'decimal:2',
+        ];
     }
 }

@@ -10,7 +10,7 @@ const page = usePage();
 const config = computed(() => page.props.config);
 
 const form = useForm({
-    email: config.value.demoMode ? 'admin@admin.com' : '',
+    email: '',
     password: '',
     remember: false,
 });
@@ -24,10 +24,6 @@ const submit = () => {
 
 <template>
     <AuthCard title="Login">
-        <p v-if="config.demoMode" class="text-amber-400 text-sm text-center mb-6 p-3 bg-amber-500/10 rounded-xl">
-            Demo mode is enabled. Use the pre-filled credentials to log in.
-        </p>
-
         <form @submit.prevent="submit" class="space-y-4">
             <Input
                 v-model="form.email"

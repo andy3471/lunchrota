@@ -88,7 +88,9 @@ class User extends Authenticatable implements FilamentUser, HasTenants
 
     public function isAvailableForDate(string $date): bool
     {
-        if (! config('app.roles_enabled')) {
+        $team = app()->bound('currentTeam') ? resolve('currentTeam') : null;
+
+        if (! $team || ! $team->roles_enabled) {
             return true;
         }
 

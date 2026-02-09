@@ -47,8 +47,8 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->throttleApi('60,1');
 
         $middleware->alias([
-            'bindings'  => Illuminate\Routing\Middleware\SubstituteBindings::class,
-            'demo_mode' => App\Http\Middleware\DemoMode::class,
+            'bindings'     => Illuminate\Routing\Middleware\SubstituteBindings::class,
+            'team.feature' => App\Http\Middleware\EnsureTeamFeatureEnabled::class,
         ]);
 
         $middleware->priority([

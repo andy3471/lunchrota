@@ -15,8 +15,13 @@ class UsersTableSeeder extends Seeder
     public function run(): void
     {
         $team = Team::factory()->create([
-            'name' => 'Demo Team',
-            'slug' => 'demo',
+            'name'                   => 'Demo Team',
+            'slug'                   => 'demo',
+            'register_enabled'       => true,
+            'reset_password_enabled' => false,
+            'roles_enabled'          => true,
+            'lunch_slot_calculated'  => false,
+            'default_role'           => 'In Office',
         ]);
 
         // Create admin user and attach to team

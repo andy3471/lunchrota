@@ -1,12 +1,8 @@
 <script setup>
-import { computed } from 'vue';
-import { useForm, usePage, Link } from '@inertiajs/vue3';
+import { useForm, Link } from '@inertiajs/vue3';
 import AuthCard from '@/Components/AuthCard.vue';
 import Input from '@/Components/Input.vue';
 import Button from '@/Components/Button.vue';
-
-const page = usePage();
-const config = computed(() => page.props.config || {});
 
 const form = useForm({
     currentpassword: '',
@@ -22,17 +18,11 @@ const submit = () => {
         },
     });
 };
-
-const isDemoMode = config.value?.demoMode;
 </script>
 
 <template>
     <AuthCard title="Change Password">
-        <p v-if="isDemoMode" class="text-slate-400 text-center mb-6 p-3 bg-slate-500/10 rounded-xl">
-            Password changes are disabled in demo mode.
-        </p>
-
-        <form v-else @submit.prevent="submit" class="space-y-4">
+        <form @submit.prevent="submit" class="space-y-4">
             <Input
                 v-model="form.currentpassword"
                 type="password"

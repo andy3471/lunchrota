@@ -21,16 +21,15 @@ class PasswordResetTest extends TestCase
     {
         parent::setUp();
 
-        $this->team = Team::factory()->create(['slug' => 'test']);
+        $this->team = Team::factory()->create([
+            'slug'                   => 'test',
+            'reset_password_enabled' => true,
+        ]);
     }
 
     /** Reset password link screen can be rendered when enabled. */
     public function test_reset_password_link_screen_can_be_rendered(): void
     {
-        if (! config('app.reset_password_enabled')) {
-            $this->markTestSkipped('Password reset is disabled.');
-        }
-
         $response = $this->get('http://test.localhost/forgot-password');
 
         $response->assertStatus(200);
@@ -39,10 +38,6 @@ class PasswordResetTest extends TestCase
     /** Reset password link can be requested when enabled. */
     public function test_reset_password_link_can_be_requested(): void
     {
-        if (! config('app.reset_password_enabled')) {
-            $this->markTestSkipped('Password reset is disabled.');
-        }
-
         Notification::fake();
 
         $user = User::factory()->create();
@@ -51,5 +46,15 @@ class PasswordResetTest extends TestCase
         $this->post('http://test.localhost/forgot-password', ['email' => $user->email]);
 
         Notification::assertSentTo($user, ResetPassword::class);
+    }
+
+    /** Reset password routes return 404 when feature is disabled. */
+    public function test_reset_password_returns_404_when_disabled(): void
+    {
+        $this->team->update(['reset_password_enabled' => false]);
+
+        $response = $this->get('http://test.localhost/forgot-password');
+
+        $response->assertStatus(404);
     }
 }

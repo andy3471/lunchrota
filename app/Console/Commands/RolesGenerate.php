@@ -18,12 +18,6 @@ class RolesGenerate extends Command
 
     public function handle(): void
     {
-        if (config('app.default_role') === 'none') {
-            $this->line('No default role set');
-
-            return;
-        }
-
         $startDate = now();
         $endDate   = now()->addWeek();
         $dateRange = CarbonPeriod::create($startDate, $endDate);
@@ -31,7 +25,13 @@ class RolesGenerate extends Command
         Team::all()->each(function (Team $team) use ($dateRange): void {
             $this->line("Processing team: {$team->name}");
 
-            $defaultRole = $team->roles()->where('name', config('app.default_role'))->first();
+            if ($team->default_role === 'none') {
+                $this->line("No default role set for team: {$team->name}");
+
+                return;
+            }
+
+            $defaultRole = $team->roles()->where('name', $team->default_role)->first();
 
             if (! $defaultRole) {
                 $this->warn("No matching default role found for team: {$team->name}");

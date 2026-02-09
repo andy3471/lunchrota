@@ -44,11 +44,13 @@ class LunchSlot extends Model
 
     public function getTotalAvailableForDate(string $date): int|float
     {
-        if (! config('app.lunch_slot_calculated')) {
+        $team = $this->team;
+
+        if (! $team->lunch_slot_calculated) {
             return $this->available;
         }
 
-        $ratio      = config('app.lunch_slot_calculated_ratio');
+        $ratio      = $team->lunch_slot_calculated_ratio;
         $rolesToday = RoleUser::query()
             ->where('date', $date)
             ->whereHas('role', fn ($query) => $query->where('is_available', true))

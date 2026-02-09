@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Middleware;
 
+use App\Models\Team;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -21,7 +22,8 @@ class HandleInertiaRequests extends Middleware
     /** @return array<string, mixed> */
     public function share(Request $request): array
     {
-        $currentTeam = app()->bound('currentTeam') ? app('currentTeam') : null;
+        /** @var Team|null $currentTeam */
+        $currentTeam = app()->bound('currentTeam') ? resolve('currentTeam') : null;
 
         return [
             ...parent::share($request),
@@ -39,10 +41,9 @@ class HandleInertiaRequests extends Middleware
             ],
             'config' => [
                 'appName'              => config('app.name', 'Rota'),
-                'demoMode'             => config('app.demo_mode', false),
-                'registerEnabled'      => config('app.register_enabled', true),
-                'resetPasswordEnabled' => config('app.reset_password_enabled', true),
-                'rolesEnabled'         => config('app.roles_enabled', false),
+                'registerEnabled'      => $currentTeam?->register_enabled       ?? false,
+                'resetPasswordEnabled' => $currentTeam?->reset_password_enabled ?? false,
+                'rolesEnabled'         => $currentTeam?->roles_enabled          ?? false,
             ],
             'currentTeam' => $currentTeam ? [
                 'id'   => $currentTeam->id,

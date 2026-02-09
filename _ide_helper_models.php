@@ -94,6 +94,12 @@ namespace App\Models{
  * @property string $slug
  * @property \Carbon\CarbonImmutable|null $created_at
  * @property \Carbon\CarbonImmutable|null $updated_at
+ * @property bool $register_enabled
+ * @property bool $reset_password_enabled
+ * @property bool $roles_enabled
+ * @property bool $lunch_slot_calculated
+ * @property numeric $lunch_slot_calculated_ratio
+ * @property string $default_role
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\LunchSlot> $lunchSlots
  * @property-read int|null $lunch_slots_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $members
@@ -105,8 +111,14 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Team newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Team query()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Team whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Team whereDefaultRole($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Team whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Team whereLunchSlotCalculated($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Team whereLunchSlotCalculatedRatio($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Team whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Team whereRegisterEnabled($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Team whereResetPasswordEnabled($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Team whereRolesEnabled($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Team whereSlug($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Team whereUpdatedAt($value)
  */

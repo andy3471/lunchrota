@@ -45,7 +45,7 @@ class UpdateLunchSlotsJob implements ShouldQueue
                 $slot = LunchSlot::find($s['id']);
             }
 
-            if (! config('app.lunch_slot_calculated')) {
+            if (! $slot->team?->lunch_slot_calculated) {
                 $slot->available = $s['available'];
             }
 
