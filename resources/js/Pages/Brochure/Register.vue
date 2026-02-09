@@ -37,7 +37,7 @@ function handleSubmit() {
     });
 }
 
-const inputClasses = 'w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent';
+const inputClasses = 'w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:outline-hidden focus:ring-2 focus:ring-primary-500 focus:border-transparent';
 </script>
 
 <template>
@@ -76,7 +76,7 @@ const inputClasses = 'w-full px-3 py-2 bg-slate-900 border border-slate-700 roun
                                     type="text"
                                     required
                                     pattern="[a-z0-9\-]+"
-                                    class="flex-1 px-3 py-2 bg-slate-900 border border-slate-700 rounded-l-xl text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                                    class="flex-1 px-3 py-2 bg-slate-900 border border-slate-700 rounded-l-xl text-white placeholder-slate-500 focus:outline-hidden focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                                     placeholder="acme-corp"
                                 />
                                 <span class="px-3 py-2 bg-slate-700 border border-slate-700 rounded-r-xl text-slate-400 text-sm whitespace-nowrap">

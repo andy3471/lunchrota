@@ -6,8 +6,8 @@ namespace App\Filament\Pages\Auth;
 
 use App\Models\Team;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
 use Filament\Pages\Tenancy\RegisterTenant;
+use Filament\Schemas\Schema;
 use Illuminate\Support\Str;
 
 class RegisterTeam extends RegisterTenant
@@ -17,10 +17,10 @@ class RegisterTeam extends RegisterTenant
         return 'Register Team';
     }
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 TextInput::make('name')
                     ->required()
                     ->maxLength(255)

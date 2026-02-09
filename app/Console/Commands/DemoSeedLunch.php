@@ -6,6 +6,7 @@ namespace App\Console\Commands;
 
 use App\Models\Team;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Date;
 
 class DemoSeedLunch extends Command
 {
@@ -15,7 +16,7 @@ class DemoSeedLunch extends Command
 
     public function handle(): void
     {
-        $date = \Illuminate\Support\Facades\Date::now();
+        $date = Date::now();
 
         if (! $date->isWeekday()) {
             $this->line('Today is a weekend day, skipping.');

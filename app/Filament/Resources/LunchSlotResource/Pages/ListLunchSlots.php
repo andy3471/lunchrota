@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Filament\Resources\LunchSlotResource\Pages;
 
 use App\Filament\Resources\LunchSlotResource;
-use Filament\Actions;
+use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 
 class ListLunchSlots extends ListRecords
@@ -15,7 +15,7 @@ class ListLunchSlots extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            CreateAction::make(),
         ];
     }
 }

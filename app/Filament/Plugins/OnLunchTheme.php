@@ -4,19 +4,36 @@ declare(strict_types=1);
 
 namespace App\Filament\Plugins;
 
-use Filament\MinimalTheme;
+use Filament\Contracts\Plugin;
+use Filament\Panel;
+use Filament\Support\Colors\Color;
 
-class OnLunchTheme extends MinimalTheme
+class OnLunchTheme implements Plugin
 {
-    public static function getColors(): array
+    public static function make(): static
     {
-        return [
-            'primary' => '#6366f1',
-            'danger'  => '#ef4444',
-            'gray'    => '#475569',
-            'info'    => '#3b82f6',
-            'success' => '#10b981',
-            'warning' => '#f97316',
-        ];
+        return new static;
+    }
+
+    public function getId(): string
+    {
+        return 'on-lunch-theme';
+    }
+
+    public function register(Panel $panel): void
+    {
+        $panel->colors([
+            'primary' => Color::Indigo,
+            'danger'  => Color::Red,
+            'gray'    => Color::Slate,
+            'info'    => Color::Blue,
+            'success' => Color::Emerald,
+            'warning' => Color::Orange,
+        ]);
+    }
+
+    public function boot(Panel $panel): void
+    {
+        //
     }
 }

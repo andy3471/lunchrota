@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class Team extends Model
 {
@@ -20,7 +21,7 @@ class Team extends Model
         'slug',
     ];
 
-    /** @return BelongsToMany<User, $this, \Illuminate\Database\Eloquent\Relations\Pivot> */
+    /** @return BelongsToMany<User, $this, Pivot> */
     public function members(): BelongsToMany
     {
         return $this->belongsToMany(User::class);

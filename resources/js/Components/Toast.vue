@@ -65,7 +65,7 @@ const close = () => {
                 typeStyles[type]
             ]"
         >
-            <svg class="w-5 h-5 text-white flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="w-5 h-5 text-white shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" :d="icons[type]" />
             </svg>
             <p class="text-white text-sm font-medium flex-1">{{ message }}</p>

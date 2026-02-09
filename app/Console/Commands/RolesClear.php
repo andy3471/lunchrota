@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 
 class RolesClear extends Command
@@ -15,7 +16,7 @@ class RolesClear extends Command
 
     public function handle(): void
     {
-        $date = \Illuminate\Support\Facades\Date::now()->addWeeks(-3);
+        $date = Date::now()->addWeeks(-3);
         DB::table('role_user')->where('date', '<', $date)->delete();
         $this->line('Deleted roles older than '.$date);
     }

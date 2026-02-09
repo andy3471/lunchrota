@@ -6,9 +6,9 @@
             <x-filament::input.wrapper>
                 <input
                     type="date"
-                    wire:model.lazy="date"
+                    wire:model.blur="date"
                     wire:change="getUserRoles"
-                    class="block w-full transition duration-75 rounded-lg shadow-sm border-gray-300 focus:border-primary-600 focus:ring focus:ring-primary-600 focus:ring-opacity-50"
+                    class="block w-full transition duration-75 rounded-lg shadow-xs border-gray-300 focus:border-primary-600 focus:ring-3 focus:ring-primary-600 focus:ring-opacity-50"
                 />
             </x-filament::input.wrapper>
         </x-filament::section>

@@ -56,8 +56,8 @@
         "visibility_required": true,
         "phpdoc_line_span": {
             "property": "single",
-            "const":    "single",
-            "method":   "single"
+            "const": "single",
+            "method": "single"
         }
     }
 }

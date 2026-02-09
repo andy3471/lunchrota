@@ -103,13 +103,13 @@ const isRemoveDisabled = () => {
 
 <template>
     <div class="card overflow-hidden flex flex-col w-full h-full">
-        <div class="px-4 py-2 border-b border-slate-700/50 flex-shrink-0">
+        <div class="px-4 py-2 border-b border-slate-700/50 shrink-0">
             <h4 class="text-sm font-semibold text-slate-100 text-center">
                 Lunches
             </h4>
         </div>
 
-        <div class="p-3 border-b border-slate-700/50 flex-shrink-0">
+        <div class="p-3 border-b border-slate-700/50 shrink-0">
             <div class="flex gap-2">
                 <button
                     v-for="slot in slots"

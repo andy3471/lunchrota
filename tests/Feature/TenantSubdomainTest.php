@@ -50,7 +50,7 @@ class TenantSubdomainTest extends TestCase
         $user = User::factory()->create();
         $team->members()->attach($user);
 
-        $response = $this->post('http://acme.localhost/login', [
+        $this->post('http://acme.localhost/login', [
             'email'    => $user->email,
             'password' => 'password',
         ]);

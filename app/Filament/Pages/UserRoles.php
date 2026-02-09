@@ -7,6 +7,9 @@ namespace App\Filament\Pages;
 use App\Filament\Exports\UserRoleExporter;
 use App\Filament\Imports\UserRoleImporter;
 use App\Models\User;
+use BackedEnum;
+use Carbon\Month;
+use Carbon\WeekDay;
 use DateTimeInterface;
 use Filament\Actions\ExportAction;
 use Filament\Actions\ImportAction;
@@ -15,7 +18,9 @@ use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Date;
 use Livewire\Attributes\Computed;
+use UnitEnum;
 
 class UserRoles extends Page
 {
@@ -23,11 +28,11 @@ class UserRoles extends Page
 
     public string $date;
 
-    protected static ?string $navigationIcon = 'heroicon-o-document-text';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-document-text';
 
-    protected static string $view = 'filament.pages.user-roles';
+    protected string $view = 'filament.pages.user-roles';
 
-    protected static ?string $navigationGroup = 'Users';
+    protected static string|UnitEnum|null $navigationGroup = 'Users';
 
     public function mount(): void
     {
@@ -35,9 +40,9 @@ class UserRoles extends Page
         $this->getUserRoles();
     }
 
-    public function updatedDate(DateTimeInterface|\Carbon\WeekDay|\Carbon\Month|string|int|float|null $date): void
+    public function updatedDate(DateTimeInterface|WeekDay|Month|string|int|float|null $date): void
     {
-        $this->date = \Illuminate\Support\Facades\Date::parse($date)->startOfDay()->format('Y-m-d');
+        $this->date = Date::parse($date)->startOfDay()->format('Y-m-d');
         $this->getUserRoles();
     }
 

@@ -13,10 +13,10 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 
 class User extends Authenticatable implements FilamentUser, HasTenants
@@ -61,20 +61,20 @@ class User extends Authenticatable implements FilamentUser, HasTenants
         return $this->teams()->whereKey($tenant->getKey())->exists();
     }
 
-    /** @return BelongsToMany<Team, $this, \Illuminate\Database\Eloquent\Relations\Pivot> */
+    /** @return BelongsToMany<Team, $this, Pivot> */
     public function teams(): BelongsToMany
     {
         return $this->belongsToMany(Team::class);
     }
 
-    /** @return BelongsToMany<Role, $this, \Illuminate\Database\Eloquent\Relations\Pivot> */
+    /** @return BelongsToMany<Role, $this, Pivot> */
     public function roles(): BelongsToMany
     {
         return $this->belongsToMany(Role::class)
             ->withPivot('date');
     }
 
-    /** @return BelongsToMany<LunchSlot, $this, \Illuminate\Database\Eloquent\Relations\Pivot> */
+    /** @return BelongsToMany<LunchSlot, $this, Pivot> */
     public function lunches(): BelongsToMany
     {
         return $this->belongsToMany(LunchSlot::class)
@@ -84,14 +84,6 @@ class User extends Authenticatable implements FilamentUser, HasTenants
     public function lunchesForDate(string $date): BelongsToMany
     {
         return $this->lunches()->wherePivot('date', $date);
-    }
-
-    public function scopeWithLunchesForDate(Builder $query, string $date): Builder
-    {
-        return $query
-            ->with(['lunches' => fn ($q) => $q->wherePivot('date', $date)->orderBy('time')])
-            ->whereHas('lunches', fn ($q) => $q->where('lunch_slot_user.date', $date))
-            ->orderBy('name');
     }
 
     public function isAvailableForDate(string $date): bool
@@ -109,6 +101,15 @@ class User extends Authenticatable implements FilamentUser, HasTenants
         return $roleUser !== null;
     }
 
+    #[\Illuminate\Database\Eloquent\Attributes\Scope]
+    protected function withLunchesForDate(Builder $query, string $date): Builder
+    {
+        return $query
+            ->with(['lunches' => fn ($q) => $q->wherePivot('date', $date)->orderBy('time')])
+            ->whereHas('lunches', fn ($q) => $q->where('lunch_slot_user.date', $date))
+            ->orderBy('name');
+    }
+
     protected function isDeleted(): Attribute
     {
         return Attribute::make(
@@ -122,7 +123,7 @@ class User extends Authenticatable implements FilamentUser, HasTenants
     protected function availableToday(): Attribute
     {
         return Attribute::make(
-            get: fn (): bool => $this->isAvailableForDate(Carbon::today()->toDateString())
+            get: fn (): bool => $this->isAvailableForDate(\Illuminate\Support\Facades\Date::today()->toDateString())
         );
     }
 

@@ -9,6 +9,7 @@ use App\Providers\AppServiceProvider;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -31,7 +32,7 @@ class ConfirmablePasswordController extends Controller
             'password' => __('auth.password'),
         ]));
 
-        $request->session()->put('auth.password_confirmed_at', \Illuminate\Support\Facades\Date::now()->getTimestamp());
+        $request->session()->put('auth.password_confirmed_at', Date::now()->getTimestamp());
 
         return redirect()->intended(AppServiceProvider::HOME);
     }

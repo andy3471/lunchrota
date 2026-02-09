@@ -13,7 +13,7 @@ const flash = computed(() => page.props.flash || {});
 
 <template>
     <div class="min-h-screen flex flex-col bg-slate-950">
-        <header class="bg-slate-900/95 border-b border-slate-800 backdrop-blur-sm">
+        <header class="bg-slate-900/95 border-b border-slate-800 backdrop-blur-xs">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <Disclosure v-slot="{ open, close }">
                     <div class="flex items-center justify-between h-16">
@@ -58,7 +58,7 @@ const flash = computed(() => page.props.flash || {});
                                         leave-from="transform opacity-100 scale-100"
                                         leave-to="transform opacity-0 scale-95"
                                     >
-                                        <MenuItems class="absolute right-0 mt-2 w-48 origin-top-right rounded-xl bg-slate-800 border border-slate-700/50 shadow-lg focus:outline-none py-1">
+                                        <MenuItems class="absolute right-0 mt-2 w-48 origin-top-right rounded-xl bg-slate-800 border border-slate-700/50 shadow-lg focus:outline-hidden py-1">
                                             <MenuItem v-slot="{ active }">
                                                 <Link
                                                     href="/change-password"

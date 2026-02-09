@@ -23,7 +23,7 @@ watch(() => props.roles, (newVal) => {
 
 <template>
     <div class="card overflow-hidden flex flex-col w-full h-full">
-        <div class="px-4 py-2 border-b border-slate-700/50 flex-shrink-0">
+        <div class="px-4 py-2 border-b border-slate-700/50 shrink-0">
             <h4 class="text-sm font-semibold text-slate-100 text-center">
                 Roles
             </h4>

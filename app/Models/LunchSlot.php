@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Support\Carbon;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 use Illuminate\Support\Facades\DB;
 
 class LunchSlot extends Model
@@ -34,19 +34,12 @@ class LunchSlot extends Model
         return $this->belongsTo(Team::class);
     }
 
-    /** @return BelongsToMany<User, $this, \Illuminate\Database\Eloquent\Relations\Pivot> */
+    /** @return BelongsToMany<User, $this, Pivot> */
     public function users(): BelongsToMany
     {
         return $this
             ->belongsToMany(User::class)
             ->withPivot('date');
-    }
-
-    public function scopeWithUsersForDate(Builder $query, string $date): Builder
-    {
-        return $query
-            ->with(['users' => fn ($q) => $q->wherePivot('date', $date)])
-            ->whereHas('users', fn ($q) => $q->wherePivot('date', $date));
     }
 
     public function getTotalAvailableForDate(string $date): int|float
@@ -77,6 +70,14 @@ class LunchSlot extends Model
         return max(0, $this->getTotalAvailableForDate($date) - $this->getClaimedCountForDate($date));
     }
 
+    #[\Illuminate\Database\Eloquent\Attributes\Scope]
+    protected function withUsersForDate(Builder $query, string $date): Builder
+    {
+        return $query
+            ->with(['users' => fn ($q) => $q->wherePivot('date', $date)])
+            ->whereHas('users', fn ($q) => $q->wherePivot('date', $date));
+    }
+
     /** @return Attribute<string, never> */
     protected function time(): Attribute
     {
@@ -90,7 +91,7 @@ class LunchSlot extends Model
     protected function totalAvailableToday(): Attribute
     {
         return Attribute::make(
-            get: fn (): int|float => $this->getTotalAvailableForDate(Carbon::today()->toDateString())
+            get: fn (): int|float => $this->getTotalAvailableForDate(\Illuminate\Support\Facades\Date::today()->toDateString())
         );
     }
 
@@ -98,7 +99,7 @@ class LunchSlot extends Model
     protected function claimedCountToday(): Attribute
     {
         return Attribute::make(
-            get: fn (): int => $this->getClaimedCountForDate(Carbon::today()->toDateString())
+            get: fn (): int => $this->getClaimedCountForDate(\Illuminate\Support\Facades\Date::today()->toDateString())
         );
     }
 
@@ -106,7 +107,7 @@ class LunchSlot extends Model
     protected function availableToday(): Attribute
     {
         return Attribute::make(
-            get: fn (): int|float => $this->getAvailableForDate(Carbon::today()->toDateString())
+            get: fn (): int|float => $this->getAvailableForDate(\Illuminate\Support\Facades\Date::today()->toDateString())
         );
     }
 
