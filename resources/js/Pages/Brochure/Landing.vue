@@ -7,7 +7,6 @@ import BrochureLayout from '@/Layouts/BrochureLayout.vue';
     <BrochureLayout>
         <div class="py-16 sm:py-24">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <!-- Hero -->
                 <div class="text-center max-w-3xl mx-auto">
                     <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-white tracking-tight">
                         Manage your team's
@@ -28,7 +27,6 @@ import BrochureLayout from '@/Layouts/BrochureLayout.vue';
                     </div>
                 </div>
 
-                <!-- Features -->
                 <div class="mt-24 grid grid-cols-1 md:grid-cols-3 gap-8">
                     <div class="bg-slate-800/60 rounded-lg border border-slate-700/50 p-6">
                         <div class="w-10 h-10 rounded-lg bg-amber-500/10 flex items-center justify-center mb-4">

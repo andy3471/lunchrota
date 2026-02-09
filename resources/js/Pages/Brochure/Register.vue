@@ -2,6 +2,7 @@
 import { reactive, ref, computed } from 'vue';
 import { router, usePage } from '@inertiajs/vue3';
 import BrochureLayout from '@/Layouts/BrochureLayout.vue';
+import Button from '@/Components/Button.vue';
 
 const page = usePage();
 const errors = computed(() => page.props.errors || {});
@@ -35,6 +36,8 @@ function handleSubmit() {
         onFinish: () => processing.value = false,
     });
 }
+
+const inputClasses = 'w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent';
 </script>
 
 <template>
@@ -47,7 +50,6 @@ function handleSubmit() {
                 </div>
 
                 <form @submit.prevent="handleSubmit" class="bg-slate-800/60 rounded-lg border border-slate-700/50 p-6">
-                    <!-- Team Details -->
                     <h2 class="text-lg font-semibold text-white mb-4">Team Details</h2>
 
                     <div class="space-y-4 mb-8">
@@ -59,7 +61,7 @@ function handleSubmit() {
                                 @input="onTeamNameInput"
                                 type="text"
                                 required
-                                class="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                                :class="inputClasses"
                                 placeholder="Acme Corp"
                             />
                             <p v-if="errors.team_name" class="mt-1 text-sm text-red-400">{{ errors.team_name }}</p>
@@ -85,7 +87,6 @@ function handleSubmit() {
                         </div>
                     </div>
 
-                    <!-- Admin Account -->
                     <h2 class="text-lg font-semibold text-white mb-4">Your Account</h2>
 
                     <div class="space-y-4 mb-8">
@@ -96,7 +97,7 @@ function handleSubmit() {
                                 v-model="form.name"
                                 type="text"
                                 required
-                                class="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                                :class="inputClasses"
                                 placeholder="Jane Smith"
                             />
                             <p v-if="errors.name" class="mt-1 text-sm text-red-400">{{ errors.name }}</p>
@@ -109,7 +110,7 @@ function handleSubmit() {
                                 v-model="form.email"
                                 type="email"
                                 required
-                                class="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                                :class="inputClasses"
                                 placeholder="jane@acme.com"
                             />
                             <p v-if="errors.email" class="mt-1 text-sm text-red-400">{{ errors.email }}</p>
@@ -122,7 +123,7 @@ function handleSubmit() {
                                 v-model="form.password"
                                 type="password"
                                 required
-                                class="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                                :class="inputClasses"
                             />
                             <p v-if="errors.password" class="mt-1 text-sm text-red-400">{{ errors.password }}</p>
                         </div>
@@ -134,19 +135,20 @@ function handleSubmit() {
                                 v-model="form.password_confirmation"
                                 type="password"
                                 required
-                                class="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                                :class="inputClasses"
                             />
                         </div>
                     </div>
 
-                    <button
+                    <Button
                         type="submit"
+                        size="lg"
+                        :loading="processing"
                         :disabled="processing"
-                        class="w-full px-4 py-3 rounded-lg text-base font-semibold bg-amber-500 text-slate-900 hover:bg-amber-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                        class="w-full bg-amber-500 text-slate-900 hover:bg-amber-400"
                     >
-                        <span v-if="processing">Creating...</span>
-                        <span v-else>Create Team</span>
-                    </button>
+                        Create Team
+                    </Button>
                 </form>
             </div>
         </div>

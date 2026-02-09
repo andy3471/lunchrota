@@ -34,6 +34,10 @@ const props = defineProps({
         type: String,
         default: '',
     },
+    autofocus: {
+        type: Boolean,
+        default: false,
+    },
 });
 
 const emit = defineEmits(['update:modelValue']);
@@ -61,6 +65,7 @@ const updateValue = (event) => {
             :required="required"
             :disabled="disabled"
             :autocomplete="autocomplete"
+            :autofocus="autofocus"
             :class="inputClasses"
             @input="updateValue"
         />

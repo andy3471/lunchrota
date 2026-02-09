@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue';
+import { TransitionRoot } from '@headlessui/vue';
 
 const props = defineProps({
     message: {
@@ -47,37 +48,35 @@ const close = () => {
 </script>
 
 <template>
-    <Transition
-        enter-active-class="transition ease-out duration-300"
-        enter-from-class="translate-y-2 opacity-0"
-        enter-to-class="translate-y-0 opacity-100"
-        leave-active-class="transition ease-in duration-200"
-        leave-from-class="translate-y-0 opacity-100"
-        leave-to-class="translate-y-2 opacity-0"
+    <TransitionRoot
+        :show="show"
+        enter="transition ease-out duration-300"
+        enter-from="translate-y-2 opacity-0"
+        enter-to="translate-y-0 opacity-100"
+        leave="transition ease-in duration-200"
+        leave-from="translate-y-0 opacity-100"
+        leave-to="translate-y-2 opacity-0"
+        as="div"
+        class="fixed top-4 right-4 z-50 max-w-sm"
     >
         <div
-            v-if="show"
-            class="fixed top-4 right-4 z-50 max-w-sm"
+            :class="[
+                'flex items-center gap-3 px-4 py-3 rounded-lg border shadow-lg',
+                typeStyles[type]
+            ]"
         >
-            <div
-                :class="[
-                    'flex items-center gap-3 px-4 py-3 rounded-lg border shadow-lg',
-                    typeStyles[type]
-                ]"
+            <svg class="w-5 h-5 text-white flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" :d="icons[type]" />
+            </svg>
+            <p class="text-white text-sm font-medium flex-1">{{ message }}</p>
+            <button
+                @click="close"
+                class="text-white/80 hover:text-white transition-colors"
             >
-                <svg class="w-5 h-5 text-white flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" :d="icons[type]" />
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                 </svg>
-                <p class="text-white text-sm font-medium flex-1">{{ message }}</p>
-                <button
-                    @click="close"
-                    class="text-white/80 hover:text-white transition-colors"
-                >
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
-            </div>
+            </button>
         </div>
-    </Transition>
+    </TransitionRoot>
 </template>
