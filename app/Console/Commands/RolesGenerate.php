@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
-use App\Models\Role;
-use App\Models\User;
+use App\Models\Team;
 use Carbon\CarbonImmutable;
 use Carbon\CarbonPeriod;
 use Illuminate\Console\Command;
@@ -17,7 +16,6 @@ class RolesGenerate extends Command
 
     protected $description = 'Generate Roles';
 
-    // TODO: Tidy up the code in this file
     public function handle(): void
     {
         if (config('app.default_role') === 'none') {
@@ -26,45 +24,51 @@ class RolesGenerate extends Command
             return;
         }
 
-        $defaultRole = Role::where('name', config('app.default_role'))->first();
-        $startDate   = now();
-        $endDate     = now()->addWeek();
-        $dateRange   = CarbonPeriod::create($startDate, $endDate);
+        $startDate = now();
+        $endDate   = now()->addWeek();
+        $dateRange = CarbonPeriod::create($startDate, $endDate);
 
-        if ($defaultRole) {
-            $this->line('The Default Role is '.$defaultRole->name);
-        } else {
-            $this->error('The default role in the .env file does not match the name of a role');
+        Team::all()->each(function (Team $team) use ($dateRange): void {
+            $this->line("Processing team: {$team->name}");
 
-            return;
-        }
+            $defaultRole = $team->roles()->where('name', config('app.default_role'))->first();
 
-        foreach ($dateRange as $date) {
-            if ($date->isWeekday()) {
-                $this->line($date);
-                $dateString = CarbonImmutable::parse($date)->toDateString();
+            if (! $defaultRole) {
+                $this->warn("No matching default role found for team: {$team->name}");
 
-                $usersWithRoles = DB::table('role_user')
-                    ->select('user_id')
-                    ->where('date', $dateString)
-                    ->get();
-
-                $usersWithRoles = json_decode((string) json_encode($usersWithRoles), true);
-
-                $users = User::whereNotIn('id', $usersWithRoles)->get();
-
-                foreach ($users as $user) {
-                    if ($user->is_scheduled) {
-                        $user->roles()->attach($defaultRole, ['date' => $dateString]);
-                        $this->line($user->name.' Given Role Of '.$defaultRole->name.' For '.$dateString);
-                    } else {
-                        $this->line($user->name.' is not a scheduled user');
-                    }
-                }
-            } else {
-                $this->line($date.' Is Weekend');
+                return;
             }
-        }
 
+            $this->line("The Default Role is {$defaultRole->name}");
+
+            foreach ($dateRange as $date) {
+                if ($date->isWeekday()) {
+                    $this->line((string) $date);
+                    $dateString = CarbonImmutable::parse($date)->toDateString();
+
+                    $usersWithRoles = DB::table('role_user')
+                        ->select('user_id')
+                        ->where('date', $dateString)
+                        ->get()
+                        ->pluck('user_id')
+                        ->toArray();
+
+                    $users = $team->members()
+                        ->whereNotIn('users.id', $usersWithRoles)
+                        ->get();
+
+                    foreach ($users as $user) {
+                        if ($user->is_scheduled) {
+                            $user->roles()->attach($defaultRole, ['date' => $dateString]);
+                            $this->line("{$user->name} Given Role Of {$defaultRole->name} For {$dateString}");
+                        } else {
+                            $this->line("{$user->name} is not a scheduled user");
+                        }
+                    }
+                } else {
+                    $this->line("{$date} Is Weekend");
+                }
+            }
+        });
     }
 }

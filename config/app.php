@@ -8,6 +8,8 @@ return [
 
     'version' => '4.0.0',
 
+    'domain' => env('APP_DOMAIN', 'localhost'),
+
     'register_enabled' => env('APP_REGISTER_ENABLED', true),
 
     'reset_password_enabled' => env('APP_RESET_PASSWORD_ENABLED', false),

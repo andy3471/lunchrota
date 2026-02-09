@@ -12,7 +12,7 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 class LunchSlotData extends Data
 {
     public function __construct(
-        public int $id,
+        public string $id,
         public string $time,
         public int|float $available_slots,
     ) {}

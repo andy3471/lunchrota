@@ -6,11 +6,11 @@ namespace App\Filament\Pages;
 
 use App\Filament\Exports\UserRoleExporter;
 use App\Filament\Imports\UserRoleImporter;
-use App\Models\Role;
 use App\Models\User;
 use DateTimeInterface;
 use Filament\Actions\ExportAction;
 use Filament\Actions\ImportAction;
+use Filament\Facades\Filament;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Illuminate\Database\Eloquent\Builder;
@@ -87,12 +87,16 @@ class UserRoles extends Page
     #[Computed]
     protected function users(): Collection
     {
-        return User::all();
+        $tenant = Filament::getTenant();
+
+        return $tenant->members;
     }
 
     #[Computed]
     protected function roles(): Collection
     {
-        return Role::all();
+        $tenant = Filament::getTenant();
+
+        return $tenant->roles;
     }
 }

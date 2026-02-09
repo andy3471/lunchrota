@@ -14,11 +14,6 @@ use Inertia\Response;
 
 class LoginController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('guest')->except('logout');
-    }
-
     public function create(): Response
     {
         return Inertia::render('Auth/Login');

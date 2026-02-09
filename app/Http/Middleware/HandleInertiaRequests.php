@@ -21,6 +21,8 @@ class HandleInertiaRequests extends Middleware
     /** @return array<string, mixed> */
     public function share(Request $request): array
     {
+        $currentTeam = app()->bound('currentTeam') ? app('currentTeam') : null;
+
         return [
             ...parent::share($request),
             'auth' => [
@@ -28,7 +30,7 @@ class HandleInertiaRequests extends Middleware
                     'id'       => $request->user()->id,
                     'name'     => $request->user()->name,
                     'email'    => $request->user()->email,
-                    'is_admin' => $request->user()->can('admin', $request->user()),
+                    'is_admin' => $request->user()->is_admin,
                 ] : null,
             ],
             'flash' => [
@@ -42,6 +44,11 @@ class HandleInertiaRequests extends Middleware
                 'resetPasswordEnabled' => config('app.reset_password_enabled', true),
                 'rolesEnabled'         => config('app.roles_enabled', false),
             ],
+            'currentTeam' => $currentTeam ? [
+                'id'   => $currentTeam->id,
+                'name' => $currentTeam->name,
+                'slug' => $currentTeam->slug,
+            ] : null,
         ];
     }
 }

@@ -15,7 +15,7 @@ class HomePageData extends Data
     public function __construct(
         #[DataCollectionOf(LunchSlotData::class)]
         public DataCollection $lunchSlots,
-        public ?int $initialSlot,
+        public ?string $initialSlot,
         public bool $available,
         #[DataCollectionOf(UserLunchData::class)]
         public DataCollection $userLunches,

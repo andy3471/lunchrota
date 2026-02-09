@@ -2,20 +2,32 @@
 
 declare(strict_types=1);
 
+use App\Http\Middleware\ResolveTenantFromSubdomain;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Support\Facades\Route;
 use Sentry\Laravel\Integration;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withProviders()
     ->withRouting(
-        web: __DIR__.'/../routes/web.php',
-        //        api: __DIR__.'/../routes/api.php',
         commands: __DIR__.'/../routes/console.php',
-        // channels: __DIR__.'/../routes/channels.php',
         health: '/up',
         then: function (): void {
+            $domain = config('app.domain');
+
+            // Main domain: brochure / marketing pages
+            Route::middleware('web')
+                ->domain($domain)
+                ->group(base_path('routes/web.php'));
+
+            // Tenant subdomains: app routes (Inertia frontend)
+            Route::middleware(['web', ResolveTenantFromSubdomain::class])
+                ->domain('{tenant}.'.$domain)
+                ->group(base_path('routes/tenant.php'));
+
+            // API routes
             Route::prefix('api')
                 ->middleware('web')
                 ->name('api.')

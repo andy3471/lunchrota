@@ -9,8 +9,8 @@ use App\DataTransferObjects\LunchSlotData;
 use App\DataTransferObjects\RoleData;
 use App\DataTransferObjects\UserLunchData;
 use App\Http\Controllers\Controller;
-use App\Models\LunchSlot;
 use App\Models\RoleUser;
+use App\Models\Team;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -21,11 +21,13 @@ class HomeController extends Controller
 {
     public function index(Request $request): Response
     {
+        /** @var Team $team */
+        $team = app('currentTeam');
         $date = $request->date('date') ?? Carbon::today();
 
         return Inertia::render('Home', HomePageData::from([
             'lunchSlots' => LunchSlotData::collectForDate(
-                LunchSlot::orderBy('time')->get(),
+                $team->lunchSlots()->orderBy('time')->get(),
                 $date->toDateString()
             ),
             'initialSlot' => auth()->check()
@@ -34,12 +36,14 @@ class HomeController extends Controller
             'available'   => auth()->user()?->isAvailableForDate($date->toDateString()) ?? true,
             'userLunches' => UserLunchData::collect(
                 User::query()
+                    ->whereHas('teams', fn ($q) => $q->where('teams.id', $team->id))
                     ->withLunchesForDate($date->toDateString())
                     ->get()
             ),
             'roles' => RoleData::collect(
                 RoleUser::query()
                     ->forDate($date->toDateString())
+                    ->whereHas('role', fn ($q) => $q->where('team_id', $team->id))
                     ->with(['user', 'role'])
                     ->get()
             ),

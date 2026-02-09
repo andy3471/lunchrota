@@ -10,6 +10,7 @@ use App\Models\User;
 use Filament\Actions\Imports\ImportColumn;
 use Filament\Actions\Imports\Importer;
 use Filament\Actions\Imports\Models\Import;
+use Filament\Facades\Filament;
 
 class UserRoleImporter extends Importer
 {
@@ -20,7 +21,9 @@ class UserRoleImporter extends Importer
         return [
             ImportColumn::make('User')
                 ->castStateUsing(function (string $state) {
-                    return User::where('name', $state)->first();
+                    $tenant = Filament::getTenant();
+
+                    return $tenant->members()->where('name', $state)->first();
                 })
                 ->fillRecordUsing(function (RoleUser $roleUser, User $user): void {
                     $roleUser->user_id = $user->id;
@@ -28,7 +31,9 @@ class UserRoleImporter extends Importer
                 ->rules(['exists:users,name']),
             ImportColumn::make('Role')
                 ->castStateUsing(function (string $state) {
-                    return Role::where('name', $state)->first();
+                    $tenant = Filament::getTenant();
+
+                    return $tenant->roles()->where('name', $state)->first();
                 })
                 ->fillRecordUsing(function (RoleUser $roleUser, Role $role): void {
                     $roleUser->role_id = $role->id;
@@ -52,7 +57,11 @@ class UserRoleImporter extends Importer
 
     public function beforeSave(): void
     {
-        RoleUser::all()->each->delete();
+        $tenant = Filament::getTenant();
+
+        RoleUser::query()
+            ->whereHas('role', fn ($q) => $q->where('team_id', $tenant->id))
+            ->delete();
     }
 
     public function resolveRecord(): ?RoleUser

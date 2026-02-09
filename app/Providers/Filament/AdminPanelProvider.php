@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Providers\Filament;
 
+use App\Filament\Pages\Auth\RegisterTeam;
 use App\Filament\Plugins\LunchrotaTheme;
+use App\Models\Team;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -30,6 +32,9 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            ->tenant(Team::class, slugAttribute: 'slug')
+            ->tenantDomain('{tenant:slug}.'.config('app.domain'))
+            ->tenantRegistration(RegisterTeam::class)
             ->colors([
                 'primary' => Color::Amber,
             ])

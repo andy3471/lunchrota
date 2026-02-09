@@ -6,22 +6,33 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class LunchSlot extends Model
 {
+    use HasUuids;
+
     protected $fillable = [
         'time',
         'available',
+        'team_id',
     ];
 
     protected $hidden = [
         'created_at',
         'updated_at',
     ];
+
+    /** @return BelongsTo<Team, $this> */
+    public function team(): BelongsTo
+    {
+        return $this->belongsTo(Team::class);
+    }
 
     /** @return BelongsToMany<User, $this, \Illuminate\Database\Eloquent\Relations\Pivot> */
     public function users(): BelongsToMany

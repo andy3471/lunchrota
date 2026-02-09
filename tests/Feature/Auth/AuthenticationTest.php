@@ -2,43 +2,72 @@
 
 declare(strict_types=1);
 
+namespace Tests\Feature\Auth;
+
+use App\Models\Team;
 use App\Models\User;
-use App\Providers\AppServiceProvider;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
-test('login screen can be rendered', function (): void {
-    $response = $this->get('/login');
+class AuthenticationTest extends TestCase
+{
+    use RefreshDatabase;
 
-    $response->assertStatus(200);
-});
+    private Team $team;
 
-test('users can authenticate using the login screen', function (): void {
-    $user = User::factory()->create();
+    protected function setUp(): void
+    {
+        parent::setUp();
 
-    $response = $this->post('/login', [
-        'email'    => $user->email,
-        'password' => 'password',
-    ]);
+        $this->team = Team::factory()->create(['slug' => 'test']);
+    }
 
-    $this->assertAuthenticated();
-    $response->assertRedirect(AppServiceProvider::HOME);
-});
+    /** Login screen can be rendered on a tenant subdomain. */
+    public function test_login_screen_can_be_rendered(): void
+    {
+        $response = $this->get('http://test.localhost/login');
 
-test('users can not authenticate with invalid password', function (): void {
-    $user = User::factory()->create();
+        $response->assertStatus(200);
+    }
 
-    $this->post('/login', [
-        'email'    => $user->email,
-        'password' => 'wrong-password',
-    ]);
+    /** Users can authenticate using the login screen. */
+    public function test_users_can_authenticate_using_the_login_screen(): void
+    {
+        $user = User::factory()->create();
+        $this->team->members()->attach($user);
 
-    $this->assertGuest();
-});
+        $response = $this->post('http://test.localhost/login', [
+            'email'    => $user->email,
+            'password' => 'password',
+        ]);
 
-test('users can logout', function (): void {
-    $user = User::factory()->create();
+        $this->assertAuthenticated();
+        $response->assertRedirect('/');
+    }
 
-    $response = $this->actingAs($user)->post('/logout');
+    /** Users cannot authenticate with invalid password. */
+    public function test_users_cannot_authenticate_with_invalid_password(): void
+    {
+        $user = User::factory()->create();
+        $this->team->members()->attach($user);
 
-    $this->assertGuest();
-    $response->assertRedirect('/');
-});
+        $this->post('http://test.localhost/login', [
+            'email'    => $user->email,
+            'password' => 'wrong-password',
+        ]);
+
+        $this->assertGuest();
+    }
+
+    /** Users can logout. */
+    public function test_users_can_logout(): void
+    {
+        $user = User::factory()->create();
+        $this->team->members()->attach($user);
+
+        $response = $this->actingAs($user)->post('http://test.localhost/logout');
+
+        $this->assertGuest();
+        $response->assertRedirect('/');
+    }
+}
