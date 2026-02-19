@@ -20,6 +20,8 @@
         "laravel/wayfinder": "^0.1.13",
         "league/flysystem-aws-s3-v3": "^3.31",
         "sentry/sentry-laravel": "*",
+        "shuvroroy/filament-spatie-laravel-backup": "*",
+        "spatie/laravel-backup": "^9.0",
         "spatie/laravel-data": "^4.19",
         "spatie/laravel-typescript-transformer": "^2.5"
     },
